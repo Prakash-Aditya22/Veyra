@@ -6,33 +6,62 @@
 }
 
 /* ============================================================
-   Hero. Left-aligned type column against a right-side map
-   fragment that bleeds off the edge. No centred layout, no
-   second call to action, no scroll cue.
+   Hero. Centred type column over a full-bleed animated wave
+   field. No call to action, no scroll cue.
    ============================================================ */
 
 .hero {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
   align-items: center;
-  gap: var(--s6);
+  justify-items: center;
   min-height: min(78dvh, 720px);
   padding-top: clamp(var(--s5), 5vw, var(--s7));
-  padding-left: max(var(--s4), calc((100vw - var(--content-max)) / 2 + var(--s4)));
+  padding-inline: var(--s4);
+  overflow: hidden;
+  background: var(--deep-graphite);
 }
 
-/*
-  No `max-width` in `ch` here and no `justify-items: start`. A `ch` cap on this
-  element resolves against the 15px body size, not the display size of the
-  headline inside it, and `justify-items: start` shrink-wraps each child to its
-  content. Together they collapsed the column to about 200px and wrapped the
-  headline into eight lines. The grid column governs the width instead, and the
-  cap that matters lives on the headline, in its own type size.
-*/
+/* Wave field fills the section behind the type column. Decorative, so it
+   is skipped entirely under prefers-reduced-motion rather than paused.
+   Masked out toward the bottom edge so the canvas dissolves into the page
+   ground instead of ending on the hard line where `overflow: hidden` clips
+   the section. */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+}
+
+/* A centred vignette rather than a one-sided fade, now that the type
+   column sits in the middle of the section instead of against the left
+   edge. Darkest behind the text, opening up toward the corners so the
+   wave crests still read at the margins. */
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(
+    ellipse 65% 62% at 50% 50%,
+    rgba(19, 20, 23, 0.88) 0%,
+    rgba(19, 20, 23, 0.6) 45%,
+    rgba(19, 20, 23, 0.18) 75%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
 .hero__type {
+  position: relative;
+  z-index: 2;
   display: grid;
+  justify-items: center;
   gap: var(--s4);
   min-width: 0;
+  max-width: 44rem;
+  text-align: center;
 }
 
 .hero__headline {
@@ -41,10 +70,6 @@
   letter-spacing: -0.03em;
   /* Room for descenders, since the line-height is tight at display sizes. */
   line-height: 1.08;
-  /*
-    The 55fr hero column already caps the measure. An additional `ch` cap here
-    only pushes the headline onto a third line, so the column governs.
-  */
 }
 
 .hero__sub {
@@ -52,30 +77,7 @@
   font-size: clamp(1rem, 1.2vw, 1.125rem);
   line-height: 1.6;
   max-width: 46ch;
-}
-
-.hero__cta {
-  padding-inline: var(--s4);
-  justify-self: start;
-}
-
-.hero__map {
-  position: relative;
-  height: min(72dvh, 640px);
-  min-width: 0;
-  border-left: 1px solid var(--structural-line);
-  overflow: hidden;
-}
-
-/* The canvas fades into the page ground at its left edge so the bleed reads as
-   a fragment rather than a panel. Fixed overlay, never over the type column. */
-.hero__map-fade {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 96px;
-  background: linear-gradient(90deg, var(--deep-graphite), transparent);
-  pointer-events: none;
-  z-index: 450;
+  margin-inline: auto;
 }
 
 /* ============================================================
@@ -127,6 +129,11 @@
 
 .capability__visual {
   height: 380px;
+  /* The copy column is shorter than 380px, so centering the row gives it
+     visible clearance above and below; the visual nearly fills the row on
+     its own and reads flush against the pinned section's top edge without
+     this same nudge. */
+  margin-top: var(--s4);
   border: 1px solid var(--structural-line);
   border-radius: var(--radius-surface);
   overflow: hidden;
@@ -161,8 +168,11 @@
   gap: 10px;
 }
 
-/* Real rows, the same components the rankings screen uses. */
+/* Real rows, the same components the rankings screen uses. Same top nudge
+   as `.capability__visual` — this column is the tall one in the flipped
+   row, so it needs the same clearance. */
 .capability__rows {
+  margin-top: var(--s4);
   border-top: 1px solid var(--structural-line);
 }
 
@@ -292,7 +302,6 @@
 
 @media (max-width: 1023px) {
   .hero {
-    grid-template-columns: minmax(0, 1fr);
     gap: var(--s5);
     padding-inline: var(--s4);
     min-height: 0;
@@ -302,15 +311,13 @@
     max-width: none;
   }
 
-  .hero__map {
-    height: 300px;
-    border-left: 0;
-    border: 1px solid var(--structural-line);
-    border-radius: var(--radius-surface);
-  }
-
-  .hero__map-fade {
-    display: none;
+  .hero__scrim {
+    background: linear-gradient(
+      180deg,
+      var(--deep-graphite) 0%,
+      rgba(19, 20, 23, 0.7) 45%,
+      rgba(19, 20, 23, 0.35) 75%
+    );
   }
 
   .capability,

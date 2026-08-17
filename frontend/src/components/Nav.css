@@ -9,7 +9,7 @@
 .nav__inner {
   height: var(--nav-height);
   display: grid;
-  grid-template-columns: auto 1fr auto auto;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: var(--s4);
   padding-inline: var(--s4);
@@ -18,13 +18,6 @@
 .nav__brand {
   display: inline-flex;
   align-items: center;
-  gap: var(--s2);
-}
-
-.nav__mark {
-  color: var(--beacon-teal-lift);
-  display: grid;
-  place-items: center;
 }
 
 .nav__wordmark {
@@ -37,7 +30,9 @@
 .nav__links {
   display: flex;
   align-items: center;
-  gap: var(--s1);
+  justify-content: flex-end;
+  justify-self: end;
+  gap: var(--s5);
 }
 
 .nav__link {
@@ -45,10 +40,11 @@
   height: 44px;
   display: inline-flex;
   align-items: center;
-  padding-inline: var(--s2);
-  border-radius: var(--radius-interactive);
-  font-size: var(--type-body);
-  font-weight: 500;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   color: var(--steel-grey);
   transition: color var(--dur-fast) var(--ease-settle);
 }
@@ -64,48 +60,12 @@
 .nav__link--active::after {
   content: '';
   position: absolute;
-  left: var(--s2);
-  right: var(--s2);
-  bottom: 6px;
+  left: 0;
+  right: 0;
+  bottom: 12px;
   height: 2px;
   background: var(--beacon-teal-lift);
   border-radius: 1px;
-}
-
-.nav__status {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s1);
-}
-
-.nav__dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--beacon-teal-lift);
-  animation: breathe 2.8s ease-in-out infinite;
-}
-
-@keyframes breathe {
-  0%,
-  100% {
-    opacity: 0.45;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .nav__dot {
-    animation: none;
-    opacity: 1;
-  }
-}
-
-.nav__status-text {
-  font-size: var(--type-label);
-  color: var(--dim-grey);
 }
 
 .nav__toggle {
@@ -130,8 +90,7 @@
     padding-inline: var(--s3);
   }
 
-  .nav__links,
-  .nav__status {
+  .nav__links {
     display: none;
   }
 
@@ -159,10 +118,4 @@
 
 .nav__sheet-link--active {
   color: var(--bone-white);
-}
-
-.nav__sheet-meta {
-  padding-top: var(--s3);
-  font-size: var(--type-label);
-  color: var(--dim-grey);
 }
