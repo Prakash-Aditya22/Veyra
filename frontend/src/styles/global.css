@@ -1,0 +1,349 @@
+@import './tokens.css';
+
+/* ============================================================
+   Reset
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--deep-graphite);
+  color: var(--bone-white);
+  font-family: var(--font-ui);
+  font-size: var(--type-body);
+  line-height: 1.65;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Horizontal page scroll on mobile is a critical failure (DESIGN.md 5). */
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ============================================================
+   Type primitives
+   ============================================================ */
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+/* Hierarchy comes from weight and color, never from inflating size alone. */
+.screen-title {
+  font-size: var(--type-screen-title);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.panel-title {
+  font-size: var(--type-panel-title);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.label {
+  font-size: var(--type-label);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--steel-grey);
+  line-height: 1.4;
+}
+
+.body-secondary {
+  color: var(--steel-grey);
+  max-width: 65ch;
+}
+
+/* Every number in the product is mono and tabular, so columns do not jitter. */
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+.readout {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--type-readout);
+  font-weight: 500;
+}
+
+@media (max-width: 767px) {
+  body {
+    font-size: 1rem; /* body never drops below 1rem on mobile */
+  }
+}
+
+/* ============================================================
+   Buttons - flat fills, 8px radius, 44px min height, 1px press
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s1);
+  min-height: 44px;
+  padding: 0 var(--s4);
+  border-radius: var(--radius-interactive);
+  font-size: var(--type-body);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  transition:
+    background var(--dur-fast) var(--ease-settle),
+    border-color var(--dur-fast) var(--ease-settle),
+    transform var(--dur-fast) var(--ease-settle);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--beacon-teal);
+  color: var(--bone-white);
+}
+
+.btn-primary:hover {
+  background: var(--beacon-teal-lift);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--bone-white);
+  border: 1px solid var(--structural-line);
+}
+
+.btn-secondary:hover {
+  background: var(--raised-slate);
+}
+
+.btn-tertiary {
+  min-height: 44px;
+  padding: 0 var(--s2);
+  color: var(--steel-grey);
+  font-size: var(--type-body);
+  font-weight: 500;
+  border-radius: var(--radius-interactive);
+  transition: color var(--dur-fast) var(--ease-settle);
+}
+
+.btn-tertiary:hover {
+  color: var(--bone-white);
+}
+
+/* ============================================================
+   Focus - one ring, Beacon Teal, everywhere
+   ============================================================ */
+
+:focus-visible {
+  outline: 2px solid var(--beacon-teal-lift);
+  outline-offset: 2px;
+  border-radius: var(--radius-interactive);
+}
+
+/* ============================================================
+   Inputs - label above, helper below, no placeholder-as-label
+   ============================================================ */
+
+.field {
+  display: grid;
+  gap: var(--s1);
+}
+
+.input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 var(--s2);
+  background: var(--raised-slate);
+  border: 1px solid var(--structural-line);
+  border-radius: var(--radius-interactive);
+  color: var(--bone-white);
+  font-size: var(--type-body);
+  transition:
+    border-color var(--dur-fast) var(--ease-settle),
+    box-shadow var(--dur-fast) var(--ease-settle);
+}
+
+.input::placeholder {
+  color: var(--dim-grey);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--beacon-teal-lift);
+  box-shadow: 0 0 0 3px var(--beacon-teal-wash);
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--risk-3);
+}
+
+.field-helper {
+  font-size: 0.8125rem;
+  color: var(--dim-grey);
+}
+
+.field-error {
+  font-size: 0.8125rem;
+  color: var(--risk-3);
+}
+
+/* ============================================================
+   Structure - hairlines, not shadows
+   ============================================================ */
+
+.rule {
+  height: 1px;
+  background: var(--structural-line);
+  border: 0;
+}
+
+.container {
+  width: 100%;
+  /* Never let a wide child stretch the container past its grid or flex track. */
+  min-width: 0;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--s4);
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding-inline: var(--s3);
+  }
+}
+
+/* Screen-reader-only text for labels the eye does not need. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   Skeleton shimmer - matches the dimensions of what it replaces.
+   Circular spinners are banned.
+   ============================================================ */
+
+.skeleton {
+  background: var(--raised-slate);
+  border-radius: var(--radius-interactive);
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(238, 241, 245, 0.06),
+    transparent
+  );
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   Leaflet overrides - the default chrome is banned
+   ============================================================ */
+
+.leaflet-container {
+  background: var(--deep-graphite);
+  font-family: var(--font-ui);
+  outline: none;
+}
+
+.leaflet-control-attribution {
+  background: rgba(19, 20, 23, 0.82) !important;
+  color: var(--dim-grey) !important;
+  font-size: 0.6875rem !important;
+  padding: 2px 8px !important;
+  border-radius: 4px 0 0 0;
+}
+
+.leaflet-control-attribution a {
+  color: var(--steel-grey) !important;
+}
+
+/* The default zoom control chrome is replaced by our own panel-graphite one. */
+.leaflet-control-zoom {
+  display: none !important;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--raised-slate);
+  color: var(--bone-white);
+  box-shadow: var(--shadow-card);
+}

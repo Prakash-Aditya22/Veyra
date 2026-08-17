@@ -1,0 +1,87 @@
+/*
+  Design tokens - a direct transcription of DESIGN.md sections 2, 3 and 5.
+  Nothing in this file is invented. If a value is not here, it does not exist
+  in the product. Add to this file rather than hardcoding colors in components.
+*/
+
+:root {
+  /* ---- Interface neutrals: one cool graphite family, no warm/cool drift ---- */
+  --deep-graphite: #131417; /* application canvas */
+  --panel-graphite: #1a1c21; /* rails, docked panels, table headers, modals */
+  --raised-slate: #22252b; /* hover surfaces, selected rows, input fills */
+  --structural-line: rgba(148, 163, 184, 0.14); /* every 1px rule in the product */
+  --bone-white: #eef1f5; /* primary text */
+  --steel-grey: #9aa2ae; /* secondary text, labels, axis ticks */
+  --dim-grey: #6b7280; /* tertiary text, disabled, attribution */
+
+  /* ---- Interface accent: exactly one, and it is not red ---- */
+  --beacon-teal: #0f766e;
+  --beacon-teal-lift: #14918a; /* hover only. Same hue, never a second accent. */
+  --beacon-teal-wash: rgba(15, 118, 110, 0.16);
+
+  /* ---- Risk ramp: the only saturated color, reserved exclusively for data ---- */
+  --risk-1: #c9a227; /* Watch     - score 0-24  */
+  --risk-2: #c2711f; /* Elevated  - score 25-49 */
+  --risk-3: #a33a2b; /* Severe    - score 50-74 */
+  --risk-4: #7a1f1a; /* Critical  - score 75-100 */
+  --risk-none: #3a3e46; /* No Data. Absence of data is not absence of risk. */
+
+  /* ---- Status: utility only. Banned from the map and from every chart. ---- */
+  --confirm-green: #3f7d58;
+  --notice-amber: #b4813a;
+
+  /* ---- Type ---- */
+  --font-ui: 'Satoshi', 'Satoshi-Variable', 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Mono', monospace;
+
+  --type-hero: clamp(2.5rem, 6vw, 4.5rem);
+  --type-screen-title: clamp(1.5rem, 3vw, 2rem);
+  --type-panel-title: 1.125rem;
+  --type-body: 0.9375rem;
+  --type-label: 0.75rem;
+  --type-readout: 0.875rem;
+  --type-hero-metric: clamp(2rem, 4vw, 3rem);
+
+  /* ---- Spacing: 8px base scale ---- */
+  --s1: 8px;
+  --s2: 12px;
+  --s3: 16px;
+  --s4: 24px;
+  --s5: 32px;
+  --s6: 48px;
+  --s7: 64px;
+  --section-gap: clamp(3rem, 8vw, 6rem);
+
+  /* ---- Shape: one radius system. 8px interactive, 12px elevated surface. ---- */
+  --radius-interactive: 0.5rem;
+  --radius-surface: 0.75rem;
+
+  /* ---- Elevation: diffused, tinted to the canvas hue. Never a glow. ---- */
+  --shadow-card: 0 8px 24px rgba(10, 11, 14, 0.5);
+
+  /* ---- Shell geometry (DESIGN.md section 5) ---- */
+  --rail-width: 280px;
+  --results-width: 380px;
+  --nav-height: 64px;
+  --content-max: 1400px;
+
+  /* ---- Motion: spring stiffness 100 / damping 20, expressed as a bezier ---- */
+  --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 180ms;
+  --dur-base: 260ms;
+  --dur-fly: 600ms;
+}
+
+/*
+  The product is a single locked dark theme. DESIGN.md describes one atmosphere
+  ("night-shift control room") and encodes risk against a dark basemap; a light
+  mode would break the ramp's contrast contract. Declared here rather than left
+  implicit so the choice is visible.
+*/
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-fly: 0ms;
+  }
+}

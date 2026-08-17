@@ -1,0 +1,63 @@
+/*
+  The fragment holds its own inline slot. Text never overlaps it, and it never
+  overlaps text: it is an inline-block in the flow, not absolutely positioned.
+*/
+
+.map-fragment {
+  display: inline-block;
+  vertical-align: baseline;
+  width: 1.55em;
+  height: 0.72em;
+  margin-inline: 0.12em;
+  /* Sit the crop on the cap-height band rather than the baseline. */
+  transform: translateY(-0.02em);
+}
+
+.map-fragment__inner {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 0.375rem;
+  background: var(--deep-graphite);
+  box-shadow: inset 0 0 0 1px var(--structural-line);
+}
+
+.map-fragment__tile {
+  position: absolute;
+  width: 256px;
+  height: 256px;
+  max-width: none;
+  image-rendering: auto;
+  pointer-events: none;
+  /*
+    The dark basemap is tuned to sit behind saturated markers at full size. At
+    type height it reads as a black rectangle, so the road geometry is lifted
+    just enough to be legible. Hue is untouched: this is still the real tile.
+  */
+  filter: brightness(2.1) contrast(1.08) saturate(0.9);
+}
+
+/* A single ramp-coloured dot marks the cluster the crop is centred on. */
+.map-fragment__pin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0.16em;
+  height: 0.16em;
+  min-width: 5px;
+  min-height: 5px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--risk-4);
+  box-shadow: 0 0 0 1.5px var(--deep-graphite);
+}
+
+/* On narrow screens the fragment stays inline but shrinks with the type. */
+@media (max-width: 767px) {
+  .map-fragment {
+    width: 1.35em;
+    height: 0.66em;
+  }
+}
