@@ -1,0 +1,3 @@
+category,level,n,mean_shap,std_shap,mean_abs_shap,label,low_sample
+urban_or_rural_area,2,13550,0.06805946693160533,0.030997119294850134,0.06808662284536272,Rural,False
+urban_or_rural_area,1,28497,-0.03064904086293778,0.014661667273112916,0.030655544211709376,Urban,False

@@ -1,0 +1,15 @@
+{
+  "segment_length_m": 500,
+  "n_roads": 1027,
+  "n_segments": 45014,
+  "build_years": [
+    2019,
+    2020,
+    2021
+  ],
+  "future_years": [
+    2022,
+    2023
+  ],
+  "method": "kNN-graph geodesic chainage along road, binned to 500m"
+}

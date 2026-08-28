@@ -1,0 +1,8 @@
+{
+  "multipliers": {
+    "Fatal": 0.5,
+    "Grievous": 0.5,
+    "Minor": 1.0
+  },
+  "ksi_roc_auc": 0.7835866445990096
+}
