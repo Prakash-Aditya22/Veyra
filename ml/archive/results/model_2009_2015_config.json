@@ -1,0 +1,26 @@
+{
+  "rows": 1040051,
+  "features": 251,
+  "macro_AP": 0.4803682213827967,
+  "AP_Fatal": 0.18257140637716016,
+  "AP_Grievous": 0.30641502479145577,
+  "macro_F1": 0.49923561414714207,
+  "KSI_ROC_AUC": 0.7938004659242182,
+  "top1pct": 0.2586538461538462,
+  "capture20": 0.8649318463444857,
+  "multipliers": {
+    "Fatal": 0.5,
+    "Grievous": 0.5
+  },
+  "params": {
+    "n_estimators": 1200,
+    "num_leaves": 255,
+    "learning_rate": 0.02,
+    "colsample_bytree": 0.5,
+    "subsample": 1.0,
+    "reg_alpha": 1.0,
+    "reg_lambda": 1.0,
+    "min_child_samples": 40,
+    "max_depth": -1
+  }
+}
