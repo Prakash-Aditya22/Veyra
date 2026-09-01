@@ -1,0 +1,25 @@
+# Raw STATS19 extract — 581MB, regenerable via ml/build_recent.py
+stats19_recent.csv
+data/stats19_*.csv
+ml/stats19_raw/
+ml/stats19_*.csv
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Model training scratch
+catboost_info/
+*.zip
+
+# Working-dir only
+handoff/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude Code local config
+.claude/
