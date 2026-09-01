@@ -1,0 +1,131 @@
+loading ...
+  210,262 collisions (2022-2023)
+  KSI positive rate: 23.73%
+  {'Minor': 160367, 'Grievous': 46771, 'Fatal': 3124}
+  236 features
+
+==============================================================================
+MODEL 1 -- KSI (Killed or Seriously Injured) vs Slight
+==============================================================================
+  ROC-AUC  0.7688
+  PR-AUC   0.5174   (no-skill 0.2373, lift 2.18x)
+  threshold 0.33 (selected on training data)
+              precision    recall  f1-score   support
+
+      Slight      0.846     0.831     0.838     32074
+         KSI      0.485     0.513     0.499      9979
+
+    accuracy                          0.755     42053
+   macro avg      0.666     0.672     0.669     42053
+weighted avg      0.760     0.755     0.758     42053
+
+  gains -- targeting the highest-risk crashes:
+    top   1%: 84.52% KSI  (lift 3.56x)  captures   3.6%
+    top   5%: 69.22% KSI  (lift 2.92x)  captures  14.6%
+    top  10%: 62.05% KSI  (lift 2.61x)  captures  26.1%
+    top  20%: 52.34% KSI  (lift 2.21x)  captures  44.1%
+
+==============================================================================
+MODEL 2 -- three-class (Fatal / Grievous / Minor)
+==============================================================================
+  multipliers Fatal x2.75 Grievous x1.75
+              precision    recall  f1-score   support
+
+       Fatal      0.379     0.085     0.139       625
+    Grievous      0.465     0.406     0.433      9354
+       Minor      0.832     0.875     0.853     32074
+
+    accuracy                          0.759     42053
+   macro avg      0.558     0.455     0.475     42053
+weighted avg      0.744     0.759     0.749     42053
+
+          Fatal  Grievous  Minor
+Fatal        53       395    177
+Grievous     62      3798   5494
+Minor        25      3978  28071
+
+  average precision vs no-skill:
+    Fatal     AP 0.1838  no-skill 0.0149  lift 12.37x
+    Grievous  AP 0.4448  no-skill 0.2224  lift 2.00x
+    Minor     AP 0.9114  no-skill 0.7627  lift 1.19x
+
+==============================================================================
+SHAP
+==============================================================================
+
+global importance (top 15):
+                  feature  mean_abs_shap
+        k_casualty_type_9         0.3110
+v_first_point_of_impact_2         0.1812
+                 latitude         0.1491
+              speed_limit         0.0955
+     number_of_casualties         0.0939
+       number_of_vehicles         0.0885
+                k_age_max         0.0882
+   v_vehicle_manoeuvre_19         0.0843
+   v_vehicle_manoeuvre_99         0.0820
+                     Hour         0.0810
+             police_force         0.0722
+           k_n_casualties         0.0686
+         k_any_pedestrian         0.0669
+        v_sex_of_driver_3         0.0660
+         v_vehicle_type_1         0.0567
+
+==============================================================================
+SUB-CATEGORY SHAP -- ranked by BETWEEN-LEVEL SPREAD
+==============================================================================
+               category  levels  spread  range  mean_abs_shap
+            speed_limit       6  0.1068 0.2634         0.1332
+           police_force      44  0.0935 0.5041         0.0865
+    urban_or_rural_area       2  0.0461 0.0987         0.0494
+       light_conditions       5  0.0440 0.1545         0.0732
+     weather_conditions       8  0.0386 0.2230         0.0511
+              road_type       6  0.0323 0.1207         0.0511
+       junction_control       6  0.0311 0.2360         0.0462
+            day_of_week       7  0.0281 0.0775         0.0281
+road_surface_conditions       7  0.0214 0.1891         0.0656
+        junction_detail       7  0.0104 0.0459         0.0164
+       first_road_class       6  0.0072 0.0306         0.0137
+
+direction by level -- what pushes a crash toward KSI (+) or slight (-):
+
+  [speed_limit]
+    50.0                     n=  1,824  +0.1842
+    60.0                     n=  5,011  +0.1833
+    70.0                     n=  2,341  +0.1826
+    ...
+    30.0                     n= 22,476  -0.0626
+    20.0                     n=  6,737  -0.0792
+
+  [police_force]
+    14                       n=    852  +0.1743
+    21                       n=    266  +0.1174
+    11                       n=    237  +0.1082
+    ...
+    55                       n=    588  -0.2865
+    12                       n=    583  -0.3298
+
+  [urban_or_rural_area]
+    Rural                    n= 13,550  +0.0681
+    Urban                    n= 28,497  -0.0306
+    ...
+    Rural                    n= 13,550  +0.0681
+    Urban                    n= 28,497  -0.0306
+
+  [light_conditions]
+    Dark-no lighting         n=  2,249  +0.1241
+    Dark-unlit               n=    289  +0.0831
+    Dark-lit                 n=  8,808  +0.0508
+    ...
+    Daylight                 n= 30,021  -0.0267
+    Dark-unknown             n=    686  -0.0304
+
+  [weather_conditions]
+    Fine                     n= 33,872  +0.0112
+    Fine+wind                n=    374  +0.0036
+    Rain                     n=  4,522  -0.0001
+    ...
+    Fog/mist                 n=    182  -0.0497
+    Unknown                  n=  1,239  -0.2118
+
+Saved to severity_outputs/: models, metrics, global SHAP, 11 sub-category SHAP tables
