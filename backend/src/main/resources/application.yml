@@ -18,7 +18,8 @@ blackspot:
   max-segments: 2000
 
 server:
-  port: 8080
+  # 8080 is taken by Oracle's TNS Listener on the development machine.
+  port: 8081
 
 logging:
   level:
