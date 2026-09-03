@@ -1,0 +1,75 @@
+.legend {
+  background: var(--panel-graphite);
+  border: 1px solid var(--structural-line);
+  border-radius: var(--radius-surface);
+  padding: var(--s2);
+  min-width: 194px;
+}
+
+/*
+  The legend occupies a reserved corner of the map. It is the only element
+  besides the map controls permitted to sit over the canvas.
+*/
+.legend--docked {
+  position: absolute;
+  left: var(--s2);
+  bottom: var(--s2);
+  z-index: 500;
+  box-shadow: var(--shadow-card);
+}
+
+.legend__title {
+  padding-bottom: 6px;
+}
+
+.legend__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.legend__item {
+  display: grid;
+  grid-template-columns: 10px 1fr auto;
+  align-items: center;
+  gap: var(--s1);
+}
+
+.legend__swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.legend__word {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--bone-white);
+}
+
+.legend__range {
+  font-size: 0.6875rem;
+  color: var(--steel-grey);
+}
+
+/* Below 768px the legend leaves the canvas and becomes a strip under the header. */
+.legend--strip {
+  border-radius: 0;
+  border-inline: 0;
+  border-top: 0;
+  min-width: 0;
+}
+
+.legend--strip .legend__list {
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  gap: var(--s2);
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.legend--strip .legend__item {
+  grid-template-columns: 10px auto auto;
+}

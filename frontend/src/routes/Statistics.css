@@ -1,0 +1,203 @@
+.stats {
+  padding-block: var(--s5) var(--s7);
+  display: grid;
+  /* See the note in Rankings.css: auto columns size to max-content. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s5);
+  align-content: start;
+}
+
+.stats__head {
+  display: grid;
+  gap: var(--s2);
+  max-width: 78ch;
+}
+
+/* --- KPI strip: hairline-separated columns, no card boxes --- */
+
+.kpi-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--structural-line);
+  border-bottom: 1px solid var(--structural-line);
+}
+
+.kpi {
+  display: grid;
+  gap: 2px;
+  align-content: start;
+  padding: var(--s3) var(--s3) var(--s3) 0;
+  border-left: 1px solid var(--structural-line);
+  padding-left: var(--s3);
+}
+
+.kpi:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.kpi__value {
+  font-size: var(--type-hero-metric);
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--bone-white);
+}
+
+.kpi__note {
+  font-size: var(--type-label);
+  color: var(--dim-grey);
+}
+
+/* --- Asymmetric 2:1 grid, flipped on the second row --- */
+
+.stats__grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--s6) var(--s5);
+}
+
+.stats__panel {
+  min-width: 0;
+}
+
+.stats__grid > .stats__panel:nth-child(3) {
+  grid-column: span 1;
+}
+
+.stats__grid > .stats__panel:nth-child(4) {
+  grid-column: span 1;
+}
+
+/* Row two reverses the emphasis so the page does not read as a repeated grid. */
+.stats__grid > .stats__panel:nth-child(3) {
+  order: 3;
+}
+
+.stats__grid > .stats__panel:nth-child(4) {
+  order: 4;
+}
+
+.stats__chart {
+  height: 258px;
+  min-width: 0;
+}
+
+/* --- Contributing factors: a ranked list, a different layout family --- */
+
+.stats__factors {
+  display: grid;
+  gap: var(--s3);
+}
+
+.stats__factors-head {
+  display: grid;
+  gap: 2px;
+  padding-bottom: var(--s1);
+  border-bottom: 1px solid var(--structural-line);
+}
+
+.stats__factors-meta {
+  color: var(--dim-grey);
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-weight: 500;
+}
+
+.factor-rank {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+}
+
+.factor-rank__row {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 22rem) 1fr 2.5rem;
+  align-items: center;
+  gap: var(--s3);
+  height: 52px;
+  border-bottom: 1px solid var(--structural-line);
+}
+
+.factor-rank__index {
+  font-size: 0.75rem;
+  color: var(--dim-grey);
+}
+
+.factor-rank__label {
+  font-size: 0.9375rem;
+  color: var(--bone-white);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.factor-rank__track {
+  height: 5px;
+  background: rgba(148, 163, 184, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.factor-rank__fill {
+  display: block;
+  height: 100%;
+  background: var(--beacon-teal-lift);
+  border-radius: 3px;
+}
+
+.factor-rank__value {
+  font-size: 0.8125rem;
+  color: var(--steel-grey);
+  text-align: right;
+}
+
+/* --- Responsive: single column below 900px, without exception --- */
+
+@media (max-width: 1023px) {
+  .stats__grid {
+    grid-template-columns: 1fr;
+    gap: var(--s6);
+  }
+
+  .kpi-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .kpi:nth-child(3) {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .kpi:nth-child(3),
+  .kpi:nth-child(4) {
+    border-top: 1px solid var(--structural-line);
+  }
+}
+
+@media (max-width: 767px) {
+  .stats {
+    padding-block: var(--s4) var(--s6);
+    gap: var(--s5);
+  }
+
+  .stats__chart {
+    height: 224px;
+  }
+
+  .factor-rank__row {
+    grid-template-columns: 1.75rem 1fr 2.25rem;
+    gap: var(--s2);
+    height: auto;
+    padding-block: var(--s2);
+  }
+
+  .factor-rank__label {
+    white-space: normal;
+  }
+
+  .factor-rank__track {
+    display: none;
+  }
+}

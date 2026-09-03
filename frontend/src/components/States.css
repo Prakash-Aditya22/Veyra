@@ -1,0 +1,77 @@
+.state {
+  display: grid;
+  justify-items: start;
+  gap: var(--s2);
+  padding: var(--s6) var(--s4);
+  max-width: 46ch;
+}
+
+.state__mark {
+  color: var(--dim-grey);
+  margin-bottom: var(--s1);
+}
+
+.state__title {
+  font-size: var(--type-panel-title);
+  font-weight: 600;
+  color: var(--bone-white);
+  letter-spacing: -0.01em;
+}
+
+.state__detail {
+  color: var(--steel-grey);
+  line-height: 1.65;
+}
+
+.state > .btn {
+  margin-top: var(--s1);
+}
+
+/* --- Error: a Risk Tier 3 left border on a Panel Graphite strip --- */
+
+.state-error {
+  background: var(--panel-graphite);
+  border-left: 3px solid var(--risk-3);
+  border-radius: 0 var(--radius-interactive) var(--radius-interactive) 0;
+  padding: var(--s3);
+}
+
+.state-error__body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s3);
+}
+
+.state-error__title {
+  color: var(--bone-white);
+  max-width: 60ch;
+}
+
+.state-error__retry {
+  min-height: 40px;
+  padding-inline: var(--s3);
+}
+
+/* --- Loading --- */
+
+.skeleton-rows {
+  display: grid;
+  gap: 1px;
+  padding: var(--s2) 0;
+}
+
+.skeleton-rows__row {
+  height: 52px; /* exactly the height of a rankings row */
+  border-radius: 4px;
+  opacity: 0.6;
+}
+
+.skeleton-map {
+  height: 100%;
+  min-height: 320px;
+  display: grid;
+  place-items: center;
+  background: var(--panel-graphite);
+}

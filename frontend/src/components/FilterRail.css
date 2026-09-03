@@ -1,0 +1,151 @@
+.filter-rail {
+  height: 100%;
+  min-height: 0;
+  background: var(--panel-graphite);
+  border-right: 1px solid var(--structural-line);
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+}
+
+.filter-rail__head {
+  padding: var(--s3) var(--s3) var(--s2);
+  display: grid;
+  gap: 2px;
+  border-bottom: 1px solid var(--structural-line);
+}
+
+.filter-rail__count {
+  color: var(--steel-grey);
+  font-size: var(--type-label);
+}
+
+/* --- Active filter chips --- */
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s1);
+  padding: var(--s2) var(--s3);
+  border-bottom: 1px solid var(--structural-line);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 0 8px;
+  border-radius: var(--radius-interactive);
+  background: var(--beacon-teal-wash);
+  color: var(--bone-white);
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: background var(--dur-fast) var(--ease-settle);
+}
+
+.chip:hover {
+  background: rgba(15, 118, 110, 0.28);
+}
+
+.chip__label {
+  max-width: 17ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --- Groups. Structure from hairlines and rhythm, never from nested cards. --- */
+
+.filter-rail__scroll {
+  overflow-y: auto;
+  min-height: 0;
+  padding-bottom: var(--s2);
+}
+
+.filter-group {
+  border: 0;
+  border-top: 1px solid var(--structural-line);
+  margin: 0;
+  padding: var(--s3) var(--s3) var(--s2);
+  display: grid;
+  gap: 2px;
+}
+
+.filter-group:first-child {
+  border-top: 0;
+}
+
+.filter-group__legend {
+  padding: 0 0 var(--s1);
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: var(--s1);
+  min-height: 34px;
+  padding: 0 6px;
+  margin-inline: -6px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--steel-grey);
+  font-size: 0.875rem;
+  transition:
+    background var(--dur-fast) var(--ease-settle),
+    color var(--dur-fast) var(--ease-settle);
+}
+
+.filter-option:hover {
+  background: var(--raised-slate);
+  color: var(--bone-white);
+}
+
+.filter-option--on {
+  background: var(--beacon-teal-wash);
+  color: var(--bone-white);
+}
+
+.filter-option--on:hover {
+  background: rgba(15, 118, 110, 0.24);
+}
+
+.filter-option__input {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  accent-color: var(--beacon-teal);
+  cursor: pointer;
+}
+
+.filter-option__swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.filter-option__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.filter-rail__foot {
+  padding: var(--s2) var(--s3);
+  border-top: 1px solid var(--structural-line);
+}
+
+.filter-rail__foot .btn-tertiary:disabled {
+  color: var(--dim-grey);
+  cursor: default;
+}
+
+/* --- Below 768px the rail becomes a bottom sheet at 60% viewport height --- */
+
+@media (max-width: 767px) {
+  .filter-rail {
+    border-right: 0;
+    height: 60dvh;
+    border-radius: var(--radius-surface) var(--radius-surface) 0 0;
+  }
+}

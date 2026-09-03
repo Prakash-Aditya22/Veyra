@@ -1,0 +1,111 @@
+.results {
+  height: 100%;
+  min-height: 0;
+  background: var(--panel-graphite);
+  border-left: 1px solid var(--structural-line);
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.results__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s2);
+  padding: var(--s3);
+  border-bottom: 1px solid var(--structural-line);
+}
+
+.results__count {
+  padding-top: 2px;
+}
+
+.results__sort {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: var(--steel-grey);
+}
+
+.results__sort svg {
+  position: absolute;
+  right: 8px;
+  pointer-events: none;
+}
+
+.results__select {
+  appearance: none;
+  min-height: 34px;
+  padding: 0 26px 0 10px;
+  background: var(--raised-slate);
+  border: 1px solid var(--structural-line);
+  border-radius: var(--radius-interactive);
+  color: var(--bone-white);
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.results__scroll {
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* --- Rows. 1px bottom rule, no cards. --- */
+
+.result-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.75rem 1fr auto;
+  align-items: center;
+  gap: var(--s2);
+  padding: var(--s2) var(--s3);
+  text-align: left;
+  border-bottom: 1px solid var(--structural-line);
+  border-left: 2px solid transparent;
+  transition: background var(--dur-fast) var(--ease-settle);
+}
+
+.result-row:hover {
+  background: var(--raised-slate);
+}
+
+.result-row__rank {
+  font-size: 0.75rem;
+  color: var(--dim-grey);
+  align-self: start;
+  padding-top: 2px;
+}
+
+.result-row__main {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.result-row__name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--bone-white);
+  line-height: 1.35;
+}
+
+.result-row__meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--steel-grey);
+}
+
+.result-row__dot {
+  width: 1px;
+  height: 9px;
+  background: var(--structural-line);
+}
+
+@media (max-width: 767px) {
+  .results {
+    border-left: 0;
+    border-top: 1px solid var(--structural-line);
+  }
+}

@@ -1,0 +1,232 @@
+/*
+  Three-zone asymmetric grid: 280px filter rail, fluid map canvas, 380px docked
+  results panel. The results panel is docked in the grid, never floated over the
+  map. Nothing overlaps the canvas except the legend and the map controls, which
+  occupy reserved corners.
+*/
+
+.explorer {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  min-height: 0;
+  height: calc(100dvh - var(--nav-height));
+}
+
+.explorer__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s3);
+  padding: var(--s2) var(--s4);
+  border-bottom: 1px solid var(--structural-line);
+  background: var(--panel-graphite);
+}
+
+.explorer__bar-main {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.explorer__provenance {
+  min-width: 0;
+}
+
+/* Scoped so this cannot lose a same-specificity tie against the base .btn rule. */
+.explorer .explorer__filter-btn {
+  display: none;
+  min-height: 40px;
+  padding-inline: var(--s2);
+}
+
+.explorer__badge {
+  min-width: 18px;
+  height: 18px;
+  padding-inline: 5px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: var(--beacon-teal);
+  color: var(--bone-white);
+  font-size: 0.6875rem;
+}
+
+.explorer__grid {
+  display: grid;
+  grid-template-columns: var(--rail-width) minmax(0, 1fr) var(--results-width);
+  min-height: 0;
+}
+
+.explorer__rail,
+.explorer__results,
+.explorer__canvas {
+  min-height: 0;
+  min-width: 0;
+}
+
+.explorer__results-inner {
+  height: 100%;
+  min-height: 0;
+}
+
+/* The strip legend only exists below 768px; on desktop the docked one is used. */
+.explorer > .legend--strip {
+  display: none;
+}
+
+/* --- Below 1180px the results panel narrows before anything collapses --- */
+
+@media (max-width: 1179px) {
+  .explorer__grid {
+    grid-template-columns: 256px minmax(0, 1fr) 324px;
+  }
+}
+
+/* --- Below 1024px the filter rail becomes a sheet, map keeps the space --- */
+
+@media (max-width: 1023px) {
+  .explorer__grid {
+    grid-template-columns: minmax(0, 1fr) 324px;
+  }
+
+  .explorer__rail {
+    display: none;
+  }
+
+  .explorer .explorer__filter-btn {
+    display: inline-flex;
+  }
+}
+
+/* --- Below 768px: single column, map first, results below --- */
+
+@media (max-width: 767px) {
+  .explorer {
+    height: auto;
+    min-height: calc(100dvh - var(--nav-height));
+  }
+
+  .explorer__bar {
+    padding: var(--s2) var(--s3);
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .explorer__filter-btn {
+    align-self: stretch;
+    justify-content: center;
+  }
+
+  .explorer > .legend--strip {
+    display: block;
+    padding: var(--s2) var(--s3);
+    border-bottom: 1px solid var(--structural-line);
+  }
+
+  .explorer__grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 52dvh auto;
+  }
+
+  .explorer__results {
+    /* The panel keeps its own scroll; the page body never scrolls sideways. */
+    max-height: 68dvh;
+  }
+}
+
+/* --- Filter sheet --- */
+
+.explorer__scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(10, 11, 14, 0.62);
+  display: grid;
+  align-items: end;
+  animation: scrim-in var(--dur-fast) var(--ease-settle) both;
+}
+
+.explorer__scrim--out {
+  animation: scrim-in var(--dur-fast) var(--ease-settle) reverse both;
+}
+
+@keyframes scrim-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.explorer__sheet {
+  background: var(--panel-graphite);
+  border-top: 1px solid var(--structural-line);
+  border-radius: var(--radius-surface) var(--radius-surface) 0 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  max-height: 82dvh;
+  overflow: hidden;
+  /* Only transform and opacity are animated. */
+  animation: sheet-in var(--dur-base) var(--ease-settle) both;
+}
+
+.explorer__sheet--out {
+  animation: sheet-in var(--dur-base) var(--ease-settle) reverse both;
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .explorer__scrim,
+  .explorer__scrim--out,
+  .explorer__sheet,
+  .explorer__sheet--out {
+    animation: none;
+  }
+}
+
+.explorer__sheet-head {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: var(--s2) var(--s3);
+}
+
+.explorer__handle {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--structural-line);
+}
+
+.explorer__sheet-close {
+  position: absolute;
+  right: var(--s2);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  color: var(--steel-grey);
+  border-radius: var(--radius-interactive);
+}
+
+.explorer__sheet-close:hover {
+  color: var(--bone-white);
+  background: var(--raised-slate);
+}
+
+.explorer__sheet .filter-rail {
+  height: auto;
+  min-height: 0;
+  overflow: hidden;
+}

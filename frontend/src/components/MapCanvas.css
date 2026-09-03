@@ -1,0 +1,102 @@
+.map-canvas {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  background: var(--deep-graphite);
+}
+
+.map-canvas__map {
+  height: 100%;
+  width: 100%;
+}
+
+/*
+  Selected blackspot: a 2px Bone White ring plus a slow perpetual pulse.
+  One selection at a time, and nothing else on the map loops - ambient
+  animation on unselected hazards would read as alarm.
+*/
+.map-marker--selected {
+  animation: marker-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes marker-pulse {
+  0%,
+  100% {
+    stroke-opacity: 1;
+  }
+  50% {
+    stroke-opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-marker--selected {
+    animation: none;
+  }
+}
+
+/* --- Custom controls in Panel Graphite, matching the interface --- */
+
+.map-controls {
+  position: absolute;
+  top: var(--s2);
+  right: var(--s2);
+  z-index: 500;
+  display: grid;
+  gap: var(--s1);
+  justify-items: end;
+}
+
+.map-controls__cluster {
+  display: grid;
+  background: var(--panel-graphite);
+  border: 1px solid var(--structural-line);
+  border-radius: var(--radius-interactive);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.map-controls__rule {
+  height: 1px;
+  background: var(--structural-line);
+}
+
+.map-btn {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  color: var(--steel-grey);
+  transition:
+    background var(--dur-fast) var(--ease-settle),
+    color var(--dur-fast) var(--ease-settle);
+}
+
+.map-btn:hover {
+  background: var(--raised-slate);
+  color: var(--bone-white);
+}
+
+.map-btn:active {
+  transform: translateY(1px);
+}
+
+.map-btn--on {
+  background: var(--beacon-teal-wash);
+  color: var(--bone-white);
+}
+
+/* Touch targets reach 44px on coarse pointers without changing the desktop look. */
+@media (pointer: coarse) {
+  .map-btn {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* Below 768px the legend leaves the canvas, so nothing overlaps except controls. */
+@media (max-width: 767px) {
+  .legend--docked {
+    display: none;
+  }
+}

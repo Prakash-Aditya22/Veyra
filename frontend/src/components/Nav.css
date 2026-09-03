@@ -1,0 +1,121 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--panel-graphite);
+  border-bottom: 1px solid var(--structural-line);
+}
+
+.nav__inner {
+  height: var(--nav-height);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--s4);
+  padding-inline: var(--s4);
+}
+
+.nav__brand {
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav__wordmark {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--bone-white);
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  justify-self: end;
+  gap: var(--s5);
+}
+
+.nav__link {
+  position: relative;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--steel-grey);
+  transition: color var(--dur-fast) var(--ease-settle);
+}
+
+.nav__link:hover {
+  color: var(--bone-white);
+}
+
+.nav__link--active {
+  color: var(--bone-white);
+}
+
+.nav__link--active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 12px;
+  height: 2px;
+  background: var(--beacon-teal-lift);
+  border-radius: 1px;
+}
+
+.nav__toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-interactive);
+  color: var(--bone-white);
+}
+
+.nav__toggle:hover {
+  background: var(--raised-slate);
+}
+
+/* --- Sheet menu below 900px. The horizontal bar must never wrap to 2 lines. --- */
+
+@media (max-width: 899px) {
+  .nav__inner {
+    grid-template-columns: 1fr auto;
+    padding-inline: var(--s3);
+  }
+
+  .nav__links {
+    display: none;
+  }
+
+  .nav__toggle {
+    display: flex;
+  }
+}
+
+.nav__sheet {
+  display: grid;
+  border-top: 1px solid var(--structural-line);
+  padding: var(--s2) var(--s3) var(--s4);
+  background: var(--panel-graphite);
+}
+
+.nav__sheet-link {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--steel-grey);
+  border-bottom: 1px solid var(--structural-line);
+}
+
+.nav__sheet-link--active {
+  color: var(--bone-white);
+}
