@@ -56,8 +56,13 @@ class SegmentRepositoryPostgisTest {
         String wkt = "LINESTRING(-0.1160 51.4607, -0.1140 51.4700)";
         var strict = repo.findAlongRoute(wkt, 200, 6);
         var loose = repo.findAlongRoute(wkt, 200, 1);
-        assertThat(strict.size()).isLessThanOrEqualTo(loose.size());
+
+        // The loose query must actually contain segments the strict one filters
+        // out, otherwise the comparison below proves nothing.
+        assertThat(loose).anySatisfy(h ->
+            assertThat(h.segment().nCrashes()).isLessThan(6));
         assertThat(strict).allSatisfy(h ->
             assertThat(h.segment().nCrashes()).isGreaterThanOrEqualTo(6));
+        assertThat(strict.size()).isLessThan(loose.size());
     }
 }
