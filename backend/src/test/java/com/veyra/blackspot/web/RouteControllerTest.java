@@ -16,10 +16,12 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -79,6 +81,43 @@ class RouteControllerTest {
     }
 
     @Test
+    void aNullBodyIsFourHundredNotFiveHundred() throws Exception {
+        mvc.perform(post("/api/route/risk").contentType(MediaType.APPLICATION_JSON).content("null"))
+           .andExpect(status().isBadRequest())
+           .andExpect(jsonPath("$.message").value(containsString("request body")));
+    }
+
+    @Test
+    void anOutOfRangeCoordinateIsRejected() throws Exception {
+        mvc.perform(post("/api/route/risk").contentType(MediaType.APPLICATION_JSON)
+                    .content("""
+                        {"from":[-0.0982,51.3762],"to":[999.0,51.5390]}
+                        """))
+           .andExpect(status().isBadRequest())
+           .andExpect(jsonPath("$.message").value(containsString("to")));
+    }
+
+    @Test
+    void minCrashesBelowOneIsRejected() throws Exception {
+        mvc.perform(post("/api/route/risk").contentType(MediaType.APPLICATION_JSON)
+                    .content("""
+                        {"from":[-0.0982,51.3762],"to":[-0.1426,51.5390],"minCrashes":0}
+                        """))
+           .andExpect(status().isBadRequest())
+           .andExpect(jsonPath("$.message").value(containsString("minCrashes")));
+    }
+
+    @Test
+    void corridorMetresOutsideBoundsIsRejected() throws Exception {
+        mvc.perform(post("/api/route/risk").contentType(MediaType.APPLICATION_JSON)
+                    .content("""
+                        {"from":[-0.0982,51.3762],"to":[-0.1426,51.5390],"corridorMetres":5000}
+                        """))
+           .andExpect(status().isBadRequest())
+           .andExpect(jsonPath("$.message").value(containsString("corridorMetres")));
+    }
+
+    @Test
     void geocodeReturnsCandidates() throws Exception {
         when(routing.geocode(anyString())).thenReturn(
             List.of(new GeocodeCandidate("Croydon, England", -0.0982, 51.3762)));
@@ -94,5 +133,24 @@ class RouteControllerTest {
         mvc.perform(get("/api/geocode?q=zzzzzz"))
            .andExpect(status().isOk())
            .andExpect(jsonPath("$").isEmpty());
+    }
+
+    @Test
+    void aBlankQIsRejected() throws Exception {
+        mvc.perform(get("/api/geocode?q="))
+           .andExpect(status().isBadRequest())
+           .andExpect(jsonPath("$.message").value(containsString("q")));
+    }
+
+    @Test
+    void aMultiWordQueryReachesTheClientWithItsSpaceIntact() throws Exception {
+        when(routing.geocode("Trafalgar Square")).thenReturn(
+            List.of(new GeocodeCandidate("Trafalgar Square, London", -0.1281, 51.5080)));
+
+        mvc.perform(get("/api/geocode").param("q", "Trafalgar Square"))
+           .andExpect(status().isOk())
+           .andExpect(jsonPath("$[0].label").value("Trafalgar Square, London"));
+
+        verify(routing).geocode("Trafalgar Square");
     }
 }

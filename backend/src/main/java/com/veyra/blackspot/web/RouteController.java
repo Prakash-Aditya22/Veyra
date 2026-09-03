@@ -31,7 +31,10 @@ public class RouteController {
     }
 
     @PostMapping("/api/route/risk")
-    public RouteRiskResponse risk(@RequestBody RouteRiskRequest req) {
+    public RouteRiskResponse risk(@RequestBody(required = false) RouteRiskRequest req) {
+        if (req == null) {
+            throw new IllegalArgumentException("request body is required");
+        }
         int minCrashes = req.minCrashes() == null ? defaultMinCrashes : req.minCrashes();
         double corridor = req.corridorMetres() == null ? defaultCorridor : req.corridorMetres();
         if (minCrashes < 1) {
