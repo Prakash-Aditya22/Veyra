@@ -1,0 +1,414 @@
+/*
+  The same three-zone asymmetric grid as the explorer: a 280px rail carrying
+  the journey inputs and the candidate routes, a fluid map canvas, and a 380px
+  docked panel listing the blackspots along the chosen route. The panel is
+  docked in the grid, never floated over the map; only the legend and the map
+  controls occupy the canvas, in reserved corners.
+*/
+
+.route {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+  min-height: 0;
+  height: calc(100dvh - var(--nav-height));
+}
+
+.route__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s3);
+  padding: var(--s2) var(--s4);
+  border-bottom: 1px solid var(--structural-line);
+  background: var(--panel-graphite);
+}
+
+.route__bar-main {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+/* Provenance: what the claim is made from, on every screen. */
+.route__provenance {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s1);
+  font-size: var(--type-label);
+  line-height: 1.5;
+  color: var(--dim-grey);
+}
+
+.route__sep {
+  width: 1px;
+  height: 10px;
+  background: var(--structural-line);
+  flex-shrink: 0;
+}
+
+/* Notice Amber is the low-confidence colour, and it stays inside panels. */
+.route__banner {
+  display: flex;
+  align-items: center;
+  gap: var(--s2);
+  padding: var(--s2) var(--s4);
+  background: var(--panel-graphite);
+  border-bottom: 1px solid var(--structural-line);
+  border-left: 3px solid var(--notice-amber);
+  color: var(--bone-white);
+  font-size: 0.8125rem;
+}
+
+.route__banner svg {
+  color: var(--notice-amber);
+  flex-shrink: 0;
+}
+
+.route__grid {
+  display: grid;
+  grid-template-columns: var(--rail-width) minmax(0, 1fr) var(--results-width);
+  min-height: 0;
+}
+
+.route__rail,
+.route__canvas,
+.route__results {
+  min-height: 0;
+  min-width: 0;
+}
+
+.route__rail {
+  background: var(--panel-graphite);
+  border-right: 1px solid var(--structural-line);
+  overflow-y: auto;
+}
+
+.route__canvas {
+  position: relative;
+  background: var(--deep-graphite);
+}
+
+.route__map {
+  height: 100%;
+  width: 100%;
+}
+
+/* --- The journey form --- */
+
+.route-form {
+  display: grid;
+  gap: var(--s2);
+  padding: var(--s3);
+}
+
+.route-form__submit {
+  width: 100%;
+  margin-top: var(--s1);
+}
+
+.route-form__submit:disabled {
+  background: var(--raised-slate);
+  color: var(--dim-grey);
+  cursor: default;
+}
+
+.route-field {
+  position: relative;
+}
+
+/*
+  Candidates sit in normal flow beneath the field. A floating menu would stack
+  over the rail's other content, which this product does not do anywhere.
+*/
+.route-field__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  border: 1px solid var(--structural-line);
+  border-radius: var(--radius-interactive);
+  overflow: hidden;
+}
+
+.route-field__option {
+  width: 100%;
+  display: grid;
+  gap: 1px;
+  padding: var(--s1) var(--s2);
+  text-align: left;
+  background: var(--raised-slate);
+  border-bottom: 1px solid var(--structural-line);
+  transition: background var(--dur-fast) var(--ease-settle);
+}
+
+.route-field__list li:last-child .route-field__option {
+  border-bottom: 0;
+}
+
+.route-field__option:hover,
+.route-field__option.is-active {
+  background: var(--beacon-teal-wash);
+}
+
+.route-field__name {
+  font-size: 0.8125rem;
+  color: var(--bone-white);
+  line-height: 1.35;
+}
+
+.route-field__coord {
+  font-size: 0.6875rem;
+  color: var(--steel-grey);
+}
+
+/* --- Evidence floor toggle --- */
+
+.route-check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s1);
+  padding: 6px;
+  margin-inline: -6px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--steel-grey);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  transition:
+    background var(--dur-fast) var(--ease-settle),
+    color var(--dur-fast) var(--ease-settle);
+}
+
+.route-check:hover {
+  background: var(--raised-slate);
+  color: var(--bone-white);
+}
+
+.route-check--on {
+  background: var(--beacon-teal-wash);
+  color: var(--bone-white);
+}
+
+.route-check__input {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  flex-shrink: 0;
+  accent-color: var(--beacon-teal);
+  cursor: pointer;
+}
+
+/* --- Candidate routes --- */
+
+.route-form__compare {
+  display: grid;
+  gap: var(--s2);
+  padding: var(--s3);
+  border-top: 1px solid var(--structural-line);
+}
+
+.route-form__compare-title {
+  padding-bottom: 2px;
+}
+
+.route-form__note {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--dim-grey);
+}
+
+/* --- Docked blackspot list --- */
+
+.route-spots {
+  height: 100%;
+  min-height: 0;
+  background: var(--panel-graphite);
+  border-left: 1px solid var(--structural-line);
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.route-spots__head {
+  display: grid;
+  gap: 2px;
+  padding: var(--s3);
+  border-bottom: 1px solid var(--structural-line);
+}
+
+.route-spots__count {
+  color: var(--steel-grey);
+}
+
+.route-spots__scroll {
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* Rows, not cards: a 1px rule and vertical rhythm carry the separation. */
+.route-spot-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--s2);
+  padding: var(--s2) var(--s3);
+  border-bottom: 1px solid var(--structural-line);
+  border-left: 2px solid transparent;
+  transition: background var(--dur-fast) var(--ease-settle);
+}
+
+.route-spot-row:hover {
+  background: var(--raised-slate);
+  border-left-color: var(--beacon-teal);
+}
+
+.route-spot-row__at {
+  font-size: 0.75rem;
+  color: var(--dim-grey);
+  align-self: start;
+  padding-top: 2px;
+}
+
+.route-spot-row__main {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.route-spot-row__name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--bone-white);
+  line-height: 1.35;
+}
+
+.route-spot-row__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--steel-grey);
+}
+
+.route-spot-row__dot {
+  width: 1px;
+  height: 9px;
+  background: var(--structural-line);
+  flex-shrink: 0;
+}
+
+.route-spot-row__thin {
+  color: var(--dim-grey);
+}
+
+/* --- Map paths ---------------------------------------------------------
+  Leaflet writes colour as an SVG presentation attribute, which cannot resolve
+  var(). Author CSS outranks a presentation attribute, so the colour is set
+  here from tokens instead of being duplicated as a literal in the component.
+  ---------------------------------------------------------------------- */
+
+.route-line {
+  stroke: var(--steel-grey);
+}
+
+.route-line--selected {
+  stroke: var(--beacon-teal-lift);
+}
+
+.route-spot {
+  stroke: var(--deep-graphite);
+}
+
+.route-spot--watch {
+  fill: var(--risk-1);
+}
+
+.route-spot--elevated {
+  fill: var(--risk-2);
+}
+
+.route-spot--severe {
+  fill: var(--risk-3);
+}
+
+.route-spot--critical {
+  fill: var(--risk-4);
+}
+
+/* Absence of data is never rendered as absence of risk. */
+.route-spot--nodata {
+  fill: var(--risk-none);
+}
+
+/* --- The strip legend only exists below 768px; above it the docked one is used. */
+.route > .legend--strip {
+  display: none;
+}
+
+/* --- Below 1180px the docked panel narrows before anything collapses --- */
+
+@media (max-width: 1179px) {
+  .route__grid {
+    grid-template-columns: 256px minmax(0, 1fr) 324px;
+  }
+}
+
+/* --- Below 1024px the panel narrows further, the map keeps its space --- */
+
+@media (max-width: 1023px) {
+  .route__grid {
+    grid-template-columns: 248px minmax(0, 1fr) 300px;
+  }
+
+  .route-spot-row {
+    grid-template-columns: 3.5rem minmax(0, 1fr) auto;
+  }
+}
+
+/* --- Below 768px: single column, form first, then map, then the list --- */
+
+@media (max-width: 767px) {
+  .route {
+    height: auto;
+    min-height: calc(100dvh - var(--nav-height));
+  }
+
+  .route__bar {
+    padding: var(--s2) var(--s3);
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .route__banner {
+    padding: var(--s2) var(--s3);
+  }
+
+  .route > .legend--strip {
+    display: block;
+    padding: var(--s2) var(--s3);
+    border-bottom: 1px solid var(--structural-line);
+  }
+
+  .route__grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 52dvh auto;
+  }
+
+  .route__rail {
+    border-right: 0;
+    border-bottom: 1px solid var(--structural-line);
+    overflow-y: visible;
+  }
+
+  .route-spots {
+    border-left: 0;
+    border-top: 1px solid var(--structural-line);
+  }
+
+  /* The panel keeps its own scroll; the page body never scrolls sideways. */
+  .route__results {
+    max-height: 68dvh;
+  }
+}

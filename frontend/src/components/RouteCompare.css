@@ -1,0 +1,70 @@
+/*
+  Candidate routes. Cards are permitted here because the comparison is the
+  hierarchy - each card is a selectable alternative, not a row in a dense
+  list - but they are never nested inside another card.
+*/
+
+.route-compare {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s1);
+}
+
+.route-compare__card {
+  width: 100%;
+  display: grid;
+  gap: 2px;
+  padding: var(--s2);
+  text-align: left;
+  background: var(--panel-graphite);
+  border: 1px solid var(--structural-line);
+  border-left: 2px solid transparent;
+  border-radius: var(--radius-surface);
+  transition:
+    background var(--dur-fast) var(--ease-settle),
+    border-color var(--dur-fast) var(--ease-settle);
+}
+
+.route-compare__card:hover {
+  background: var(--raised-slate);
+}
+
+.route-compare__card.is-selected {
+  background: var(--beacon-teal-wash);
+  border-left-color: var(--beacon-teal);
+}
+
+.route-compare__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--bone-white);
+  line-height: 1.35;
+}
+
+.route-compare__stats {
+  font-size: var(--type-label);
+  color: var(--steel-grey);
+}
+
+.route-compare__risk {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding-top: 2px;
+  font-size: var(--type-label);
+  color: var(--steel-grey);
+}
+
+.route-compare__figure {
+  white-space: nowrap;
+}
+
+.route-compare__dot {
+  width: 1px;
+  height: 9px;
+  background: var(--structural-line);
+  flex-shrink: 0;
+}

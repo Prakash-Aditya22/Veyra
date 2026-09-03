@@ -4,6 +4,7 @@ import { MotionConfig } from 'motion/react';
 import Nav from './components/Nav.jsx';
 import Landing from './routes/Landing.jsx';
 import Explorer from './routes/Explorer.jsx';
+import RouteScreen from './routes/Route.jsx';
 import Rankings from './routes/Rankings.jsx';
 import Statistics from './routes/Statistics.jsx';
 import { SPRING } from './lib/motion.js';
@@ -30,6 +31,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/explorer" element={<Explorer />} />
+        <Route path="/route" element={<RouteScreen />} />
         <Route path="/rankings" element={<Rankings />} />
         <Route path="/statistics" element={<Statistics />} />
         <Route path="*" element={<Navigate to="/" replace />} />

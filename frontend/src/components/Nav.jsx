@@ -6,6 +6,7 @@ import './Nav.css';
 const LINKS = [
   { to: '/', label: 'Overview', end: true },
   { to: '/explorer', label: 'Explorer' },
+  { to: '/route', label: 'Route' },
   { to: '/rankings', label: 'Rankings' },
   { to: '/statistics', label: 'Statistics' },
 ];
