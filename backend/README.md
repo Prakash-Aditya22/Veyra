@@ -37,18 +37,32 @@ the exported value at the first `&`. The app then fails to connect (or
 connects with the wrong value) with no obvious cause. Load it line-by-line
 instead, so the value is never re-parsed as shell syntax:
 
-    while IFS='=' read -r key value; do
-      case "$key" in ''|'#'*) continue ;; esac
-      export "$key=$value"
+    while IFS= read -r line; do
+      case "$line" in ''|'#'*) continue ;; esac
+      export "${line%%=*}=${line#*=}"
     done < .env
+
+**Do not set `IFS='='` for the `read`.** That was tried and is also wrong:
+`IFS='='` makes `read -r key value` split on *every* `=` in the line, and if
+the value's last character is itself `=` — which happens routinely, since
+`ORS_API_KEY` is base64-shaped and base64 pads with trailing `=` — that
+trailing character is dropped from `value` instead of being read as part of
+it. The key silently loads one character short, ORS still parses it as a
+string and returns `403 {"error": "Access to this API has been disallowed"}`
+(the auth layer's generic reply for an invalid key), and nothing about that
+response points back to a shell-quoting bug. `${line%%=*}` / `${line#*=}`
+split on only the *first* `=`, so a trailing `=` in the value survives.
 
 Verify without ever printing the value:
 
     [ -n "$DATABASE_URL" ] && echo "set"
+    [ -n "$ORS_API_KEY" ] && echo "set"
 
 PowerShell: read each `KEY=value` line of `.env` and run
-`Set-Item Env:KEY value` for it — the same `&`-in-value hazard doesn't apply
-there, but a dotenv-loading plugin works too if you prefer one.
+`Set-Item Env:KEY value`, splitting each line on the first `=` only (e.g.
+`$line -split '=', 2`, not `-split '='`) so the same trailing-`=` truncation
+doesn't reappear there — the `&`-in-value hazard doesn't apply on this side,
+but a dotenv-loading plugin works too if you prefer one.
 
 ## Create the schema
 
