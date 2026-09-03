@@ -52,15 +52,38 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <!-- PostGIS tests need a live database; Docker is not running here.
-               Run them explicitly with -Dgroups=postgis. -->
-          <excludedGroups>postgis</excludedGroups>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <!--
+      PostGIS tests need a live database; Docker is not running here. They
+      are excluded by default. Passing -Dgroups=postgis both sets the JUnit
+      Platform "groups" (include) filter AND deactivates this profile, so
+      the two flags never fight: default `mvn test` gets excludedGroups,
+      `mvn test -Dgroups=postgis` gets neither exclusion nor the -D value
+      hardcoded out from under it. A literal <excludedGroups> in the main
+      build's plugin config cannot be overridden by a same-named -D flag,
+      which is why this lives in a profile instead.
+    -->
+    <profile>
+      <id>exclude-postgis</id>
+      <activation>
+        <property>
+          <name>!groups</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <excludedGroups>postgis</excludedGroups>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
