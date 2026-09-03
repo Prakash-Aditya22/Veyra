@@ -131,18 +131,18 @@
   overflow: hidden;
 }
 
+/* The option is the <li> itself: role="option" admits no interactive child. */
 .route-field__option {
-  width: 100%;
   display: grid;
   gap: 1px;
   padding: var(--s1) var(--s2);
-  text-align: left;
+  cursor: pointer;
   background: var(--raised-slate);
   border-bottom: 1px solid var(--structural-line);
   transition: background var(--dur-fast) var(--ease-settle);
 }
 
-.route-field__list li:last-child .route-field__option {
+.route-field__option:last-child {
   border-bottom: 0;
 }
 

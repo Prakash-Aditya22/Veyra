@@ -157,7 +157,21 @@ function EndpointField({ id, label, placeholder, value, onChange }) {
   };
 
   const listId = `${id}-candidates`;
+  const optionId = (i) => `${id}-candidate-${i}`;
+  const expanded = open && items.length > 0;
 
+  /*
+    A combobox with an activedescendant listbox: focus never leaves the input,
+    and the arrow keys move `active`, which is published to assistive tech as
+    aria-activedescendant rather than only as a highlight class.
+
+    That is why the options are plain <li> elements and not buttons. An element
+    with role="option" must not contain interactive descendants, and a button
+    inside each option would also put a second tab stop per candidate beside
+    the arrow-key model - two competing ways to navigate one list. The <li>
+    carries the role, the id and the click handler; the keyboard path goes
+    through the input.
+  */
   return (
     <div className="field route-field">
       <label className="label" htmlFor={id}>
@@ -171,8 +185,10 @@ function EndpointField({ id, label, placeholder, value, onChange }) {
         placeholder={placeholder}
         autoComplete="off"
         role="combobox"
-        aria-expanded={open && items.length > 0}
-        aria-controls={listId}
+        aria-expanded={expanded}
+        // Both only name something that exists while the list is rendered.
+        aria-controls={expanded ? listId : undefined}
+        aria-activedescendant={expanded && active >= 0 ? optionId(active) : undefined}
         aria-autocomplete="list"
         onChange={(e) => {
           setText(e.target.value);
@@ -183,21 +199,23 @@ function EndpointField({ id, label, placeholder, value, onChange }) {
         onKeyDown={onKeyDown}
       />
 
-      {open && items.length > 0 && (
+      {expanded && (
         <ul className="route-field__list" id={listId} role="listbox" aria-label={label}>
           {items.map((c, i) => (
-            <li key={`${c.label}-${c.lon}-${c.lat}`} role="option" aria-selected={i === active}>
-              <button
-                type="button"
-                className={`route-field__option${i === active ? ' is-active' : ''}`}
-                onMouseDown={(e) => e.preventDefault()}
-                onClick={() => choose(c)}
-              >
-                <span className="route-field__name">{c.label}</span>
-                <span className="route-field__coord mono">
-                  {c.lat.toFixed(3)}, {c.lon.toFixed(3)}
-                </span>
-              </button>
+            <li
+              key={`${c.label}-${c.lon}-${c.lat}`}
+              id={optionId(i)}
+              role="option"
+              aria-selected={i === active}
+              className={`route-field__option${i === active ? ' is-active' : ''}`}
+              // Keeps focus - and so the caret - in the input through the click.
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => choose(c)}
+            >
+              <span className="route-field__name">{c.label}</span>
+              <span className="route-field__coord mono">
+                {c.lat.toFixed(3)}, {c.lon.toFixed(3)}
+              </span>
             </li>
           ))}
         </ul>
@@ -349,10 +367,18 @@ export default function RouteScreen() {
                 selectedIndex={selected?.index ?? selectedIndex}
                 onSelect={setSelectedIndex}
               />
+              {/*
+                The one sentence that defines the number for the reader, so it
+                has to be right in both directions: expectedKsi is a Poisson
+                regression's estimate for 2022-23 built from 2019-21 features,
+                not a tally of what happened - and it is a property of the
+                corridor across all traffic, not of one reader's trip.
+              */}
               <p className="route-form__note">
-                Risk figures are recorded killed-or-seriously-injured casualties
-                accumulated on each corridor over two years, across all traffic.
-                They are not the risk of a single journey.
+                Risk figures are expected killed-or-seriously-injured casualties
+                on each corridor over two years, across all traffic - a model
+                estimate, not a tally of past crashes, and not the risk of a
+                single journey.
               </p>
             </div>
           )}
