@@ -48,12 +48,13 @@ public class OrsRoutingClient implements RoutingClient {
     public List<RawRoute> route(Coord from, Coord to, int alternatives) {
         String url = props.getBaseUrl() + "/v2/directions/driving-car/geojson";
 
+        OrsProperties.Alternatives alt = props.getAlternatives();
         Map<String, Object> body = alternatives > 1
             ? Map.of("coordinates", List.of(List.of(from.lon(), from.lat()),
                                             List.of(to.lon(), to.lat())),
-                     "alternative_routes", Map.of("target_count", alternatives,
-                                                  "share_factor", 0.6,
-                                                  "weight_factor", 1.6))
+                     "alternative_routes", Map.of("target_count", alt.getTargetCount(),
+                                                  "share_factor", alt.getShareFactor(),
+                                                  "weight_factor", alt.getWeightFactor()))
             : Map.of("coordinates", List.of(List.of(from.lon(), from.lat()),
                                             List.of(to.lon(), to.lat())));
 

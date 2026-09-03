@@ -11,6 +11,14 @@ spring:
 ors:
   api-key: ${ORS_API_KEY:}
   base-url: https://api.openrouteservice.org
+  alternatives:
+    # Measured live for Croydon -> Camden: at 0.6/1.6 alternatives overlap the
+    # fastest route's geometry by ~46%, collapsing fastest-vs-safest into
+    # near-identical cards. 0.2/2.0 drops overlap to 2-7%. Tunable here so a
+    # demo can retune it for different endpoints without a rebuild.
+    target-count: 3
+    share-factor: 0.2
+    weight-factor: 2.0
 
 blackspot:
   corridor-metres: 50
