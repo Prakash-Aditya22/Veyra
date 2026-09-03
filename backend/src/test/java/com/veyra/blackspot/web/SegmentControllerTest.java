@@ -24,6 +24,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest({SegmentController.class, ApiExceptionHandler.class})
 class SegmentControllerTest {
 
+    // Empirically determined by running the response through Jackson and
+    // printing its actual key set (see task-7-report.md, fix round). These
+    // are exactly the record's 18 components, alphabetical order; the derived
+    // accessors nSerious() and thinlyEvidenced() do NOT appear because
+    // neither follows the getX/isX bean-accessor naming Jackson looks for.
+    // Any field added to Segment must be added here deliberately — this is
+    // what stops a future_ksi-shaped column reaching the wire under ANY name.
+    private static final java.util.Set<String> EXPECTED_KEYS = java.util.Set.of(
+        "blackspotScore", "crashesPerYear", "kmFrom", "kmTo", "ksiRate", "lat",
+        "location", "lon", "nCrashes", "nFatal", "nKsi", "pctJunction",
+        "pctNight", "rank", "roadId", "run", "segmentId", "speedMax");
+
     @Autowired MockMvc mvc;
     @MockitoBean SegmentRepository repo;
 
@@ -67,6 +79,13 @@ class SegmentControllerTest {
     }
 
     @Test
+    void limitBelowOneIsRejected() throws Exception {
+        mvc.perform(get("/api/segments?bbox=-0.51,51.28,0.34,51.70&limit=0"))
+           .andExpect(status().isBadRequest())
+           .andExpect(jsonPath("$.message").value(org.hamcrest.Matchers.containsString("limit")));
+    }
+
+    @Test
     void withoutBboxReturnsTopRanked() throws Exception {
         when(repo.findTop(anyInt())).thenReturn(List.of(sample()));
         mvc.perform(get("/api/segments"))
@@ -79,5 +98,23 @@ class SegmentControllerTest {
         when(repo.findById(anyString())).thenReturn(Optional.empty());
         mvc.perform(get("/api/segments/NOPE"))
            .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void responseExposesExactlyTheExpectedFields() throws Exception {
+        when(repo.findInBbox(any(BoundingBox.class), anyDouble(), anyInt(), anyInt()))
+            .thenReturn(List.of(sample()));
+
+        String body = mvc.perform(get("/api/segments?bbox=-0.51,51.28,0.34,51.70"))
+            .andReturn().getResponse().getContentAsString();
+
+        var node = new com.fasterxml.jackson.databind.ObjectMapper().readTree(body).get(0);
+        var keys = new java.util.TreeSet<String>();
+        node.fieldNames().forEachRemaining(keys::add);
+
+        // Any field added to Segment must be added here deliberately. This is what
+        // stops a future_ksi-shaped column reaching the wire under ANY name.
+        org.assertj.core.api.Assertions.assertThat(keys)
+            .containsExactlyInAnyOrderElementsOf(EXPECTED_KEYS);
     }
 }

@@ -16,26 +16,30 @@ public class SegmentController {
 
     private final SegmentRepository repo;
     private final int maxSegments;
+    private final int defaultMinCrashes;
 
     public SegmentController(SegmentRepository repo,
-                             @Value("${blackspot.max-segments}") int maxSegments) {
+                             @Value("${blackspot.max-segments}") int maxSegments,
+                             @Value("${blackspot.min-crashes}") int defaultMinCrashes) {
         this.repo = repo;
         this.maxSegments = maxSegments;
+        this.defaultMinCrashes = defaultMinCrashes;
     }
 
     @GetMapping("/api/segments")
     public List<Segment> segments(
             @RequestParam(required = false) String bbox,
             @RequestParam(defaultValue = "0") double minScore,
-            @RequestParam(defaultValue = "6") int minCrashes,
+            @RequestParam(required = false) Integer minCrashes,
             @RequestParam(defaultValue = "500") int limit) {
 
         if (limit < 1 || limit > maxSegments) {
             throw new IllegalArgumentException("limit must be between 1 and " + maxSegments);
         }
+        int effectiveMinCrashes = minCrashes == null ? defaultMinCrashes : minCrashes;
         return bbox == null
             ? repo.findTop(limit)
-            : repo.findInBbox(BoundingBox.parse(bbox), minScore, minCrashes, limit);
+            : repo.findInBbox(BoundingBox.parse(bbox), minScore, effectiveMinCrashes, limit);
     }
 
     @GetMapping("/api/segments/{segmentId}")
