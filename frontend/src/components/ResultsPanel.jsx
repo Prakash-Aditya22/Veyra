@@ -2,15 +2,18 @@ import { motion, useReducedMotion } from 'motion/react';
 import { CaretUpDown } from '@phosphor-icons/react';
 import RiskBadge from './RiskBadge.jsx';
 import DetailPanel from './DetailPanel.jsx';
-import { EmptyState, TableSkeleton } from './States.jsx';
-import { num, shortDate } from '../lib/format.js';
-import { DATASET } from '../data/blackspots.js';
+import { EmptyState, ErrorState, TableSkeleton } from './States.jsx';
+import { num } from '../lib/format.js';
 import './ResultsPanel.css';
 
+/*
+  "Most recent" is gone with the fixture. A 500 m segment aggregates three
+  years of crashes into counts and carries no date, so there is nothing
+  honest to sort on.
+*/
 const SORTS = [
-  { key: 'score', label: 'Danger score' },
-  { key: 'incidents', label: 'Incident count' },
-  { key: 'lastIncident', label: 'Most recent' },
+  { key: 'score', label: 'Risk score' },
+  { key: 'incidents', label: 'Recorded crashes' },
   { key: 'name', label: 'Stretch name' },
 ];
 
@@ -21,6 +24,7 @@ export default function ResultsPanel({
   sortKey,
   onSortChange,
   loading,
+  error,
   onResetFilters,
 }) {
   const reduce = useReducedMotion();
@@ -68,10 +72,12 @@ export default function ResultsPanel({
       <div className="results__scroll">
         {loading && <TableSkeleton rows={7} />}
 
-        {!loading && results.length === 0 && (
+        {!loading && error && <ErrorState message={error} />}
+
+        {!loading && !error && results.length === 0 && (
           <EmptyState
-            title="No clusters match this filter combination"
-            detail={`Widen the time period, or clear the road-class filter. The corridor has ${DATASET.clusters} detected clusters in total.`}
+            title="No scored segments in this view"
+            detail="Pan or zoom to a stretch of road with a recorded crash history, clear the road filter, or include thinly-evidenced segments to widen the floor below six crashes."
             action={
               <button className="btn btn-secondary" onClick={onResetFilters}>
                 Reset filters
@@ -81,6 +87,7 @@ export default function ResultsPanel({
         )}
 
         {!loading &&
+          !error &&
           results.map((b, i) => (
             <motion.button
               key={b.id}
@@ -101,9 +108,15 @@ export default function ResultsPanel({
               <span className="result-row__main">
                 <span className="result-row__name">{b.name}</span>
                 <span className="result-row__meta">
-                  <span className="mono">{num(b.incidents)}</span> incidents
+                  <span className="mono">{num(b.incidents)}</span> crashes
                   <span className="result-row__dot" aria-hidden="true" />
-                  <span className="mono">{shortDate(b.lastIncident)}</span>
+                  <span className="mono">{num(b.ksi)}</span> KSI
+                  {b.thinlyEvidenced && (
+                    <>
+                      <span className="result-row__dot" aria-hidden="true" />
+                      <span className="result-row__thin">thinly evidenced</span>
+                    </>
+                  )}
                 </span>
               </span>
               <RiskBadge score={b.score} size="sm" />

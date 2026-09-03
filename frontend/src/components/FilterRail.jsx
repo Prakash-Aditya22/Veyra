@@ -1,13 +1,5 @@
 import { X } from '@phosphor-icons/react';
-import {
-  PERIODS,
-  TIER_FILTERS,
-  ROAD_TYPES,
-  ROAD_CLASSES,
-  CONDITIONS,
-  EMPTY_FILTERS,
-  isDefaultFilters,
-} from '../lib/filters.js';
+import { TIER_FILTERS, EMPTY_FILTERS, isDefaultFilters } from '../lib/filters.js';
 import { TIERS, NO_DATA_TIER } from '../lib/risk.js';
 import './FilterRail.css';
 
@@ -24,9 +16,13 @@ function Group({ title, children }) {
   );
 }
 
-function Check({ checked, onChange, children, swatch }) {
+function Check({ checked, onChange, children, swatch, wrap = false }) {
   return (
-    <label className={`filter-option${checked ? ' filter-option--on' : ''}`}>
+    <label
+      className={`filter-option${checked ? ' filter-option--on' : ''}${
+        wrap ? ' filter-option--wrap' : ''
+      }`}
+    >
       <input
         type="checkbox"
         className="filter-option__input"
@@ -57,35 +53,29 @@ export default function FilterRail({ filters, onChange, resultCount, totalCount 
   };
 
   const activeChips = [
-    ...(filters.period !== 'full'
-      ? [
-          {
-            key: `period:${filters.period}`,
-            label: PERIODS.find((p) => p.key === filters.period).label,
-            clear: () => onChange({ ...filters, period: 'full' }),
-          },
-        ]
-      : []),
     ...filters.tiers.map((t) => ({
       key: `tier:${t}`,
       label: TIER_FILTERS.find((x) => x.key === t).label,
       clear: () => toggle('tiers', t),
     })),
-    ...filters.roadTypes.map((t) => ({
-      key: `rt:${t}`,
-      label: t,
-      clear: () => toggle('roadTypes', t),
-    })),
-    ...filters.roadClasses.map((t) => ({
-      key: `rc:${t}`,
-      label: t,
-      clear: () => toggle('roadClasses', t),
-    })),
-    ...filters.conditions.map((c) => ({
-      key: `cond:${c}`,
-      label: CONDITIONS.find((x) => x.key === c).label,
-      clear: () => toggle('conditions', c),
-    })),
+    ...(filters.includeThin
+      ? [
+          {
+            key: 'thin',
+            label: 'Thinly-evidenced included',
+            clear: () => onChange({ ...filters, includeThin: false }),
+          },
+        ]
+      : []),
+    ...(filters.road.trim()
+      ? [
+          {
+            key: 'road',
+            label: filters.road.trim(),
+            clear: () => onChange({ ...filters, road: '' }),
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -93,7 +83,7 @@ export default function FilterRail({ filters, onChange, resultCount, totalCount 
       <div className="filter-rail__head">
         <h2 className="panel-title">Filters</h2>
         <p className="filter-rail__count readout">
-          {resultCount} of {totalCount} clusters
+          {resultCount} of {totalCount} segments in view
         </p>
       </div>
 
@@ -109,25 +99,7 @@ export default function FilterRail({ filters, onChange, resultCount, totalCount 
       )}
 
       <div className="filter-rail__scroll">
-        <Group title="Time period">
-          {PERIODS.map((p) => (
-            <label
-              key={p.key}
-              className={`filter-option${filters.period === p.key ? ' filter-option--on' : ''}`}
-            >
-              <input
-                type="radio"
-                name="period"
-                className="filter-option__input"
-                checked={filters.period === p.key}
-                onChange={() => onChange({ ...filters, period: p.key })}
-              />
-              <span className="filter-option__text">{p.label}</span>
-            </label>
-          ))}
-        </Group>
-
-        <Group title="Severity tier">
+        <Group title="Risk tier">
           {TIER_FILTERS.map((t) => (
             <Check
               key={t.key}
@@ -140,40 +112,33 @@ export default function FilterRail({ filters, onChange, resultCount, totalCount 
           ))}
         </Group>
 
-        <Group title="Road type">
-          {ROAD_TYPES.map((t) => (
-            <Check
-              key={t}
-              checked={filters.roadTypes.includes(t)}
-              onChange={() => toggle('roadTypes', t)}
-            >
-              {t}
-            </Check>
-          ))}
+        <Group title="Evidence">
+          <Check
+            wrap
+            checked={filters.includeThin}
+            onChange={() => onChange({ ...filters, includeThin: !filters.includeThin })}
+          >
+            Include thinly-evidenced segments (fewer than 6 recorded crashes)
+          </Check>
+          <p className="filter-group__note">
+            86% of segments rest on fewer than six recorded crashes, and the tier
+            boundaries are calibrated against the ones that clear the floor.
+            Included segments are drawn dimmed.
+          </p>
         </Group>
 
-        <Group title="Road class">
-          {ROAD_CLASSES.map((t) => (
-            <Check
-              key={t}
-              checked={filters.roadClasses.includes(t)}
-              onChange={() => toggle('roadClasses', t)}
-            >
-              {t}
-            </Check>
-          ))}
-        </Group>
-
-        <Group title="Conditions">
-          {CONDITIONS.map((c) => (
-            <Check
-              key={c.key}
-              checked={filters.conditions.includes(c.key)}
-              onChange={() => toggle('conditions', c.key)}
-            >
-              {c.label}
-            </Check>
-          ))}
+        <Group title="Road">
+          <label className="field filter-rail__field">
+            <span className="sr-only">Filter by road number or stretch</span>
+            <input
+              className="input"
+              type="text"
+              value={filters.road}
+              placeholder="A23, M1, ..."
+              autoComplete="off"
+              onChange={(e) => onChange({ ...filters, road: e.target.value })}
+            />
+          </label>
         </Group>
       </div>
 

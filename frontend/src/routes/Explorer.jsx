@@ -6,25 +6,91 @@ import MapCanvas from '../components/MapCanvas.jsx';
 import FilterRail from '../components/FilterRail.jsx';
 import ResultsPanel from '../components/ResultsPanel.jsx';
 import Legend from '../components/Legend.jsx';
-import ProvenanceStrip from '../components/ProvenanceStrip.jsx';
-import { MapSkeleton } from '../components/States.jsx';
-import { BLACKSPOTS } from '../data/blackspots.js';
-import { EMPTY_FILTERS, applyFilters, sortBlackspots, countActive } from '../lib/filters.js';
+import { getSegments, getSegment, ApiError } from '../lib/api.js';
+import { scoreToDisplay } from '../lib/riskScale.js';
+import {
+  EMPTY_FILTERS,
+  MIN_CRASHES_ALL,
+  MIN_CRASHES_EVIDENCED,
+  matchesFilters,
+  sortBlackspots,
+  countActive,
+} from '../lib/filters.js';
 import './Explorer.css';
+
+/* Great Britain, the extent of the STATS19 record the scores are built from. */
+const GB_CENTER = [54.2, -2.6];
+const GB_ZOOM = 6;
+
+/*
+  Panning is cheap - /api/segments is a PostGIS query and touches no third
+  party - but a request per animation frame is still waste, so the viewport
+  settles for 400ms before it is asked about.
+*/
+const DEBOUNCE_MS = 400;
+const LIMIT = 500;
 
 const SORT_DIRECTION = {
   score: 'desc',
   incidents: 'desc',
-  lastIncident: 'desc',
   name: 'asc',
 };
+
+/**
+ * One API segment in the shape the map, the results panel and the detail
+ * panel read.
+ *
+ * Two things are worth naming. The API reports `lon`; Leaflet takes
+ * [lat, lng], so the flip happens here and only here. And `score` is the 0-100
+ * display band, while `blackspotScore` stays alongside it as the model's own
+ * output - expected KSI casualties over two years - because the detail panel
+ * shows the raw figure rather than only its band.
+ */
+function toView(s) {
+  return {
+    id: s.segmentId,
+    name: s.location,
+    lat: s.lat,
+    lng: s.lon,
+    score: scoreToDisplay(s.blackspotScore),
+    blackspotScore: s.blackspotScore,
+    // Recorded counts, 2019 to 2021. Not forecasts, unlike the score above.
+    incidents: s.nCrashes,
+    ksi: s.nKsi,
+    fatal: s.nFatal,
+    serious: s.nKsi - s.nFatal,
+    slight: s.nCrashes - s.nKsi,
+    roadClass: s.roadId,
+    speedLimit: s.speedMax,
+    pctNight: s.pctNight,
+    pctJunction: s.pctJunction,
+    kmFrom: s.kmFrom,
+    kmTo: s.kmTo,
+    rank: s.rank,
+    thinlyEvidenced: s.nCrashes < MIN_CRASHES_EVIDENCED,
+  };
+}
+
+/** An aborted request never reaches here; callers drop those silently. */
+function messageFor(err) {
+  if (err instanceof ApiError && err.status === 0) {
+    return 'Cannot reach the API. Is the backend running?';
+  }
+  if (err instanceof ApiError) return err.message;
+  return 'Something went wrong loading segments for this view.';
+}
 
 export default function Explorer() {
   const reduce = useReducedMotion();
   const [searchParams, setSearchParams] = useSearchParams();
   const [filters, setFilters] = useState(EMPTY_FILTERS);
   const [sortKey, setSortKey] = useState('score');
-  const [booting, setBooting] = useState(true);
+
+  const [bbox, setBbox] = useState(null);
+  const [segments, setSegments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [pinned, setPinned] = useState(null);
 
   /*
     Sheet visibility.
@@ -62,44 +128,130 @@ export default function Explorer() {
     return () => window.removeEventListener('keydown', onKey);
   }, [sheetMounted]);
 
-  // Deep link: /explorer?cluster=BBS-C0417 opens straight onto that stretch,
-  // which is what the rankings table and the landing page link into.
-  const selectedId = searchParams.get('cluster');
+  /*
+    Deep link: /explorer?segment=A23_run3_km0.5 opens straight onto that
+    stretch. This is the one place the route screen touches this one - a
+    blackspot row on a route links here by segment id - so the parameter name
+    is the segment id the API knows, not the fixture's cluster id.
+  */
+  const selectedId = searchParams.get('segment');
 
   const setSelectedId = (id) => {
-    if (id) setSearchParams({ cluster: id }, { replace: true });
+    if (id) setSearchParams({ segment: id }, { replace: true });
     else setSearchParams({}, { replace: true });
   };
 
-  // One short boot so the skeleton is real rather than decorative. When this is
-  // wired to the Spring Boot API, replace with the fetch's pending state.
-  useEffect(() => {
-    const t = setTimeout(() => setBooting(false), 550);
-    return () => clearTimeout(t);
-  }, []);
+  const minCrashes = filters.includeThin ? MIN_CRASHES_ALL : MIN_CRASHES_EVIDENCED;
 
-  const results = useMemo(() => {
-    const filtered = applyFilters(BLACKSPOTS, filters);
-    return sortBlackspots(filtered, sortKey, SORT_DIRECTION[sortKey]);
-  }, [filters, sortKey]);
-
-  // If the active filters exclude the selected cluster, drop the selection
-  // rather than leaving a highlighted marker with no row beside it.
+  /*
+    The viewport query. Every pan supersedes the one before it: without the
+    abort, a slow reply for an old viewport can land after a fast reply for
+    the current one and repopulate the map with segments that are no longer
+    on screen.
+  */
   useEffect(() => {
-    if (selectedId && !results.some((b) => b.id === selectedId)) {
-      setSearchParams({}, { replace: true });
+    if (!bbox) return undefined;
+
+    const controller = new AbortController();
+    setLoading(true);
+
+    const timer = setTimeout(async () => {
+      try {
+        const found = await getSegments({
+          bbox,
+          minCrashes,
+          limit: LIMIT,
+          signal: controller.signal,
+        });
+        setSegments(found.map(toView));
+        setError(null);
+      } catch (err) {
+        if (err.name === 'AbortError') return; // our own doing
+        setSegments([]);
+        setError(messageFor(err));
+      } finally {
+        if (!controller.signal.aborted) setLoading(false);
+      }
+    }, DEBOUNCE_MS);
+
+    return () => {
+      clearTimeout(timer);
+      controller.abort();
+    };
+  }, [bbox, minCrashes]);
+
+  /*
+    The selected segment is fetched by id rather than taken from the viewport
+    list. A deep link arrives before any viewport query has run, and it may
+    name a stretch outside the current view or below the evidence floor -
+    either way the list cannot be relied on to contain it.
+
+    A 404 means the link names a segment this dataset does not have, so the
+    selection is dropped rather than left pointing at nothing.
+  */
+  useEffect(() => {
+    if (!selectedId) {
+      setPinned(null);
+      return undefined;
     }
-  }, [results, selectedId, setSearchParams]);
+
+    const controller = new AbortController();
+    let live = true;
+
+    (async () => {
+      try {
+        const s = await getSegment(selectedId, { signal: controller.signal });
+        if (live) setPinned(toView(s));
+      } catch (err) {
+        if (err.name === 'AbortError' || !live) return;
+        setPinned(null);
+        setSearchParams({}, { replace: true });
+      }
+    })();
+
+    return () => {
+      live = false;
+      controller.abort();
+    };
+  }, [selectedId, setSearchParams]);
+
+  /*
+    The selected segment is exempt from the client-side filters. Arriving from
+    a route result only to be dropped because a tier box happens to be ticked
+    would sever the one link between the two screens, and would do it
+    silently.
+  */
+  const results = useMemo(() => {
+    const byId = new Map(segments.map((s) => [s.id, s]));
+    if (pinned) byId.set(pinned.id, pinned);
+    const list = [...byId.values()].filter(
+      (s) => s.id === selectedId || matchesFilters(s, filters),
+    );
+    return sortBlackspots(list, sortKey, SORT_DIRECTION[sortKey]);
+  }, [segments, pinned, filters, sortKey, selectedId]);
 
   const filterKey = JSON.stringify(filters);
   const activeCount = countActive(filters);
+  const inView = segments.length + (pinned && !segments.some((s) => s.id === pinned.id) ? 1 : 0);
 
   return (
     <div className="explorer">
       <div className="explorer__bar">
         <div className="explorer__bar-main">
           <h1 className="screen-title">Blackspot explorer</h1>
-          <ProvenanceStrip className="explorer__provenance" />
+          {/*
+            Provenance, on every screen, naming what the claim is made from.
+            The recorded counts come from 2019 to 2021 and the scores are
+            validated against 2022 to 2023, so the strip states the span of
+            the record rather than of either half.
+          */}
+          <p className="explorer__provenance">
+            <span className="mono">STATS19 2019 to 2023</span>
+            <span className="explorer__sep" aria-hidden="true" />
+            <span className="mono">45,014 scored 500 m segments</span>
+            <span className="explorer__sep" aria-hidden="true" />
+            <span className="mono">Great Britain</span>
+          </p>
         </div>
         <button
           className="btn btn-secondary explorer__filter-btn"
@@ -120,29 +272,35 @@ export default function Explorer() {
             filters={filters}
             onChange={setFilters}
             resultCount={results.length}
-            totalCount={BLACKSPOTS.length}
+            totalCount={inView}
           />
         </div>
 
         <main className="explorer__canvas">
-          {booting ? (
-            <MapSkeleton />
-          ) : (
-            <MapCanvas
-              blackspots={results}
-              selectedId={selectedId}
-              onSelect={setSelectedId}
-            />
-          )}
+          {/*
+            The map renders immediately rather than behind a skeleton: it is
+            what reports the viewport, so nothing can be fetched until it
+            exists. Loading is expressed in the results panel instead.
+          */}
+          <MapCanvas
+            blackspots={results}
+            selectedId={selectedId}
+            onSelect={setSelectedId}
+            onBoundsChange={setBbox}
+            center={GB_CENTER}
+            zoom={GB_ZOOM}
+            homeLabel="the whole of Great Britain"
+          />
         </main>
 
         <div className="explorer__results">
           {/*
             Results cross-fade on filter change rather than blanking to a
-            loader, because the data is already in memory. The key remounts the
-            panel so the new content fades in; AnimatePresence is deliberately
-            not used here, because `mode="wait"` would gate the incoming panel
-            on an outgoing exit animation and stall the update.
+            loader, because the segments for this viewport are already in
+            memory. The key remounts the panel so the new content fades in;
+            AnimatePresence is deliberately not used here, because
+            `mode="wait"` would gate the incoming panel on an outgoing exit
+            animation and stall the update.
           */}
           <motion.div
             key={selectedId ?? filterKey}
@@ -157,7 +315,8 @@ export default function Explorer() {
               onSelect={setSelectedId}
               sortKey={sortKey}
               onSortChange={setSortKey}
-              loading={booting}
+              loading={loading && !results.length}
+              error={error}
               onResetFilters={() => setFilters(EMPTY_FILTERS)}
             />
           </motion.div>
@@ -200,7 +359,7 @@ export default function Explorer() {
               filters={filters}
               onChange={setFilters}
               resultCount={results.length}
-              totalCount={BLACKSPOTS.length}
+              totalCount={inView}
             />
           </div>
         </div>

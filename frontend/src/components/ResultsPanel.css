@@ -103,6 +103,11 @@
   background: var(--structural-line);
 }
 
+/* Under the six-crash floor. Stated in words, not by colour alone. */
+.result-row__thin {
+  color: var(--dim-grey);
+}
+
 @media (max-width: 767px) {
   .results {
     border-left: 0;

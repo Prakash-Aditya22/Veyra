@@ -130,6 +130,36 @@
   white-space: nowrap;
 }
 
+/* A label too long for one rail-width line wraps rather than truncating: the
+   evidence floor is a claim about the data, and half of it is not a claim. */
+.filter-option--wrap {
+  align-items: flex-start;
+  min-height: 0;
+  padding-block: 8px;
+  line-height: 1.45;
+}
+
+.filter-option--wrap .filter-option__input {
+  margin-top: 3px;
+}
+
+.filter-option--wrap .filter-option__text {
+  overflow: visible;
+  white-space: normal;
+}
+
+.filter-group__note {
+  padding-top: var(--s1);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--dim-grey);
+}
+
+.filter-rail__field {
+  display: block;
+  padding-top: 2px;
+}
+
 .filter-rail__foot {
   padding: var(--s2) var(--s3);
   border-top: 1px solid var(--structural-line);

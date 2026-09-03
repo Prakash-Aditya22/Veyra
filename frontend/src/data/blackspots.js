@@ -1,31 +1,11 @@
 /*
-  DEMONSTRATION FIXTURE.
+  DEMONSTRATION FIXTURE - Bhubaneswar/Cuttack/Puri, hand-authored, NOT real data.
 
-  These clusters are hand-authored stand-ins shaped like the output of the
-  DBSCAN + severity-weighting pipeline described in the project plan. The road
-  names and coordinates are real locations on the Bhubaneswar / Cuttack / Puri
-  corridor; the incident figures are NOT. Nothing here is derived from
-  AccidentsBig.csv yet.
+  Explorer and Route now read the live API (src/lib/api.js). Rankings and
+  Statistics still read this file; moving them is Phase 2 of
+  docs/superpowers/specs/2026-09-03-route-risk-design.md.
 
-  When the Python pipeline is ready, replace this module with a fetch against
-  the Spring Boot endpoint. The shape below is the contract that the UI expects,
-  so matching it in the API is enough - no component changes required.
-
-    id            stable cluster identifier from the clustering run
-    name          human-readable stretch name
-    lat, lng      cluster centroid
-    score         composite danger score, 0-100, one decimal
-    incidents     total records inside the cluster
-    fatal /
-      serious /
-      slight      severity split, must sum to `incidents`
-    lastIncident  ISO date of the most recent record in the cluster
-    roadType      carriageway classification
-    roadClass     highway designation
-    speedLimit    posted limit in km/h
-    factors       contributing-factor weights, descending, summing to ~100
-    landmarks     nearest recognisable references, nearest first
-    hourlyProfile shape key used to derive the incident-time histogram
+  Do not add to this file. New work reads the API.
 */
 
 // Deterministic PRNG. The histograms must look irregular across reloads-safe

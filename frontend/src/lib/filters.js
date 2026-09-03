@@ -1,30 +1,24 @@
-import { BLACKSPOTS } from '../data/blackspots.js';
 import { tierOf } from './risk.js';
 
 /*
-  Filter definitions and the single pure function that applies them.
+  Explorer's filters, applied to live segments from /api/segments.
 
-  Periods are anchored to the last date present in the dataset, not to today.
-  Anchoring to `new Date()` would silently empty the map as the fixture ages,
-  and would misrepresent a precomputed dataset as a live one.
+  Every group here has a counterpart on the segment record the API returns.
+  The fixture's period, road-type and contributing-condition groups are gone
+  with the fixture: a 500 m segment aggregates crashes from 2019 to 2021 into
+  counts and carries no date, no carriageway classification and no
+  per-segment factor attribution. Those three groups could only ever have
+  matched nothing, and a filter that silently matches nothing is worse than an
+  absent one.
+
+  The evidence floor is deliberately NOT a predicate here. It is `minCrashes`
+  on the request, because the six-crash floor is the population the tier
+  cutoffs in riskScale.js are calibrated against - lowering it changes which
+  rows the server sends, not merely which of them are drawn.
+
+  `sortBlackspots` is shared with Rankings, which still reads the fixture.
+  Leave its `lastIncident` handling alone.
 */
-
-const DATASET_END = BLACKSPOTS.reduce(
-  (latest, b) => (b.lastIncident > latest ? b.lastIncident : latest),
-  '2019-01-01',
-);
-
-function monthsBefore(iso, months) {
-  const d = new Date(`${iso}T00:00:00`);
-  d.setMonth(d.getMonth() - months);
-  return d.toISOString().slice(0, 10);
-}
-
-export const PERIODS = [
-  { key: 'full', label: 'Full coverage, 2019 to 2024', since: '2019-01-01' },
-  { key: '36m', label: 'Final 36 months', since: monthsBefore(DATASET_END, 36) },
-  { key: '12m', label: 'Final 12 months', since: monthsBefore(DATASET_END, 12) },
-];
 
 export const TIER_FILTERS = [
   { key: 'critical', label: 'Critical, 75 to 100' },
@@ -34,101 +28,43 @@ export const TIER_FILTERS = [
   { key: 'nodata', label: 'No data' },
 ];
 
-export const ROAD_TYPES = [
-  'Dual carriageway',
-  'Single carriageway',
-];
-
-export const ROAD_CLASSES = [
-  'NH-16',
-  'NH-316',
-  'NH-55',
-  'SH-13',
-  'SH-60',
-  'SH-9A',
-  'Urban arterial',
-  'Urban collector',
-  'Rural district road',
-  'Coastal highway',
-];
-
 /*
-  The dataset records lighting and surface state as contributing factors rather
-  than as a separate weather column, so the condition filter matches on factor
-  text. Each entry names the factors that count as a hit.
+  86% of segments rest on fewer than six crashes and their scores are noise.
+  Six is the floor the UI shows by default; unchecking the box drops it to one
+  and the extra segments arrive flagged as thinly evidenced.
 */
-export const CONDITIONS = [
-  { key: 'wet', label: 'Wet surface', match: ['Wet surface, monsoon months'] },
-  {
-    key: 'dark',
-    label: 'Reduced visibility',
-    match: ['Reduced visibility after dusk', 'Unlit stretch adjacent to forest edge'],
-  },
-  {
-    key: 'hgv',
-    label: 'Heavy goods traffic',
-    match: ['Heavy goods vehicle share', 'Freight yard access conflict'],
-  },
-  {
-    key: 'pedestrian',
-    label: 'Pedestrian exposure',
-    match: [
-      'Pedestrian crossing without signal',
-      'Student pedestrian volume at peak hours',
-      'Pilgrim and tourist pedestrian volume',
-      'Passenger boarding from carriageway',
-    ],
-  },
-];
+export const MIN_CRASHES_EVIDENCED = 6;
+export const MIN_CRASHES_ALL = 1;
 
 export const EMPTY_FILTERS = {
-  period: 'full',
   tiers: [],
-  roadTypes: [],
-  roadClasses: [],
-  conditions: [],
+  includeThin: false,
+  road: '',
 };
 
 export function isDefaultFilters(f) {
-  return (
-    f.period === 'full' &&
-    !f.tiers.length &&
-    !f.roadTypes.length &&
-    !f.roadClasses.length &&
-    !f.conditions.length
-  );
+  return !f.tiers.length && !f.includeThin && !f.road.trim();
 }
 
 export function countActive(f) {
-  return (
-    (f.period === 'full' ? 0 : 1) +
-    f.tiers.length +
-    f.roadTypes.length +
-    f.roadClasses.length +
-    f.conditions.length
-  );
+  return f.tiers.length + (f.includeThin ? 1 : 0) + (f.road.trim() ? 1 : 0);
 }
 
-export function applyFilters(blackspots, f) {
-  const period = PERIODS.find((p) => p.key === f.period) ?? PERIODS[0];
+/** True when one segment survives the client-side groups. */
+export function matchesFilters(s, f) {
+  if (f.tiers.length && !f.tiers.includes(tierOf(s.score).key)) return false;
 
-  return blackspots.filter((b) => {
-    if (b.lastIncident < period.since) return false;
-    if (f.tiers.length && !f.tiers.includes(tierOf(b.score).key)) return false;
-    if (f.roadTypes.length && !f.roadTypes.includes(b.roadType)) return false;
-    if (f.roadClasses.length && !f.roadClasses.includes(b.roadClass)) return false;
+  const road = f.road.trim().toLowerCase();
+  if (road && !s.roadClass.toLowerCase().includes(road)
+      && !s.name.toLowerCase().includes(road)) {
+    return false;
+  }
 
-    if (f.conditions.length) {
-      const factorLabels = b.factors.map((x) => x.label);
-      const hit = f.conditions.some((key) => {
-        const cond = CONDITIONS.find((c) => c.key === key);
-        return cond?.match.some((m) => factorLabels.includes(m));
-      });
-      if (!hit) return false;
-    }
+  return true;
+}
 
-    return true;
-  });
+export function applyFilters(segments, f) {
+  return segments.filter((s) => matchesFilters(s, f));
 }
 
 /** Sorting for the rankings table and the docked results panel. */

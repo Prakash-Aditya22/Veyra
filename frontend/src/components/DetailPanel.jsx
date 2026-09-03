@@ -1,20 +1,23 @@
 import { ArrowLeft } from '@phosphor-icons/react';
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Cell,
-} from 'recharts';
 import { tierOf, TIERS } from '../lib/risk.js';
-import { num, score as fmtScore, shortDate, coords, pct, hourLabel } from '../lib/format.js';
+import { num, score as fmtScore, coords, pct } from '../lib/format.js';
 import RiskBadge from './RiskBadge.jsx';
-import ChartFrame, { ChartTooltip, AXIS, GRID } from './charts/ChartFrame.jsx';
 import SpringBar from './motion/SpringBar.jsx';
 import './DetailPanel.css';
+
+/*
+  Four blocks the fixture carried are gone rather than filled in.
+
+    lastIncident  no date survives segment aggregation - the counts cover
+                  2019 to 2021 as a whole
+    landmarks     no gazetteer exists; `location` ("A23 km 0.5-1.0") is the
+                  human-readable handle
+    factors       only dataset-wide SHAP exists, never per-segment attribution
+    hourly        replaced by the segment's real pctNight, one figure
+
+  A placeholder in any of those would be worse than the gap: an invented "last
+  incident" date is a claim about when someone was hurt.
+*/
 
 const SEVERITY_ROWS = [
   { key: 'fatal', word: 'Fatal', color: 'var(--risk-4)' },
@@ -26,8 +29,7 @@ export default function DetailPanel({ blackspot, onBack, rank }) {
   const b = blackspot;
   const tier = tierOf(b.score);
   const hasScore = b.score !== null;
-
-  const peak = b.hourly.reduce((best, h) => (h.count > best.count ? h : best), b.hourly[0]);
+  const hasNight = b.pctNight !== null && b.pctNight !== undefined;
 
   return (
     <div className="detail">
@@ -37,7 +39,7 @@ export default function DetailPanel({ blackspot, onBack, rank }) {
           Back to results
         </button>
         <p className="label detail__id">
-          Cluster <span className="mono">{b.id}</span>
+          Segment <span className="mono">{b.id}</span>
         </p>
       </div>
 
@@ -47,9 +49,9 @@ export default function DetailPanel({ blackspot, onBack, rank }) {
           <p className="detail__coords mono">{coords(b.lat, b.lng)}</p>
         </div>
 
-        {/* Composite score. The tier word sits beside the number, always. */}
+        {/* The score. The tier word sits beside the number, always. */}
         <div className="detail__block detail__score-block">
-          <p className="label">Composite danger score</p>
+          <p className="label">Blackspot risk score</p>
           {hasScore ? (
             <>
               <div className="detail__score-row">
@@ -72,41 +74,61 @@ export default function DetailPanel({ blackspot, onBack, rank }) {
                   />
                 ))}
               </div>
-              <p className="detail__score-note">
-                Frequency, severity weighting and recency, combined on a fixed 0 to 100
-                scale. Historically high risk, not a forecast.
+              {/*
+                The model's own output, beside the band it was mapped into, so
+                the reader sees the number and not only its bucket. It is a
+                Poisson regression's estimate for 2022-23 built from 2019-21
+                features - a forecast, not a tally, and a property of the
+                stretch across all traffic rather than of one journey.
+              */}
+              <p className="detail__raw">
+                <span className="mono">{b.blackspotScore.toFixed(2)}</span> expected
+                killed-or-seriously-injured casualties over two years, across all
+                traffic on this 500 m.
               </p>
+              <p className="detail__score-note">
+                The 0 to 100 band ranks this stretch against the segments that
+                clear the six-crash evidence floor, not against every road in
+                Great Britain.
+              </p>
+              {b.thinlyEvidenced && (
+                <p className="detail__caveat">
+                  Fewer than 6 recorded crashes. This score rests on too little
+                  evidence to be ranked against the rest, and is shown because
+                  insufficient data is not evidence of low risk.
+                </p>
+              )}
             </>
           ) : (
             <p className="detail__score-note">
-              Under the 12-record minimum for scoring. Insufficient data is not
-              evidence of low risk.
+              No score for this stretch. Insufficient data is not evidence of
+              low risk.
             </p>
           )}
         </div>
 
         <div className="detail__block detail__stats">
           <div className="stat">
-            <p className="label">Rank</p>
+            <p className="label">Rank in view</p>
             <p className="stat__value mono">{rank ? `${rank}` : '--'}</p>
           </div>
           <div className="stat">
-            <p className="label">Incidents</p>
+            <p className="label">Crashes</p>
             <p className="stat__value mono">{num(b.incidents)}</p>
+          </div>
+          <div className="stat">
+            <p className="label">KSI</p>
+            <p className="stat__value mono">{num(b.ksi)}</p>
           </div>
           <div className="stat">
             <p className="label">Fatal</p>
             <p className="stat__value mono">{num(b.fatal)}</p>
           </div>
-          <div className="stat">
-            <p className="label">Last incident</p>
-            <p className="stat__value stat__value--sm mono">{shortDate(b.lastIncident)}</p>
-          </div>
         </div>
 
         {/* Severity split. Ramp colours, each with its word beside it. */}
         <div className="detail__block">
-          <p className="label detail__block-title">Severity split</p>
+          <p className="label detail__block-title">Recorded severity, 2019 to 2021</p>
           <ul className="severity">
             {SEVERITY_ROWS.map((row, i) => (
               <li key={row.key} className="severity__row">
@@ -129,100 +151,51 @@ export default function DetailPanel({ blackspot, onBack, rank }) {
               </li>
             ))}
           </ul>
+          <p className="detail__score-note detail__note--spaced">
+            Crashes actually recorded in STATS19 on this stretch, by their worst
+            casualty. These are counts, not estimates.
+          </p>
         </div>
 
-        {/* Contributing factors. Weights come from the model, not from the UI. */}
-        {b.factors.length > 0 && (
-          <div className="detail__block">
-            <p className="label detail__block-title">Contributing factors</p>
-            <ul className="factors">
-              {b.factors.map((f, i) => (
-                <li key={f.label} className="factors__row">
-                  <span className="factors__label">{f.label}</span>
-                  <span className="factors__track" aria-hidden="true">
-                    <SpringBar className="factors__fill" percent={f.weight} index={i} />
-                  </span>
-                  <span className="factors__weight mono">{f.weight}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        <div className="detail__block">
-          <ChartFrame
-            title="Incidents by hour"
-            meta={`${b.incidents} records inside this cluster, ${b.id}. Peak at ${hourLabel(peak.hour)}.`}
-          >
-            <div className="detail__chart">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={b.hourly} margin={{ top: 4, right: 0, bottom: 0, left: -22 }}>
-                  <CartesianGrid {...GRID} />
-                  <XAxis
-                    {...AXIS}
-                    dataKey="hour"
-                    interval={3}
-                    tickFormatter={(h) => String(h).padStart(2, '0')}
-                  />
-                  <YAxis {...AXIS} width={38} allowDecimals={false} />
-                  <Tooltip
-                    cursor={{ fill: 'rgba(148, 163, 184, 0.08)' }}
-                    content={(p) => (
-                      <ChartTooltip
-                        {...p}
-                        label={hourLabel(p.label)}
-                        unit="incidents in this cluster"
-                      />
-                    )}
-                  />
-                  <Bar
-                    dataKey="count"
-                    name="Incidents"
-                    radius={[2, 2, 0, 0]}
-                    isAnimationActive={false}
-                  >
-                    {b.hourly.map((h) => (
-                      <Cell
-                        key={h.hour}
-                        fill="#0F766E"
-                        fillOpacity={h.hour === peak.hour ? 1 : 0.55}
-                      />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </ChartFrame>
-        </div>
-
-        <div className="detail__block">
+        <div className={`detail__block${hasNight ? '' : ' detail__block--last'}`}>
           <p className="label detail__block-title">Road</p>
           <dl className="kv">
             <div className="kv__row">
-              <dt>Class</dt>
+              <dt>Road</dt>
               <dd className="mono">{b.roadClass}</dd>
             </div>
             <div className="kv__row">
-              <dt>Type</dt>
-              <dd>{b.roadType}</dd>
+              <dt>Chainage</dt>
+              <dd className="mono">
+                {b.kmFrom?.toFixed(1)} to {b.kmTo?.toFixed(1)} km
+              </dd>
             </div>
             <div className="kv__row">
               <dt>Posted limit</dt>
-              <dd className="mono">{b.speedLimit} km/h</dd>
+              {/* STATS19 records speed limits in mph, the UK's own unit. */}
+              <dd className="mono">
+                {b.speedLimit === null || b.speedLimit === undefined
+                  ? '--'
+                  : `${Math.round(b.speedLimit)} mph`}
+              </dd>
             </div>
           </dl>
         </div>
 
-        <div className="detail__block detail__block--last">
-          <p className="label detail__block-title">Nearest landmarks</p>
-          <ul className="landmarks">
-            {b.landmarks.map((l) => (
-              <li key={l} className="landmarks__item">
-                {l}
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/*
+          One figure, not a histogram. pctNight is the share of this segment's
+          own recorded crashes that happened at night; the export carries that
+          proportion and no per-hour breakdown, so there is nothing to plot.
+        */}
+        {hasNight && (
+          <div className="detail__block detail__block--last">
+            <p className="label detail__block-title">Time of day</p>
+            <p className="detail__figure">
+              <span className="mono">{Math.round(b.pctNight * 100)}%</span> of crashes
+              here were at night
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

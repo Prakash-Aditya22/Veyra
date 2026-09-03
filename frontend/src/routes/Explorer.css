@@ -28,8 +28,23 @@
   min-width: 0;
 }
 
+/* Provenance: what the claim is made from, on every screen. */
 .explorer__provenance {
   min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s1);
+  font-size: var(--type-label);
+  line-height: 1.5;
+  color: var(--dim-grey);
+}
+
+.explorer__sep {
+  width: 1px;
+  height: 10px;
+  background: var(--structural-line);
+  flex-shrink: 0;
 }
 
 /* Scoped so this cannot lose a same-specificity tie against the base .btn rule. */

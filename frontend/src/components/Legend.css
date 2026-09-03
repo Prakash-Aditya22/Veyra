@@ -54,6 +54,21 @@
   color: var(--steel-grey);
 }
 
+/*
+  The relative-tier disclosure. It is not a footnote to be shed at narrow
+  widths: it is the sentence that stops the bands reading as national ones, so
+  it stays in both variants.
+*/
+.legend__note {
+  max-width: 30ch;
+  padding-top: 6px;
+  margin-top: 6px;
+  border-top: 1px solid var(--structural-line);
+  font-size: 0.6875rem;
+  line-height: 1.45;
+  color: var(--dim-grey);
+}
+
 /* Below 768px the legend leaves the canvas and becomes a strip under the header. */
 .legend--strip {
   border-radius: 0;
@@ -72,4 +87,8 @@
 
 .legend--strip .legend__item {
   grid-template-columns: 10px auto auto;
+}
+
+.legend--strip .legend__note {
+  max-width: none;
 }

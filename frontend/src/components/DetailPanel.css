@@ -104,6 +104,33 @@
   line-height: 1.55;
 }
 
+.detail__note--spaced {
+  padding-top: var(--s2);
+}
+
+/* The model's own output, in its own unit and window. Brighter than the
+   surrounding notes because it is the number, not a gloss on it. */
+.detail__raw {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--bone-white);
+}
+
+/* Notice Amber is the low-confidence colour and it stays inside panels. */
+.detail__caveat {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--steel-grey);
+  border-left: 2px solid var(--notice-amber);
+  padding-left: var(--s2);
+}
+
+.detail__figure {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--bone-white);
+}
+
 /* --- Stat strip --- */
 
 .detail__stats {
@@ -133,9 +160,7 @@
 
 /* --- Severity split --- */
 
-.severity,
-.factors,
-.landmarks {
+.severity {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -186,48 +211,7 @@
   text-align: right;
 }
 
-/* --- Contributing factors --- */
-
-.factors__row {
-  display: grid;
-  grid-template-columns: 1fr 64px 1.75rem;
-  align-items: center;
-  gap: var(--s2);
-}
-
-.factors__label {
-  font-size: 0.8125rem;
-  color: var(--steel-grey);
-  line-height: 1.4;
-}
-
-.factors__track {
-  height: 4px;
-  border-radius: 2px;
-  background: rgba(148, 163, 184, 0.1);
-  overflow: hidden;
-}
-
-.factors__fill {
-  display: block;
-  height: 100%;
-  background: var(--beacon-teal-lift);
-  border-radius: 2px;
-}
-
-.factors__weight {
-  font-size: 0.75rem;
-  color: var(--steel-grey);
-  text-align: right;
-}
-
-/* --- Chart --- */
-
-.detail__chart {
-  height: 168px;
-}
-
-/* --- Key/value + landmarks --- */
+/* --- Key/value --- */
 
 .kv {
   display: grid;
@@ -257,23 +241,6 @@
   margin: 0;
   font-size: 0.8125rem;
   color: var(--bone-white);
-}
-
-.landmarks__item {
-  font-size: 0.8125rem;
-  color: var(--steel-grey);
-  padding-left: var(--s2);
-  position: relative;
-}
-
-.landmarks__item::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.6em;
-  width: 5px;
-  height: 1px;
-  background: var(--dim-grey);
 }
 
 @media (max-width: 767px) {
