@@ -2,6 +2,7 @@ package com.veyra.blackspot.service;
 
 import java.util.List;
 
+import com.veyra.blackspot.config.OrsProperties;
 import com.veyra.blackspot.domain.RouteRisk.Coord;
 import com.veyra.blackspot.domain.RouteRisk.GeocodeCandidate;
 import com.veyra.blackspot.domain.RouteRisk.RawRoute;
@@ -22,6 +23,10 @@ class RouteRiskServiceTest {
 
     private static final Coord LONDON_S = new Coord(-0.0982, 51.3762);
     private static final Coord LONDON_N = new Coord(-0.1426, 51.5390);
+
+    /** Default alternatives (target-count 3) are all these tests need. */
+    private static final OrsProperties ORS_PROPS =
+        new OrsProperties("test-key", "https://api.openrouteservice.org");
 
     private static Segment seg(String id, double score, int crashes) {
         return new Segment(id, "A23", 3, id, 0.5, 1.0, 51.46, -0.116,
@@ -52,7 +57,7 @@ class RouteRiskServiceTest {
             new CorridorHit(seg("near", 2.0, 10), 0.1),
             new CorridorHit(seg("mid", 3.0, 10), 0.5)));
 
-        var svc = new RouteRiskService(fakeClient(List.of(route(10_000, 600))), repo);
+        var svc = new RouteRiskService(fakeClient(List.of(route(10_000, 600))), repo, ORS_PROPS);
         var out = svc.assess(LONDON_S, LONDON_N, 6, 50);
 
         assertThat(out.routes().get(0).blackspots())
@@ -65,7 +70,7 @@ class RouteRiskServiceTest {
         when(repo.findAlongRoute(anyString(), anyDouble(), anyInt()))
             .thenReturn(List.of(new CorridorHit(seg("a", 1.0, 10), 0.25)));
 
-        var svc = new RouteRiskService(fakeClient(List.of(route(10_000, 600))), repo);
+        var svc = new RouteRiskService(fakeClient(List.of(route(10_000, 600))), repo, ORS_PROPS);
         var out = svc.assess(LONDON_S, LONDON_N, 6, 50);
 
         assertThat(out.routes().get(0).blackspots().get(0).metresAlongRoute()).isEqualTo(2500.0);
@@ -78,7 +83,7 @@ class RouteRiskServiceTest {
             new CorridorHit(seg("a", 1.5, 10), 0.1),
             new CorridorHit(seg("b", 2.5, 10), 0.6)));
 
-        var svc = new RouteRiskService(fakeClient(List.of(route(10_000, 600))), repo);
+        var svc = new RouteRiskService(fakeClient(List.of(route(10_000, 600))), repo, ORS_PROPS);
         var out = svc.assess(LONDON_S, LONDON_N, 6, 50);
 
         assertThat(out.routes().get(0).expectedKsi()).isEqualTo(4.0);
@@ -94,7 +99,7 @@ class RouteRiskServiceTest {
             .thenReturn(List.of(new CorridorHit(seg("b", 1.0, 10), 0.5)));
 
         var svc = new RouteRiskService(
-            fakeClient(List.of(route(18_000, 2040), route(19_800, 2340))), repo);
+            fakeClient(List.of(route(18_000, 2040), route(19_800, 2340))), repo, ORS_PROPS);
         var out = svc.assess(LONDON_S, LONDON_N, 6, 50);
 
         assertThat(out.routes().get(0).label()).isEqualTo("Fastest");
@@ -109,7 +114,7 @@ class RouteRiskServiceTest {
             .thenReturn(List.of(new CorridorHit(seg("b", 9.0, 10), 0.5)));
 
         var svc = new RouteRiskService(
-            fakeClient(List.of(route(18_000, 2040), route(19_800, 2340))), repo);
+            fakeClient(List.of(route(18_000, 2040), route(19_800, 2340))), repo, ORS_PROPS);
         var out = svc.assess(LONDON_S, LONDON_N, 6, 50);
 
         assertThat(out.routes().get(0).label()).isEqualTo("Fastest and safest");
@@ -121,7 +126,7 @@ class RouteRiskServiceTest {
         var repo = mock(SegmentRepository.class);
         when(repo.findAlongRoute(anyString(), anyDouble(), anyInt())).thenReturn(List.of());
 
-        var svc = new RouteRiskService(fakeClient(List.of(route(10_000, 600))), repo);
+        var svc = new RouteRiskService(fakeClient(List.of(route(10_000, 600))), repo, ORS_PROPS);
         var out = svc.assess(LONDON_S, LONDON_N, 6, 50);
 
         assertThat(out.routes()).hasSize(1);
@@ -139,7 +144,7 @@ class RouteRiskServiceTest {
         var paris = new Coord(2.3522, 48.8566);
         var lyon = new Coord(4.8357, 45.7640);
         var svc = new RouteRiskService(
-            fakeClient(List.of(new RawRoute(List.of(paris, lyon), 465_000, 16_000))), repo);
+            fakeClient(List.of(new RawRoute(List.of(paris, lyon), 465_000, 16_000))), repo, ORS_PROPS);
         var out = svc.assess(paris, lyon, 6, 50);
 
         assertThat(out.coverageWarning()).contains("Great Britain");
@@ -151,7 +156,7 @@ class RouteRiskServiceTest {
         when(repo.findAlongRoute(anyString(), anyDouble(), anyInt()))
             .thenReturn(List.of(new CorridorHit(seg("thin", 1.0, 3), 0.5)));
 
-        var svc = new RouteRiskService(fakeClient(List.of(route(10_000, 600))), repo);
+        var svc = new RouteRiskService(fakeClient(List.of(route(10_000, 600))), repo, ORS_PROPS);
         var out = svc.assess(LONDON_S, LONDON_N, 1, 50);
 
         assertThat(out.routes().get(0).blackspots().get(0).thinlyEvidenced()).isTrue();

@@ -48,11 +48,16 @@ public class OrsRoutingClient implements RoutingClient {
     public List<RawRoute> route(Coord from, Coord to, int alternatives) {
         String url = props.getBaseUrl() + "/v2/directions/driving-car/geojson";
 
+        // target_count comes from the alternatives argument -- the caller's ask
+        // -- not from config, so RoutingClient's "returns at most N" contract
+        // holds regardless of what ors.alternatives.target-count is tuned to.
+        // share_factor/weight_factor are genuine tuning knobs with no
+        // caller-side meaning, so those do come from config.
         OrsProperties.Alternatives alt = props.getAlternatives();
         Map<String, Object> body = alternatives > 1
             ? Map.of("coordinates", List.of(List.of(from.lon(), from.lat()),
                                             List.of(to.lon(), to.lat())),
-                     "alternative_routes", Map.of("target_count", alt.getTargetCount(),
+                     "alternative_routes", Map.of("target_count", alternatives,
                                                   "share_factor", alt.getShareFactor(),
                                                   "weight_factor", alt.getWeightFactor()))
             : Map.of("coordinates", List.of(List.of(from.lon(), from.lat()),

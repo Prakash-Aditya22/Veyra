@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.StringJoiner;
 
+import com.veyra.blackspot.config.OrsProperties;
 import com.veyra.blackspot.domain.RouteRisk.BlackspotOnRoute;
 import com.veyra.blackspot.domain.RouteRisk.Coord;
 import com.veyra.blackspot.domain.RouteRisk.RawRoute;
@@ -27,22 +28,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class RouteRiskService {
 
-    private static final int ALTERNATIVES = 3;
-
     /** Generous bounds for Great Britain, the extent of the STATS19 data. */
     private static final double GB_MIN_LON = -8.7, GB_MAX_LON = 2.0;
     private static final double GB_MIN_LAT = 49.8, GB_MAX_LAT = 61.0;
 
     private final RoutingClient routing;
     private final SegmentRepository repo;
+    private final OrsProperties orsProperties;
 
-    public RouteRiskService(RoutingClient routing, SegmentRepository repo) {
+    public RouteRiskService(RoutingClient routing, SegmentRepository repo, OrsProperties orsProperties) {
         this.routing = routing;
         this.repo = repo;
+        this.orsProperties = orsProperties;
     }
 
     public RouteRiskResponse assess(Coord from, Coord to, int minCrashes, double corridorMetres) {
-        List<RawRoute> raw = routing.route(from, to, ALTERNATIVES);
+        // How many routes we want is configuration (ors.alternatives.target-count),
+        // not a constant here — this is the single source of truth OrsRoutingClient
+        // also reads its target_count from, via the alternatives argument below.
+        int alternatives = orsProperties.getAlternatives().getTargetCount();
+        List<RawRoute> raw = routing.route(from, to, alternatives);
 
         List<ScoredRoute> scored = new ArrayList<>();
         for (int i = 0; i < raw.size(); i++) {
