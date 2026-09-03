@@ -140,26 +140,87 @@ Create `backend/pom.xml`:
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <!-- PostGIS tests need a live database; Docker is not running here.
-               Run them explicitly with -Dgroups=postgis. -->
-          <excludedGroups>postgis</excludedGroups>
-        </configuration>
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <!--
+      PostGIS tests need a live database; Docker is not running on the dev
+      machine. They carry @Tag("postgis") and are excluded by default.
+
+      The exclusion MUST live in a profile that deactivates when -Dgroups is
+      supplied. A plain <excludedGroups>postgis</excludedGroups> in <build>
+      cannot be overridden from the command line, so `-Dgroups=postgis` would
+      intersect "only postgis" with "never postgis" and silently run ZERO
+      tests while reporting success.
+    -->
+    <profile>
+      <id>exclude-postgis</id>
+      <activation>
+        <property><name>!groups</name></property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <excludedGroups>postgis</excludedGroups>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
 ```
 
-- [ ] **Step 2: Add the Maven wrapper**
+- [ ] **Step 2: Add the Maven wrapper** — *done by the controller, 2026-09-03*
 
-No global Maven is installed. Generate the wrapper from the Spring Boot plugin, which is available through the parent POM:
+No global Maven is installed. **Do not fetch `mvnw` from the maven-wrapper GitHub
+repo** — those are unfiltered build sources with `@@project.version@@`
+placeholders that are never substituted, producing a wrapper that fails with
+`ClassNotFoundException: org.apache.maven.wrapper.MavenWrapperMain`. A first
+attempt at this task hit exactly that.
+
+The working sequence, already applied:
 
 ```bash
-cd backend && curl -fsSL https://raw.githubusercontent.com/apache/maven-wrapper/master/maven-wrapper-distribution/src/resources/mvnw -o mvnw && curl -fsSL https://raw.githubusercontent.com/apache/maven-wrapper/master/maven-wrapper-distribution/src/resources/mvnw.cmd -o mvnw.cmd && mkdir -p .mvn/wrapper && printf 'wrapperVersion=3.3.2\ndistributionType=only-script\ndistributionUrl=https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.9.9/apache-maven-3.9.9-bin.zip\n' > .mvn/wrapper/maven-wrapper.properties && chmod +x mvnw
+cd "C:/Major Project/frontend-v1" && curl -fsSL -o maven.zip https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.9.9/apache-maven-3.9.9-bin.zip && unzip -q maven.zip && rm maven.zip
 ```
 
-If that fails (no network, or the URLs moved), the fallback is one manual Maven install and `mvn -N wrapper:wrapper`. Confirm with `./mvnw -v` before continuing — a broken wrapper blocks every later task.
+then, with `JAVA_HOME` set (see below), from `backend/`:
+
+```bash
+mvn -N wrapper:wrapper "-Dmaven=3.9.9"
+```
+
+That unpacks the `only-script` wrapper and writes a correct
+`.mvn/wrapper/maven-wrapper.properties`. The extracted `apache-maven-3.9.9/`
+sits outside the repo and is not committed; the wrapper is.
+
+**`JAVA_HOME` is not set on this machine**, and Maven refuses to start without
+it. JDK 22 lives at `C:\Program Files\Java\jdk-22`. Every Maven invocation in
+this plan needs it:
+
+```bash
+export JAVA_HOME="/c/Program Files/Java/jdk-22"     # Git Bash
+```
+```powershell
+$env:JAVA_HOME = 'C:\Program Files\Java\jdk-22'     # PowerShell
+```
+
+Task 5's `backend/README.md` must state this as a prerequisite — a teammate
+cloning the repo hits it immediately.
+
+Verify before continuing; a broken wrapper blocks every later task:
+
+```bash
+cd backend && ./mvnw -v
+```
+
+Expected: `Apache Maven 3.9.9`, `Java version: 22.0.1`.
 
 - [ ] **Step 3: Write the secret exclusions**
 
@@ -205,7 +266,8 @@ blackspot:
   max-segments: 2000
 
 server:
-  port: 8080
+  # 8080 is taken by Oracle's TNS Listener on the development machine.
+  port: 8081
 
 logging:
   level:
@@ -1358,9 +1420,15 @@ class SegmentRepositoryPostgisTest {
         String wkt = "LINESTRING(-0.1160 51.4607, -0.1140 51.4700)";
         var strict = repo.findAlongRoute(wkt, 200, 6);
         var loose = repo.findAlongRoute(wkt, 200, 1);
-        assertThat(strict.size()).isLessThanOrEqualTo(loose.size());
+
+        // The loose query must actually contain segments the strict one
+        // filters out, otherwise the size comparison proves nothing: a filter
+        // that did nothing would return identical sets and still pass <=.
+        assertThat(loose).anySatisfy(h ->
+            assertThat(h.segment().nCrashes()).isLessThan(6));
         assertThat(strict).allSatisfy(h ->
             assertThat(h.segment().nCrashes()).isGreaterThanOrEqualTo(6));
+        assertThat(strict.size()).isLessThan(loose.size());
     }
 }
 ```
@@ -1392,7 +1460,11 @@ git add backend/ && git commit -m "feat(backend): segment repository with PostGI
 **Files:**
 - Create: `backend/src/main/java/com/veyra/blackspot/web/SegmentController.java`
 - Create: `backend/src/main/java/com/veyra/blackspot/web/ApiExceptionHandler.java`
+- Create: `backend/src/main/java/com/veyra/blackspot/routing/RoutingException.java`
 - Create: `backend/src/test/java/com/veyra/blackspot/web/SegmentControllerTest.java`
+
+`RoutingException` is created here, not in Task 8, because `ApiExceptionHandler`
+imports it and would not compile otherwise. Task 8 uses it; it does not create it.
 
 **Interfaces:**
 - Consumes: `SegmentRepository`, `BoundingBox`
@@ -1414,7 +1486,7 @@ import com.veyra.blackspot.repo.SegmentRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -1430,7 +1502,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class SegmentControllerTest {
 
     @Autowired MockMvc mvc;
-    @MockBean SegmentRepository repo;
+    @MockitoBean SegmentRepository repo;
 
     private static Segment sample() {
         return new Segment("A23_run3_km0.5", "A23", 3, "A23 km 0.5-1.0 (seg 3)",
@@ -1498,7 +1570,34 @@ Expected: FAIL — `SegmentController` does not exist.
 
 - [ ] **Step 3: Write the exception handler**
 
-Create `backend/src/main/java/com/veyra/blackspot/web/ApiExceptionHandler.java`:
+First create the exception it maps, `backend/src/main/java/com/veyra/blackspot/routing/RoutingException.java`:
+
+```java
+package com.veyra.blackspot.routing;
+
+public class RoutingException extends RuntimeException {
+
+    public enum Kind { NO_ROUTE, UNAVAILABLE }
+
+    private final Kind kind;
+
+    public RoutingException(Kind kind, String message) {
+        super(message);
+        this.kind = kind;
+    }
+
+    public RoutingException(Kind kind, String message, Throwable cause) {
+        super(message, cause);
+        this.kind = kind;
+    }
+
+    public Kind kind() {
+        return kind;
+    }
+}
+```
+
+Then create `backend/src/main/java/com/veyra/blackspot/web/ApiExceptionHandler.java`:
 
 ```java
 package com.veyra.blackspot.web;
@@ -1616,7 +1715,6 @@ HTTP only, no domain logic. The interface is what makes `RouteRiskService` testa
 
 **Files:**
 - Create: `backend/src/main/java/com/veyra/blackspot/routing/RoutingClient.java`
-- Create: `backend/src/main/java/com/veyra/blackspot/routing/RoutingException.java`
 - Create: `backend/src/main/java/com/veyra/blackspot/routing/OrsRoutingClient.java`
 - Create: `backend/src/main/java/com/veyra/blackspot/config/OrsProperties.java`
 - Create: `backend/src/main/java/com/veyra/blackspot/domain/RouteRisk.java`
@@ -1773,32 +1871,7 @@ public class OrsProperties {
 }
 ```
 
-Create `backend/src/main/java/com/veyra/blackspot/routing/RoutingException.java`:
-
-```java
-package com.veyra.blackspot.routing;
-
-public class RoutingException extends RuntimeException {
-
-    public enum Kind { NO_ROUTE, UNAVAILABLE }
-
-    private final Kind kind;
-
-    public RoutingException(Kind kind, String message) {
-        super(message);
-        this.kind = kind;
-    }
-
-    public RoutingException(Kind kind, String message, Throwable cause) {
-        super(message, cause);
-        this.kind = kind;
-    }
-
-    public Kind kind() {
-        return kind;
-    }
-}
-```
+`RoutingException` already exists from Task 7. Do not recreate it.
 
 Create `backend/src/main/java/com/veyra/blackspot/routing/RoutingClient.java`:
 
@@ -1911,7 +1984,7 @@ public class OrsRoutingClient implements RoutingClient {
 
     @Override
     public List<GeocodeCandidate> geocode(String query) {
-        String url = UriComponentsBuilder.fromHttpUrl(props.getBaseUrl() + "/geocode/search")
+        String url = UriComponentsBuilder.fromUriString(props.getBaseUrl() + "/geocode/search")
             .queryParam("api_key", props.getApiKey())
             .queryParam("text", query)
             .queryParam("boundary.country", "GB")
@@ -1967,6 +2040,35 @@ Where routing meets blackspots. Fully unit-tested against a fake client and a st
 **Interfaces:**
 - Consumes: `RoutingClient`, `SegmentRepository`
 - Produces: `RouteRiskResponse assess(Coord from, Coord to, int minCrashes, double corridorMetres)`
+
+**Amendment — make the ORS alternative-route parameters configurable.**
+
+I measured the actual geometric overlap between ORS alternatives for
+Croydon → Camden (fraction of a route's coordinates lying within 50 m of the
+fastest route):
+
+| `share_factor` / `weight_factor` | overlap with route 0 | distance | time |
+|---|---|---|---|
+| 0.6 / 1.6 | **45.8%, 45.6%** | 22.3 km | 63 min |
+| 0.4 / 1.6 | 28.6%, 34.1% | 24.7 km | 64 min |
+| **0.2 / 2.0** | **1.9%, 7.0%** | 27.4 km | 67 min |
+
+At 0.6 the alternatives share nearly half their geometry with the fastest
+route, so they traverse many of the same segments and the fastest-vs-safest
+comparison degenerates into near-identical cards — which removes the reason
+this feature exists.
+
+So: move `target_count`, `share_factor` and `weight_factor` out of
+`OrsRoutingClient`'s hardcoded map and into `application.yml` under
+`ors.alternatives`, defaulting to `target_count: 3`, `share_factor: 0.2`,
+`weight_factor: 2.0`. Bind them on `OrsProperties`. This makes them tunable at
+demo time without a rebuild, which matters because the right value depends on
+the road network around whichever endpoints get demonstrated.
+
+Then, as part of Step 4's verification, report the real blackspot counts per
+route for one London pair. If all routes still return identical counts, say so
+— that is the signal that the comparison needs different endpoints or further
+tuning, and it is better known now than at Task 13.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -2324,7 +2426,7 @@ import com.veyra.blackspot.service.RouteRiskService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -2342,8 +2444,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class RouteControllerTest {
 
     @Autowired MockMvc mvc;
-    @MockBean RouteRiskService service;
-    @MockBean RoutingClient routing;
+    @MockitoBean RouteRiskService service;
+    @MockitoBean RoutingClient routing;
 
     private static final String BODY = """
         {"from":[-0.0982,51.3762],"to":[-0.1426,51.5390],"minCrashes":6}
@@ -2552,7 +2654,7 @@ cd backend && ./mvnw spring-boot:run
 Then in another shell:
 
 ```bash
-curl -s -X POST localhost:8080/api/route/risk -H 'Content-Type: application/json' -d '{"from":[-0.0982,51.3762],"to":[-0.1426,51.5390]}' | head -40
+curl -s -X POST localhost:8081/api/route/risk -H 'Content-Type: application/json' -d '{"from":[-0.0982,51.3762],"to":[-0.1426,51.5390]}' | head -40
 ```
 
 Expected: JSON with a `routes` array, each entry carrying `label`, `expectedKsi`, and a `blackspots` list. **Verify no `futureKsi` appears anywhere in the output.**
@@ -2607,21 +2709,23 @@ import { tierOf } from './risk.js';
 
 describe('scoreToDisplay', () => {
   it('maps the band cutoffs onto the published tiers', () => {
-    expect(tierOf(scoreToDisplay(0.2)).key).toBe('watch');
-    expect(tierOf(scoreToDisplay(0.6)).key).toBe('elevated');
-    expect(tierOf(scoreToDisplay(1.0)).key).toBe('severe');
-    expect(tierOf(scoreToDisplay(1.8)).key).toBe('critical');
+    expect(tierOf(scoreToDisplay(0.5)).key).toBe('watch');
+    expect(tierOf(scoreToDisplay(1.2)).key).toBe('elevated');
+    expect(tierOf(scoreToDisplay(2.0)).key).toBe('severe');
+    expect(tierOf(scoreToDisplay(5.0)).key).toBe('critical');
     expect(tierOf(scoreToDisplay(9.67)).key).toBe('critical');
   });
 
-  it('keeps Critical to roughly the worst 1% of road', () => {
-    // p99 of the real distribution is 2.04; the median is 0.25
-    expect(tierOf(scoreToDisplay(0.25)).key).toBe('watch');
-    expect(tierOf(scoreToDisplay(2.04)).key).toBe('critical');
+  it('keeps Critical to roughly the worst 5% of displayed segments', () => {
+    // Measured on the 6,213 segments with n_crashes >= 6: median 0.94,
+    // p80 1.57, p95 3.09. Just below a cutoff must not reach the next tier.
+    expect(tierOf(scoreToDisplay(0.93)).key).toBe('watch');
+    expect(tierOf(scoreToDisplay(3.09)).key).toBe('critical');
+    expect(tierOf(scoreToDisplay(3.08)).key).toBe('severe');
   });
 
   it('is monotonic', () => {
-    const scores = [0, 0.2, 0.45, 0.85, 1.45, 2.2, 5, 9.67];
+    const scores = [0, 0.5, 0.94, 1.57, 3.09, 5, 9.67];
     const display = scores.map(scoreToDisplay);
     for (let i = 1; i < display.length; i += 1) {
       expect(display[i]).toBeGreaterThanOrEqual(display[i - 1]);
@@ -2671,21 +2775,34 @@ Create `frontend/src/lib/riskScale.js`:
   The score is expected killed-or-seriously-injured casualties on a 500m
   stretch over two years, and runs 0 to 9.67. The UI's tiers are 0-100.
 
-  Mapping by percentile would put a quarter of all British road in "Critical".
-  Instead the ML's own band cutoffs are mapped piecewise, so the tier words
-  keep the meaning the model gave them and "Critical" stays roughly the worst
-  1% of road. Cutoffs come from the real distribution: median 0.25, p90 0.83,
-  p99 2.04.
+  CUTOFFS ARE CALIBRATED TO THE POPULATION USERS ACTUALLY SEE, not to all
+  45,014 segments. The UI filters to n_crashes >= 6, because 86% of segments
+  rest on fewer than six crashes and their scores are noise. That filter
+  removes overwhelmingly low-scoring rows, so what is displayed is far riskier
+  than the whole:
+
+                     all 45,014     shown (n_crashes>=6, 6,213)
+      median               0.25                       0.94
+      p90                  0.81                       2.24
+
+  The earlier cutoffs (0.45/0.85/1.45), derived from the full population, put
+  23.3% of DISPLAYED segments in "Critical" and 60% in Severe-or-worse: a red
+  screen that distinguishes nothing. These cutoffs are the 50th, 80th and 95th
+  percentiles of the displayed population, giving roughly 50/30/15/5%.
+
+  THE LEGEND MUST SAY SO. A segment labelled "Watch" at 0.90 is still above
+  the national median of 0.25. The tiers rank segments that have enough
+  evidence to be ranked; they are not absolute national bands. Saying that
+  plainly is the condition on which this calibration is honest.
 
   This is the only place these constants live.
 */
 
 const BANDS = [
-  { from: 0, to: 0.45, out: [0, 24] },     // Watch
-  { from: 0.45, to: 0.85, out: [25, 49] }, // Elevated
-  { from: 0.85, to: 1.45, out: [50, 74] }, // Severe
-  { from: 1.45, to: 2.2, out: [75, 89] },  // Critical
-  { from: 2.2, to: 10, out: [90, 100] },   // Critical, top ~1%
+  { from: 0, to: 0.94, out: [0, 24] },      // Watch
+  { from: 0.94, to: 1.57, out: [25, 49] },  // Elevated
+  { from: 1.57, to: 3.09, out: [50, 74] },  // Severe
+  { from: 3.09, to: 9.67, out: [75, 100] }, // Critical
 ];
 
 /** Returns 0-100, or null when there is no score, so tierOf gives No data. */
@@ -2753,7 +2870,7 @@ Create `frontend/src/lib/api.js`:
   through it so the OpenRouteService key stays server-side.
 */
 
-const BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:8080';
+const BASE = import.meta.env.VITE_API_BASE ?? 'http://localhost:8081';
 
 export class ApiError extends Error {
   constructor(status, message) {
@@ -2809,7 +2926,7 @@ export function routeRisk({ from, to, minCrashes }) {
 Create `frontend/.env.development`:
 
 ```
-VITE_API_BASE=http://localhost:8080
+VITE_API_BASE=http://localhost:8081
 ```
 
 - [ ] **Step 2: Verify the app still builds**

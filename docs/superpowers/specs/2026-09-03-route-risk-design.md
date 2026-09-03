@@ -231,17 +231,26 @@ a quarter of all British road "Critical" — the ML's own band cutoffs are mappe
 piecewise-linearly onto the existing 0–100 scale, so the tier words keep the
 meaning the ML gave them:
 
-| `blackspot_score` | Display 0–100 | Tier |
-|---|---|---|
-| 0 → 0.45 | 0 → 24 | Watch |
-| 0.45 → 0.85 | 25 → 49 | Elevated |
-| 0.85 → 1.45 | 50 → 74 | Severe |
-| 1.45 → 2.20 | 75 → 89 | Critical |
-| 2.20 → max | 90 → 100 | Critical |
+| `blackspot_score` | Display 0–100 | Tier | Share of displayed segments |
+|---|---|---|---|
+| 0 → 0.94 | 0 → 24 | Watch | 50% |
+| 0.94 → 1.57 | 25 → 49 | Elevated | 30% |
+| 1.57 → 3.09 | 50 → 74 | Severe | 15% |
+| 3.09 → 9.67 | 75 → 100 | Critical | 5% |
 
-Cutoffs come from the real score distribution (median 0.25, p90 0.83,
-p99 2.04), so "Critical" remains roughly the worst 1% of British road rather
-than a quarter of it. `lib/risk.js` keeps `tierOf`, `markerRadius`, and
+**Revised 2026-09-03 after measuring the data.** Cutoffs are calibrated to the
+population the UI actually displays, not to all 45,014 segments. The UI filters
+to `n_crashes >= 6`, which strips out overwhelmingly low-scoring rows: the
+median over all segments is 0.25, but over the 6,213 displayed it is 0.94.
+Cutoffs drawn from the full population put **23.3% of displayed segments in
+"Critical"** and 60% in Severe-or-worse — the very outcome percentile mapping
+was rejected to avoid. The values above are the 50th/80th/95th percentiles of
+the displayed population.
+
+The legend must state that tiers rank segments with enough evidence to be
+ranked, and are not absolute national bands — a segment shown as "Watch" at
+0.90 still sits above the national median. That disclosure is what makes this
+calibration honest rather than flattering. `lib/risk.js` keeps `tierOf`, `markerRadius`, and
 `worstTier` unchanged; a new `scoreToDisplay(blackspotScore)` does the mapping
 and is the only place the constants live. The raw expected-KSI value is shown
 alongside the tier in the detail panel, never replaced by it.
