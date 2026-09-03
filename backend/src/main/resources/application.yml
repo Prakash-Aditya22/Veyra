@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: blackspot-api
+  datasource:
+    # Absent at startup is fine — health and unit tests do not touch the DB.
+    url: ${DATABASE_URL:}
+  sql:
+    init:
+      mode: never
+
+ors:
+  api-key: ${ORS_API_KEY:}
+  base-url: https://api.openrouteservice.org
+
+blackspot:
+  corridor-metres: 50
+  min-crashes: 6
+  max-segments: 2000
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.veyra.blackspot: INFO
