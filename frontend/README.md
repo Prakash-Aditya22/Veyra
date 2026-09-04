@@ -25,7 +25,7 @@ npm run build
 
 | Route | Screen | Notes |
 |---|---|---|
-| `/` | Landing / Overview | Asymmetric hero with inline map typography, two capability rows, methodology, provenance |
+| `/` | Landing / Overview | Centred hero over an animated wave background, two capability rows, methodology, provenance — the page's scroll motion is choreographed with GSAP ScrollTrigger, see below |
 | `/explorer` | Blackspot Explorer | The primary screen. Filter rail, map canvas, docked results panel, permanent legend |
 | `/explorer?segment=<id>` | Blackspot Detail | The docked panel switches to detail for that segment id (e.g. `A23_run3_km0.5`). Deep linkable; the route screen's blackspot rows link here |
 | `/rankings` | Rankings Table | Sortable, searchable, sticky header, sticky rank column |
@@ -70,23 +70,57 @@ The two dataset-level chart series live in `src/data/series.js` and cover every
 record in the window, not only clustered records. The charts that use them say
 so beneath their titles.
 
+## Hero background
+
+The landing hero's wave field (`src/components/GradientWaves.jsx`) is a WebGL
+raymarched shader built on [`ogl`](https://github.com/oframe/ogl), retinted to
+the product's palette — graphite horizon, Beacon Teal waves, bone-white
+crests — so it reads as this product's background rather than a stock effect.
+It renders behind the hero copy with a radial scrim for text contrast, and is
+skipped entirely (not paused) under `prefers-reduced-motion`.
+
 ## Motion
 
 All timings live in `src/lib/motion.js` and follow DESIGN.md section 6: one
 spring (stiffness 100, damping 20), a 30ms stagger step, a 180ms cross-fade.
-Nothing invents its own timing.
+Nothing invents its own timing — except the Landing page, which is a
+deliberate, scoped exception documented below.
 
 Three reusable pieces in `src/components/motion/`:
 
 | Component | What it does | Where |
 |---|---|---|
-| `Reveal` | Scroll-triggered fade plus a 14px settle, `viewport.once` so it never replays | Landing sections, statistics panels, factor rows |
+| `Reveal` | Scroll-triggered fade plus a 14px settle, `viewport.once` so it never replays | Statistics panels, factor rows |
 | `CountUp` | A figure springs from zero to its value when scrolled into view | Landing metrics, dashboard KPI strip |
 | `SpringBar` | Proportion bar grows via `scaleX` from a left origin | Severity split, contributing factors |
 
 `<MotionConfig reducedMotion="user">` in `App.jsx` makes every Motion component
 in the tree respect the operating system setting, rather than each component
 checking for itself.
+
+### The Landing page is the one exception
+
+`Landing.jsx` does not use `Reveal`. DESIGN.md section 2 fixes this product at
+**Motion: 4** — "fluid but restrained... no cinematic scroll choreography" —
+but the Landing page's scroll motion (hero pins and recedes as the wave field
+pushes in, both capability rows pin while their content slides in from
+opposite edges, metrics/methodology/footer scrub into place) is exactly that,
+built on GSAP + ScrollTrigger (`src/lib/gsapScroll.js`) instead of Motion's
+`whileInView`. That was a deliberate choice for this one page, not an
+oversight; every other screen still follows DESIGN.md section 6 as written,
+and `Reveal` still exists for them.
+
+Two things worth knowing if you touch it:
+
+- **`gsap.context()` scopes every selector to the page, and its `revert()` on
+  unmount tears everything down.** ScrollTrigger instances are otherwise
+  global and leak across React Router navigation without this — verified by
+  checking `ScrollTrigger.getAll().length` returns to the same count after a
+  round trip through another route.
+- **Pinned sections start at `top {navHeight}px`, not `top top`.** The nav bar
+  is sticky with its own `z-index` above the pinned content; pinning flush to
+  the literal viewport top renders the section's headline behind the nav
+  instead of below it.
 
 Two rules this product holds harder than the animation is worth:
 
@@ -96,9 +130,11 @@ Two rules this product holds harder than the animation is worth:
   1200ms**, whatever the animation did. A figure frozen part way through a count
   is a wrong figure, and this product reports casualty counts.
 
-Perpetual motion is still limited to exactly two things, as the design document
-requires: the selected marker's ring pulse and the header's dataset dot. Nothing
-else loops.
+Perpetual motion is limited to exactly one thing, as the design document
+requires: the selected marker's ring pulse. Nothing else loops. (The header's
+dataset dot — the other of the original two — was removed along with the
+"Precomputed" status readout it belonged to; the nav no longer surfaces that
+state.)
 
 **Not implemented:** DESIGN.md asks for spring-driven marker radius changes on
 the map. Markers currently resize in one step when the filter set changes.
