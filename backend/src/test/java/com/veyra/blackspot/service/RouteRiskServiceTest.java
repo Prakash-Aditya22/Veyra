@@ -161,4 +161,89 @@ class RouteRiskServiceTest {
 
         assertThat(out.routes().get(0).blackspots().get(0).thinlyEvidenced()).isTrue();
     }
+
+    // ---- near-duplicate alternatives -------------------------------------
+    //
+    // Measured against the live ORS API for Croydon -> Camden: two of the three
+    // returned alternatives were 25891.5 m / 4371.8 s and 25909.3 m / 4382.1 s
+    // — 17.8 m and 10.3 s apart, rounding to the same displayed "67 min,
+    // 24.4 km" and traversing the same blackspots. Their geometries were NOT
+    // equal (845 vs 849 coordinates), so exact comparison catches nothing.
+
+    @Test
+    void alternativesTheUserCannotTellApartAreCollapsed() {
+        var repo = mock(SegmentRepository.class);
+        when(repo.findAlongRoute(anyString(), anyDouble(), anyInt()))
+            .thenReturn(List.of(new CorridorHit(seg("a", 2.0, 10), 0.3)));
+
+        var svc = new RouteRiskService(
+            fakeClient(List.of(route(25891.5, 4371.8), route(25909.3, 4382.1))),
+            repo, ORS_PROPS);
+        var out = svc.assess(LONDON_S, LONDON_N, 6, 50);
+
+        assertThat(out.routes()).hasSize(1);
+    }
+
+    @Test
+    void routesPassingTheSameBlackspotsButMateriallyLongerAreBothKept() {
+        var repo = mock(SegmentRepository.class);
+        when(repo.findAlongRoute(anyString(), anyDouble(), anyInt()))
+            .thenReturn(List.of(new CorridorHit(seg("a", 2.0, 10), 0.3)));
+
+        // same blackspots, but 40% further — a real choice, not a duplicate
+        var svc = new RouteRiskService(
+            fakeClient(List.of(route(20_000, 3600), route(28_000, 4200))), repo, ORS_PROPS);
+        var out = svc.assess(LONDON_S, LONDON_N, 6, 50);
+
+        assertThat(out.routes()).hasSize(2);
+    }
+
+    @Test
+    void routesOfSimilarLengthPassingDifferentBlackspotsAreBothKept() {
+        var repo = mock(SegmentRepository.class);
+        when(repo.findAlongRoute(anyString(), anyDouble(), anyInt()))
+            .thenReturn(List.of(new CorridorHit(seg("a", 2.0, 10), 0.3)))
+            .thenReturn(List.of(new CorridorHit(seg("b", 5.0, 10), 0.3)));
+
+        var svc = new RouteRiskService(
+            fakeClient(List.of(route(25891.5, 4371.8), route(25909.3, 4382.1))),
+            repo, ORS_PROPS);
+        var out = svc.assess(LONDON_S, LONDON_N, 6, 50);
+
+        assertThat(out.routes()).hasSize(2);
+    }
+
+    @Test
+    void twoCleanRoutesOfDifferentLengthSurvive() {
+        // Both pass zero blackspots, so their (empty) blackspot sets match.
+        // Requiring a similar length too is what stops this collapsing into
+        // one and silently removing a real travel option.
+        var repo = mock(SegmentRepository.class);
+        when(repo.findAlongRoute(anyString(), anyDouble(), anyInt())).thenReturn(List.of());
+
+        var svc = new RouteRiskService(
+            fakeClient(List.of(route(20_000, 3600), route(30_000, 4500))), repo, ORS_PROPS);
+        var out = svc.assess(LONDON_S, LONDON_N, 6, 50);
+
+        assertThat(out.routes()).hasSize(2);
+    }
+
+    @Test
+    void labelsAndIndicesAreAssignedOverTheKeptRoutesOnly() {
+        var repo = mock(SegmentRepository.class);
+        when(repo.findAlongRoute(anyString(), anyDouble(), anyInt()))
+            .thenReturn(List.of(new CorridorHit(seg("a", 9.0, 10), 0.3)))   // route 0
+            .thenReturn(List.of(new CorridorHit(seg("a", 9.0, 10), 0.3)))   // dup of 0
+            .thenReturn(List.of(new CorridorHit(seg("b", 1.0, 10), 0.3)));  // safest
+
+        var svc = new RouteRiskService(
+            fakeClient(List.of(route(25891.5, 4371.8), route(25909.3, 4382.1),
+                               route(31_000, 5000))), repo, ORS_PROPS);
+        var out = svc.assess(LONDON_S, LONDON_N, 6, 50);
+
+        assertThat(out.routes()).hasSize(2);
+        assertThat(out.routes()).extracting("index").containsExactly(0, 1);
+        assertThat(out.routes().get(0).label()).isEqualTo("Fastest");
+        assertThat(out.routes().get(1).label()).isEqualTo("Safest");
+    }
 }

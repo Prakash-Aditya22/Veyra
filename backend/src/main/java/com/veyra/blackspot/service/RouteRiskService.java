@@ -28,6 +28,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class RouteRiskService {
 
+    /**
+     * Two routes within this relative difference in both distance and duration
+     * are treated as the same size. 1% is well below what a card shows: it
+     * separates the 0.07% seen between real ORS near-duplicates from any
+     * difference a user would act on.
+     */
+    private static final double INDISTINGUISHABLE = 0.01;
+
     /** Generous bounds for Great Britain, the extent of the STATS19 data. */
     private static final double GB_MIN_LON = -8.7, GB_MAX_LON = 2.0;
     private static final double GB_MIN_LAT = 49.8, GB_MAX_LAT = 61.0;
@@ -53,6 +61,7 @@ public class RouteRiskService {
         for (int i = 0; i < raw.size(); i++) {
             scored.add(score(i, raw.get(i), minCrashes, corridorMetres));
         }
+        scored = dropIndistinguishable(scored);
         scored = label(scored);
 
         boolean covered = raw.stream().flatMap(r -> r.geometry().stream()).anyMatch(
@@ -91,6 +100,67 @@ public class RouteRiskService {
 
         return new ScoredRoute(index, "Alternative", r.distanceMetres(), r.durationSeconds(),
             r.geometry(), round(expectedKsi), blackspots.size(), worst, blackspots);
+    }
+
+    /**
+     * Drop alternatives a user could not tell apart.
+     *
+     * ORS sometimes returns routes that differ only trivially. Measured live
+     * for Croydon -> Camden, two of the three alternatives came back 17.8 m and
+     * 10.3 s apart — both rendering as "67 min, 24.4 km" and traversing the
+     * same blackspots. Their geometries were NOT equal (845 vs 849
+     * coordinates), so comparing geometry or summary figures for equality
+     * catches nothing. Two identical-looking cards read as a bug and offer no
+     * choice.
+     *
+     * A route is dropped only when BOTH hold against one already kept:
+     *
+     *   1. it passes exactly the same blackspots, in the same order — that is
+     *      the comparison this screen exists to make; and
+     *   2. its distance and duration are within {@link #INDISTINGUISHABLE}.
+     *
+     * Both conditions are required deliberately. Condition 1 alone would
+     * collapse two genuinely different routes that each happen to pass no
+     * blackspots at all, silently removing a real travel option.
+     *
+     * Indices are reassigned so the surviving routes stay 0..n-1, which is what
+     * the frontend selects on.
+     */
+    private static List<ScoredRoute> dropIndistinguishable(List<ScoredRoute> routes) {
+        List<ScoredRoute> kept = new ArrayList<>();
+        for (ScoredRoute r : routes) {
+            boolean duplicate = kept.stream()
+                .anyMatch(k -> sameBlackspots(k, r) && sameSize(k, r));
+            if (!duplicate) {
+                kept.add(new ScoredRoute(kept.size(), r.label(), r.distanceMetres(),
+                    r.durationSeconds(), r.geometry(), r.expectedKsi(), r.blackspotCount(),
+                    r.worstSegmentId(), r.blackspots()));
+            }
+        }
+        return kept;
+    }
+
+    /** Same segments, in the same order a driver would meet them. */
+    private static boolean sameBlackspots(ScoredRoute a, ScoredRoute b) {
+        if (a.blackspots().size() != b.blackspots().size()) {
+            return false;
+        }
+        for (int i = 0; i < a.blackspots().size(); i++) {
+            if (!a.blackspots().get(i).segmentId().equals(b.blackspots().get(i).segmentId())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean sameSize(ScoredRoute a, ScoredRoute b) {
+        return relativelyEqual(a.distanceMetres(), b.distanceMetres())
+            && relativelyEqual(a.durationSeconds(), b.durationSeconds());
+    }
+
+    private static boolean relativelyEqual(double x, double y) {
+        double scale = Math.max(Math.abs(x), Math.abs(y));
+        return scale == 0 || Math.abs(x - y) / scale <= INDISTINGUISHABLE;
     }
 
     /**
