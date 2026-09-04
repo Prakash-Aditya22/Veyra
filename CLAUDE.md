@@ -5,9 +5,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this is
 
 The ML half of a university group project: **road blackspot detection for Great
-Britain**. Backend (Spring Boot), frontend (React/Leaflet) and architecture are
-owned by teammates — this repo produces the data and models they consume, and
-ships them in `handoff/`.
+Britain**. This file covers the `ml/` pipeline, originally built and owned as
+a separate concern from the backend (Spring Boot) and frontend (React/Leaflet)
+work — the three have since merged into this one repo (see Layout below).
+`ml/` produces the data and models the backend consumes, via `data/`.
 
 Three deliverables: **blackspot scores per 500 m of road**, a **severity model**,
 and **SHAP explanations**. The blackspot ranking is the primary product; the
@@ -15,17 +16,22 @@ severity model exists mainly as an input to it.
 
 ## Running things
 
-No test suite, no build step. Four scripts, run in order from the repo root:
+No test suite, no build step. Four scripts, run in order from `ml/`:
 
 ```bash
-python build_recent.py        # downloads ~4GB STATS19 -> stats19_recent.csv (581MB), ~30 min
+python build_recent.py        # ml/stats19_raw/*.csv -> stats19_recent.csv (581MB), ~30 min
 python road_segments.py       # chainage -> 500m segments -> blackspot scores, ~15 min
-python severity_final.py      # severity models + SHAP -> severity_outputs/, ~20 min
+python severity_final.py      # severity models + SHAP -> models/, shap/, reports/, ~20 min
 python severity_deployable.py # deployable-vs-explanatory severity comparison, ~10 min
 ```
 
-Only step 1 needs internet. Steps 2–4 all read `stats19_recent.csv`, so step 1
-must have completed. Deps: `pandas numpy scikit-learn lightgbm shap joblib scipy pyarrow`.
+`build_recent.py` does not download anything — it reads three pre-downloaded
+DfT STATS19 CSVs (collision, vehicle, casualty) from `ml/stats19_raw/`, which
+is gitignored and not shipped in this repo; fetch them manually from
+`data.dft.gov.uk/road-accidents-safety-data/` before running it, or the script
+fails with `FileNotFoundError`. None of the four steps need internet. Steps
+2–4 all read `stats19_recent.csv`, so step 1 must have completed. Deps:
+`pandas numpy scikit-learn lightgbm shap joblib scipy pyarrow`.
 
 Long runs should go in the background — several exceed a 10-minute foreground
 timeout.
@@ -109,13 +115,24 @@ as a cause.
 
 ## Layout
 
+This repo also holds the teammates' backend and frontend — this file covers
+the `ml/` pipeline only; see `backend/README.md` and `frontend/README.md` for
+those.
+
 ```
-build_recent.py road_segments.py severity_final.py severity_deployable.py
-clean_road_accident_data.py   pre-existing; cleans an older 2009-10 file, now unused
-handoff/                      packaged deliverable + README for teammates
-severity_outputs/             models, metrics, global + per-level SHAP
-archive/                      superseded experiments — keep, they document what failed
-stats19_recent.csv            581MB, regenerable, not in git
+backend/                       Spring Boot API — segments, route risk, geocoding
+frontend/                      React 18 + Vite + Leaflet UI
+data/                          road_segments_ranked.csv — 45,014 scored segments, consumed by backend
+docs/                          specs and plans (docs/superpowers/)
+ml/                             this pipeline
+  build_recent.py road_segments.py severity_final.py severity_deployable.py
+  clean_road_accident_data.py   pre-existing; cleans an older 2009-10 file, now unused
+  models/ shap/ reports/        severity models, metrics, global + per-level SHAP
+  demo/                         blackspot_map.html — standalone demo, no server needed
+  reference/                    DfT casualty valuation tables (RAS4001)
+  archive/                      superseded experiments — keep, they document what failed
+  stats19_raw/                  three pre-downloaded DfT CSVs, gitignored, not shipped
+  stats19_recent.csv            581MB, regenerable, not in git
 ```
 
 `archive/` holds real negative results worth citing: a hierarchical cascade

@@ -6,14 +6,18 @@ Everything the backend and frontend need, plus a working demo.
 
 ```bash
 pip install -r requirements.txt
-python build_recent.py         # downloads STATS19 -> stats19_recent.csv (581MB, gitignored), ~30 min
+python build_recent.py         # ml/stats19_raw/*.csv -> stats19_recent.csv (581MB, gitignored), ~30 min
 python road_segments.py        # 500m road segments + blackspot scores
 python severity_final.py       # severity models + SHAP
 python severity_deployable.py  # deployable vs explanatory severity
 ```
 
-Only the first needs internet. Outputs the backend consumes are committed to
-`../data/`.
+`build_recent.py` does not download anything — it reads three pre-downloaded
+DfT STATS19 CSVs (collision, vehicle, casualty) from `stats19_raw/`, which is
+gitignored and not shipped in this repo. Fetch them manually from
+`data.dft.gov.uk/road-accidents-safety-data/` first, or the script fails with
+`FileNotFoundError`. None of the four scripts need internet. Outputs the
+backend consumes are committed to `../data/`.
 
 **Data:** UK STATS19 (DfT), Open Government Licence v3.0.
 1,049,378 collisions, 2015–2023. Segments built from 2019–2021 crashes,
@@ -245,7 +249,9 @@ State these in the report; an examiner will look for them.
 ## Reproducing
 
 `stats19_recent.csv` (581 MB) is not included — `build_recent.py`
-regenerates it from DfT in about 30 minutes. 
+regenerates it from the raw DfT CSVs in `stats19_raw/` in about 30 minutes
+(fetch those from `data.dft.gov.uk/road-accidents-safety-data/` first; they
+are not shipped in this repo either).
 
 **Not included, and why:** `severity_3class_model.joblib` (24 MB). Its
 metrics are in `ml/models/severity_metrics.json`, and `severity_final.py`
