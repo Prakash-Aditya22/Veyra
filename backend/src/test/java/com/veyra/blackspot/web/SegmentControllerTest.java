@@ -87,10 +87,50 @@ class SegmentControllerTest {
 
     @Test
     void withoutBboxReturnsTopRanked() throws Exception {
-        when(repo.findTop(anyInt())).thenReturn(List.of(sample()));
+        when(repo.findTop(anyDouble(), anyInt(), anyInt())).thenReturn(List.of(sample()));
         mvc.perform(get("/api/segments"))
            .andExpect(status().isOk())
            .andExpect(jsonPath("$[0].rank").value(1));
+    }
+
+    @Test
+    void theNoBboxPathAppliesMinScoreAndMinCrashesRatherThanDroppingThem() throws Exception {
+        // The defect this guards: the no-bbox branch accepted both parameters
+        // and called a repository method that took only a limit, so
+        // ?minCrashes=6 silently returned segments resting on one crash.
+        when(repo.findTop(anyDouble(), anyInt(), anyInt())).thenReturn(List.of(sample()));
+
+        mvc.perform(get("/api/segments?minScore=1.5&minCrashes=6&limit=25"))
+           .andExpect(status().isOk());
+
+        org.mockito.Mockito.verify(repo).findTop(1.5, 6, 25);
+    }
+
+    @Test
+    void theNoBboxPathFallsBackToTheConfiguredEvidenceFloor() throws Exception {
+        // Omitting minCrashes must not mean "no floor": it means the
+        // configured blackspot.min-crashes, the population the tier cutoffs
+        // are calibrated against.
+        when(repo.findTop(anyDouble(), anyInt(), anyInt())).thenReturn(List.of(sample()));
+
+        mvc.perform(get("/api/segments")).andExpect(status().isOk());
+
+        org.mockito.Mockito.verify(repo).findTop(0.0, 6, 500);
+    }
+
+    @Test
+    void minCrashesBelowOneIsRejected() throws Exception {
+        // RouteController has always enforced this floor for the same-named
+        // parameter; this endpoint accepted any integer, negatives included.
+        mvc.perform(get("/api/segments?minCrashes=0"))
+           .andExpect(status().isBadRequest())
+           .andExpect(jsonPath("$.message")
+               .value(org.hamcrest.Matchers.containsString("minCrashes")));
+
+        mvc.perform(get("/api/segments?bbox=-0.51,51.28,0.34,51.70&minCrashes=-5"))
+           .andExpect(status().isBadRequest())
+           .andExpect(jsonPath("$.message")
+               .value(org.hamcrest.Matchers.containsString("minCrashes")));
     }
 
     @Test

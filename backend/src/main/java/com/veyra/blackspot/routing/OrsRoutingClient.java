@@ -15,6 +15,7 @@ import com.veyra.blackspot.domain.RouteRisk.RawRoute;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
@@ -130,12 +131,24 @@ public class OrsRoutingClient implements RoutingClient {
         // the URL as a string and passing it through URI.create(...) does
         // not encode it, so any multi-word query (e.g. "Trafalgar Square")
         // would throw IllegalArgumentException outside the catch below.
+        //
+        // The key is NOT a URI variable here. ORS accepts it either as
+        // api_key= or as an Authorization header, and in the query string it
+        // ends up in the URI itself -- which reaches Spring's own DEBUG
+        // logging, any HTTP wire log and any proxy access log. One --debug
+        // during a demo would print it. route() has always sent it as a
+        // header; this does the same, so there is one way to authenticate
+        // and no way for the credential to reach a log line.
         String urlTemplate = props.getBaseUrl()
-            + "/geocode/search?api_key={key}&text={text}&boundary.country=GB&size=5";
+            + "/geocode/search?text={text}&boundary.country={country}&size=5";
+
+        HttpHeaders h = new HttpHeaders();
+        h.set(HttpHeaders.AUTHORIZATION, props.getApiKey());
 
         JsonNode root;
         try {
-            root = http.getForObject(urlTemplate, JsonNode.class, props.getApiKey(), query);
+            root = http.exchange(urlTemplate, HttpMethod.GET, new HttpEntity<>(h),
+                                 JsonNode.class, query, "GB").getBody();
         } catch (RestClientException e) {
             throw new RoutingException(RoutingException.Kind.UNAVAILABLE,
                 "geocoding service unavailable", e);

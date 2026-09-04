@@ -55,9 +55,23 @@ public class SegmentRepository {
             b.minLon(), b.minLat(), b.maxLon(), b.maxLat(), minScore, minCrashes, limit);
     }
 
-    public List<Segment> findTop(int limit) {
-        return jdbc.query("SELECT " + COLS + " FROM road_segment ORDER BY rank ASC LIMIT ?",
-                          MAPPER, limit);
+    /**
+     * The nationally worst-ranked segments, subject to the same two filters
+     * the bbox query applies.
+     *
+     * There is deliberately no unfiltered overload. This method used to take
+     * only a limit, so /api/segments without a bbox accepted minScore and
+     * minCrashes and then discarded them - a request for six-crash evidence
+     * came back full of segments resting on one, with nothing to say the
+     * filter had done nothing.
+     */
+    public List<Segment> findTop(double minScore, int minCrashes, int limit) {
+        return jdbc.query("""
+            SELECT %s FROM road_segment
+            WHERE blackspot_score >= ? AND n_crashes >= ?
+            ORDER BY rank ASC
+            LIMIT ?
+            """.formatted(COLS), MAPPER, minScore, minCrashes, limit);
     }
 
     /**

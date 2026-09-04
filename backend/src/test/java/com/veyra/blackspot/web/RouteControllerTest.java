@@ -80,8 +80,18 @@ class RouteControllerTest {
            .andExpect(status().isBadRequest());
     }
 
+    /*
+     * Named for what it asserts, not for the premise it was written under. The
+     * original name claimed a literal `null` body had been a 500; it never
+     * was. Spring's AbstractMessageConverterMethodArgumentResolver refuses to
+     * bind a null-deserialized value to a required @RequestBody and throws
+     * HttpMessageNotReadableException before the method body runs, so the
+     * status was already 400. What this test actually holds in place is that
+     * the reply carries this API's own {"message": ...} contract rather than
+     * Spring's default error page.
+     */
     @Test
-    void aNullBodyIsFourHundredNotFiveHundred() throws Exception {
+    void aNullBodyIsRejectedWithThisApisOwnErrorBody() throws Exception {
         mvc.perform(post("/api/route/risk").contentType(MediaType.APPLICATION_JSON).content("null"))
            .andExpect(status().isBadRequest())
            .andExpect(jsonPath("$.message").value(containsString("request body")));

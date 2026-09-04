@@ -37,8 +37,17 @@ public class SegmentController {
             throw new IllegalArgumentException("limit must be between 1 and " + maxSegments);
         }
         int effectiveMinCrashes = minCrashes == null ? defaultMinCrashes : minCrashes;
+        // Same floor RouteController enforces for the same-named parameter. A
+        // segment cannot rest on fewer than one crash, and a negative used to
+        // pass straight through to the repository.
+        if (effectiveMinCrashes < 1) {
+            throw new IllegalArgumentException("minCrashes must be at least 1");
+        }
+        // Both branches apply both filters. The no-bbox branch used to accept
+        // minScore and minCrashes and then drop them, so ?minCrashes=6 without
+        // a bbox returned thinly-evidenced segments and said nothing about it.
         return bbox == null
-            ? repo.findTop(limit)
+            ? repo.findTop(minScore, effectiveMinCrashes, limit)
             : repo.findInBbox(BoundingBox.parse(bbox), minScore, effectiveMinCrashes, limit);
     }
 

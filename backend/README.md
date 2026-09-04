@@ -58,11 +58,23 @@ Verify without ever printing the value:
     [ -n "$DATABASE_URL" ] && echo "set"
     [ -n "$ORS_API_KEY" ] && echo "set"
 
-PowerShell: read each `KEY=value` line of `.env` and run
-`Set-Item Env:KEY value`, splitting each line on the first `=` only (e.g.
-`$line -split '=', 2`, not `-split '='`) so the same trailing-`=` truncation
-doesn't reappear there — the `&`-in-value hazard doesn't apply on this side,
-but a dotenv-loading plugin works too if you prefer one.
+PowerShell — the same thing, run from `backend/`:
+
+    Get-Content .env | Where-Object { $_ -match '^\s*[^#\s]' } | ForEach-Object {
+      $k, $v = $_ -split '=', 2
+      Set-Item -Path "Env:$($k.Trim())" -Value $v
+    }
+
+`-split '=', 2` is the whole point: the `, 2` caps the split at two fields, so
+only the *first* `=` separates key from value and a trailing `=` in the value
+survives. `-split '='` without it truncates the ORS key exactly as `IFS='='`
+does above, with the same unexplained 403. The `&`-in-value hazard does not
+apply on this side — `Get-Content` never re-parses the line as syntax.
+
+Verify without printing either value:
+
+    if ($env:DATABASE_URL) { "DATABASE_URL set" }
+    if ($env:ORS_API_KEY)  { "ORS_API_KEY set" }
 
 ## Create the schema
 

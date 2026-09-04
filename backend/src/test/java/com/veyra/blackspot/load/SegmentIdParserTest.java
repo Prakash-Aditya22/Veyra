@@ -21,6 +21,16 @@ class SegmentIdParserTest {
     }
 
     @Test
+    void parsesAMultiDigitRun() {
+        // 211 of the 45,014 real segment ids carry a two-digit run, and only
+        // parsesRunZero covered the run group at all - a pattern anchored to a
+        // single digit would have passed every other test in this file.
+        assertThat(SegmentIdParser.parse("A23_run12_km3.5").run()).isEqualTo(12);
+        assertThat(SegmentIdParser.parse("A23_run12_km3.5").roadId()).isEqualTo("A23");
+        assertThat(SegmentIdParser.parse("A23_run12_km3.5").kmFrom()).isEqualTo(3.5);
+    }
+
+    @Test
     void parsesMotorwayAndBRoadNumbers() {
         assertThat(SegmentIdParser.parse("M25_run2_km60.0").roadId()).isEqualTo("M25");
         assertThat(SegmentIdParser.parse("B1234_run0_km1.5").roadId()).isEqualTo("B1234");
