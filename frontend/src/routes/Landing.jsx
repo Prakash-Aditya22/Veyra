@@ -278,10 +278,16 @@ export default function Landing() {
         {/*
           Not a mock-up: these are the same row and badge components the
           rankings screen renders, reading the same data.
+
+          The rows open the explorer, not a particular stretch. This preview
+          still reads the Bhubaneswar fixture, whose ids (BBS-C0417) cannot
+          resolve against /api/segments/{id}, so a per-row deep link would
+          land on an explorer with nothing selected. It returns in Phase 2,
+          when this screen moves onto the segment API.
         */}
         <div className="capability__rows">
           {PREVIEW_ROWS.map((b, i) => (
-            <Link key={b.id} to={`/explorer?cluster=${b.id}`} className="preview-row">
+            <Link key={b.id} to="/explorer" className="preview-row">
               <span className="preview-row__rank mono">
                 {String(i + 1).padStart(2, '0')}
               </span>

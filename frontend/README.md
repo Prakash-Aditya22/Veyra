@@ -27,7 +27,7 @@ npm run build
 |---|---|---|
 | `/` | Landing / Overview | Asymmetric hero with inline map typography, two capability rows, methodology, provenance |
 | `/explorer` | Blackspot Explorer | The primary screen. Filter rail, map canvas, docked results panel, permanent legend |
-| `/explorer?cluster=<id>` | Blackspot Detail | The docked panel switches to detail for that cluster. Deep linkable |
+| `/explorer?segment=<id>` | Blackspot Detail | The docked panel switches to detail for that segment id (e.g. `A23_run3_km0.5`). Deep linkable; the route screen's blackspot rows link here |
 | `/rankings` | Rankings Table | Sortable, searchable, sticky header, sticky rank column |
 | `/statistics` | Statistics Dashboard | Four panels on an asymmetric 2:1 grid, plus a weighted factor ranking |
 

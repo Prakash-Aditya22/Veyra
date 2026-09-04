@@ -38,6 +38,17 @@ export function tierOf(score) {
   );
 }
 
+/**
+ * Fill opacity for a thinly-evidenced segment - fewer than six recorded
+ * crashes, so its score rests on too little to read at face value.
+ *
+ * Such a segment is NOT withheld and is NOT drawn in the No-data colour: it
+ * keeps its tier colour and is dimmed to this value. The constant lives here
+ * because the legend renders its sample at the same opacity, and a legend that
+ * does not match the map is worse than no legend.
+ */
+export const THIN_FILL_OPACITY = 0.45;
+
 /** Marker radius scales with incident count, clamped to 6px-22px. */
 export function markerRadius(incidents, maxIncidents) {
   if (!maxIncidents) return 6;

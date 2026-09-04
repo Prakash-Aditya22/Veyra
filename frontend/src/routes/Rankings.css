@@ -108,21 +108,17 @@
   color: var(--bone-white);
 }
 
+/*
+  Rows do not navigate in Phase 1 (see Rankings.jsx), so no pointer cursor and
+  no focus ring: promising a click that does nothing is worse than no promise.
+  The hover wash stays — it tracks the eye across a wide table.
+*/
 .rank-table__row {
-  cursor: pointer;
   transition: background var(--dur-fast) var(--ease-settle);
 }
 
 .rank-table__row:hover .rank-table__td {
   background: var(--raised-slate);
-}
-
-.rank-table__row:focus-visible {
-  outline: none;
-}
-
-.rank-table__row:focus-visible .rank-table__td {
-  background: var(--beacon-teal-wash);
 }
 
 .rank-table__td {

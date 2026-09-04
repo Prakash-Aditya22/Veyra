@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, CircleMarker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet.heat';
 import { Plus, Minus, StackSimple, MapTrifold, CrosshairSimple } from '@phosphor-icons/react';
-import { tierOf, markerRadius } from '../lib/risk.js';
+import { tierOf, markerRadius, THIN_FILL_OPACITY } from '../lib/risk.js';
 import { MAP_CENTER, MAP_ZOOM } from '../data/blackspots.js';
 import Legend from './Legend.jsx';
 import './MapCanvas.css';
@@ -271,8 +271,9 @@ export default function MapCanvas({
                   fillColor: tier.hex,
                   // A segment under the six-crash floor is drawn, not hidden -
                   // absence of evidence is not evidence of safety - but it is
-                  // dimmed so it never reads as an equal of a scored one.
-                  fillOpacity: b.thinlyEvidenced ? 0.45 : 0.85,
+                  // dimmed so it never reads as an equal of a scored one. The
+                  // legend shows its sample at the same constant.
+                  fillOpacity: b.thinlyEvidenced ? THIN_FILL_OPACITY : 0.85,
                   opacity: b.thinlyEvidenced ? 0.55 : 1,
                   className: isSelected ? 'map-marker--selected' : undefined,
                 }}

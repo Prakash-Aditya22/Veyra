@@ -43,6 +43,22 @@
   border-radius: 2px;
 }
 
+/*
+  A thinly-evidenced segment keeps its own tier colour on the map and is only
+  dimmed, so its sample is the whole tier ramp rather than a fifth colour. The
+  opacity is applied inline from THIN_FILL_OPACITY in lib/risk.js, the same
+  constant the map markers use.
+*/
+.legend__swatch--thin {
+  background: linear-gradient(
+    135deg,
+    var(--risk-1) 0%,
+    var(--risk-2) 33%,
+    var(--risk-3) 66%,
+    var(--risk-4) 100%
+  );
+}
+
 .legend__word {
   font-size: 0.75rem;
   font-weight: 500;

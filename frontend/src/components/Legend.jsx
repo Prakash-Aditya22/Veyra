@@ -1,4 +1,4 @@
-import { TIERS, NO_DATA_TIER } from '../lib/risk.js';
+import { TIERS, THIN_FILL_OPACITY } from '../lib/risk.js';
 import './Legend.css';
 
 /**
@@ -10,9 +10,11 @@ import './Legend.css';
  * riskScale.js calibrates them to the 50th, 80th and 95th percentiles of the
  * population the UI shows - segments with at least six recorded crashes -
  * whose median score is 0.94 against 0.25 across all 45,014. A stretch
- * labelled "Watch" is therefore below the median of the roads on screen, not
- * below the national one. Without that sentence the tiers read as absolute
- * national bands and quietly understate every segment on the map.
+ * labelled "Watch" is therefore at or below the median of the roads on screen
+ * while it may still be above the national one - Watch spans 0 to 0.94, so
+ * that holds from 0.25 upwards and not below it. Without that sentence the
+ * tiers read as absolute national bands and quietly understate every segment
+ * on the map.
  */
 export default function Legend({ variant = 'docked' }) {
   return (
@@ -32,20 +34,28 @@ export default function Legend({ variant = 'docked' }) {
             </span>
           </li>
         ))}
+        {/*
+          Not a "No data" row. blackspot_score is NOT NULL on every segment, so
+          nothing the map draws is ever unscored; the row that needs explaining
+          is the dimmed one. A segment with fewer than six recorded crashes
+          keeps its tier colour and is drawn at THIN_FILL_OPACITY, so the
+          sample is the tier ramp at that same opacity rather than a colour of
+          its own - the reader should be able to match it to what they see.
+        */}
         <li className="legend__item">
           <span
-            className="legend__swatch"
-            style={{ background: NO_DATA_TIER.color }}
+            className="legend__swatch legend__swatch--thin"
+            style={{ opacity: THIN_FILL_OPACITY }}
             aria-hidden="true"
           />
-          <span className="legend__word">{NO_DATA_TIER.word}</span>
+          <span className="legend__word">Thinly evidenced</span>
           <span className="legend__range mono">under 6 crashes</span>
         </li>
       </ul>
       <p className="legend__note">
         Tiers rank segments against the others with at least 6 recorded crashes,
-        not against every road in Great Britain. A stretch marked Watch is still
-        well above the national median.
+        not against every road in Great Britain. A stretch marked Watch can
+        still sit above the national median of 0.25 expected KSI.
       </p>
     </div>
   );

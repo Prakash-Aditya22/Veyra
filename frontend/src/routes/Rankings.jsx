@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion, useReducedMotion } from 'motion/react';
 import { CaretDown, CaretUp, MagnifyingGlass } from '@phosphor-icons/react';
 import RiskBadge from '../components/RiskBadge.jsx';
@@ -21,7 +20,6 @@ const COLUMNS = [
 ];
 
 export default function Rankings() {
-  const navigate = useNavigate();
   const reduce = useReducedMotion();
   const [sort, setSort] = useState({ key: 'score', direction: 'desc' });
   const [query, setQuery] = useState('');
@@ -55,7 +53,6 @@ export default function Rankings() {
           <h1 className="screen-title">Ranked road stretches</h1>
           <p className="body-secondary rankings__lede">
             Every detected cluster on the corridor, ordered by composite danger score.
-            Select a row to open it on the map.
           </p>
         </div>
 
@@ -149,14 +146,14 @@ export default function Rankings() {
                   <motion.tr
                     key={b.id}
                     className="rank-table__row"
-                    onClick={() => navigate(`/explorer?cluster=${b.id}`)}
-                    tabIndex={0}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        navigate(`/explorer?cluster=${b.id}`);
-                      }
-                    }}
+                    /*
+                      Rows do not navigate in Phase 1. This screen still reads
+                      the Bhubaneswar fixture, whose ids (BBS-C0417) cannot
+                      resolve against /api/segments/{id}, so a deep link here
+                      would open the explorer on nothing. The link returns in
+                      Phase 2, when Rankings moves onto the segment API and its
+                      ids become real segment ids.
+                    */
                     initial={reduce ? false : { opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{
