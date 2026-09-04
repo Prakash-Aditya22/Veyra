@@ -280,7 +280,7 @@ to `/explorer?segment=<id>`, reusing the existing detail panel.
 corridor over two years, across all traffic**. It is not the user's risk on one
 trip, and the difference is three orders of magnitude.
 
-The UI says *"this corridor accumulated 4.2 KSI casualties over two years."*
+The UI says *"this corridor is expected to produce 4.2 KSI casualties over two years."*
 It must never say *"your journey is 4.2 dangerous"*, show a per-trip
 probability, or label anything "predicted severity". The severity model behind
 this data has ROC-AUC 0.658 and its own documentation forbids that framing.

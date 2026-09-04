@@ -2855,7 +2855,10 @@ git add frontend/ && git commit -m "feat(frontend): map blackspot score onto the
 **Files:**
 - Create: `frontend/src/lib/api.js`
 - Create: `frontend/.env.development`
-- Modify: `frontend/vite.config.js`
+
+No `vite.config.js` change is needed. The backend's `WebConfig` already allows
+the Vite dev origin (`http://localhost:5173`) on `/api/**`, so the browser
+calls `http://localhost:8081` directly and no dev proxy is required.
 
 **Interfaces:**
 - Produces: `getSegments({ bbox, minScore, minCrashes, limit })`, `getSegment(id)`, `geocode(q)`, `routeRisk({ from, to, minCrashes })`, `ApiError`
@@ -3068,7 +3071,28 @@ The last piece of "the blackspot feature": Explorer stops reading the hand-autho
 **Files:**
 - Modify: `frontend/src/routes/Explorer.jsx`
 - Modify: `frontend/src/components/DetailPanel.jsx`
+- Modify: `frontend/src/components/Legend.jsx`
 - Modify: `frontend/src/data/blackspots.js`
+
+**Three carry-overs from Task 13 that must be closed here.**
+
+1. **The deep link from the Route screen is currently broken.** Task 13 emits
+   `/explorer?segment=<id>` because this plan told it to, but `Explorer.jsx`
+   reads `searchParams.get('cluster')`. Accept `segment` as the parameter name
+   (it is a segment now, not a DBSCAN cluster), and write it back with
+   `setSearchParams({ segment: id })`. Verify the link from a Route row
+   actually opens the right stretch — this is the one place the two screens
+   touch.
+
+2. **`Legend.jsx` still says "No data — under 12 records"**, the fixture's
+   threshold. The real floor is `n_crashes < 6`. Correct the copy.
+
+3. **The legend must state that tiers are relative.** The cutoffs
+   (0.94/1.57/3.09) are percentiles of the displayed population, not absolute
+   national bands — a segment shown as "Watch" at 0.90 still sits above the
+   national median of 0.25. Say so in the legend. This disclosure is the
+   condition on which the recalibration is honest; without it the tiers
+   understate risk.
 
 - [ ] **Step 1: Read what Explorer consumes today**
 
