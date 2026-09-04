@@ -19,6 +19,17 @@ describe('scoreToDisplay', () => {
     expect(tierOf(scoreToDisplay(3.08)).key).toBe('severe');
   });
 
+  it('puts each interior cutoff in the band it opens, not the one it closes', () => {
+    // 0.94 and 1.57 are the 50th and 80th percentiles of the displayed
+    // population, and they are the calibration the whole tier scheme rests
+    // on. A mutation isolated to either comparison - >= for >, or a digit
+    // moved - shows up here and nowhere else: the assertions above only
+    // bracket these two values, they never land on them.
+    expect(tierOf(scoreToDisplay(0.94)).key).toBe('elevated');
+    expect(tierOf(scoreToDisplay(1.57)).key).toBe('severe');
+    expect(tierOf(scoreToDisplay(1.56)).key).toBe('elevated');
+  });
+
   it('is monotonic', () => {
     const scores = [0, 0.5, 0.94, 1.57, 3.09, 5, 9.67];
     const display = scores.map(scoreToDisplay);
