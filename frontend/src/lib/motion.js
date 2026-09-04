@@ -28,3 +28,14 @@ export const VIEWPORT = { once: true, amount: 0.2 };
 
 /** Distance a revealing element travels. Small: this is settling, not entering. */
 export const REVEAL_Y = 14;
+
+/**
+ * The 180ms cross-fade, in seconds, as motion's `duration` wants it.
+ *
+ * Used where a panel's content is replaced but its data is already in memory -
+ * switching route, changing a filter - so the swap reads as a change of state
+ * rather than a fresh load. It is stated in DESIGN.md section 6 alongside the
+ * spring and the stagger, and belongs here with them rather than as a literal
+ * at each call site.
+ */
+export const CROSSFADE = 0.18;

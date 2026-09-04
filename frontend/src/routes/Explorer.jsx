@@ -7,7 +7,9 @@ import FilterRail from '../components/FilterRail.jsx';
 import ResultsPanel from '../components/ResultsPanel.jsx';
 import Legend from '../components/Legend.jsx';
 import { getSegments, getSegment, ApiError } from '../lib/api.js';
-import { scoreToDisplay } from '../lib/riskScale.js';
+// The API's lon -> Leaflet's lng happens in lib/geo.js and only there.
+import { toView } from '../lib/geo.js';
+import { CROSSFADE } from '../lib/motion.js';
 import {
   EMPTY_FILTERS,
   MIN_CRASHES_ALL,
@@ -35,41 +37,6 @@ const SORT_DIRECTION = {
   incidents: 'desc',
   name: 'asc',
 };
-
-/**
- * One API segment in the shape the map, the results panel and the detail
- * panel read.
- *
- * Two things are worth naming. The API reports `lon`; Leaflet takes
- * [lat, lng], so the flip happens here and only here. And `score` is the 0-100
- * display band, while `blackspotScore` stays alongside it as the model's own
- * output - expected KSI casualties over two years - because the detail panel
- * shows the raw figure rather than only its band.
- */
-function toView(s) {
-  return {
-    id: s.segmentId,
-    name: s.location,
-    lat: s.lat,
-    lng: s.lon,
-    score: scoreToDisplay(s.blackspotScore),
-    blackspotScore: s.blackspotScore,
-    // Recorded counts, 2019 to 2021. Not forecasts, unlike the score above.
-    incidents: s.nCrashes,
-    ksi: s.nKsi,
-    fatal: s.nFatal,
-    serious: s.nKsi - s.nFatal,
-    slight: s.nCrashes - s.nKsi,
-    roadClass: s.roadId,
-    speedLimit: s.speedMax,
-    pctNight: s.pctNight,
-    pctJunction: s.pctJunction,
-    kmFrom: s.kmFrom,
-    kmTo: s.kmTo,
-    rank: s.rank,
-    thinlyEvidenced: s.nCrashes < MIN_CRASHES_EVIDENCED,
-  };
-}
 
 /** An aborted request never reaches here; callers drop those silently. */
 function messageFor(err) {
@@ -307,7 +274,7 @@ export default function Explorer() {
             className="explorer__results-inner"
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.18 }}
+            transition={{ duration: CROSSFADE }}
           >
             <ResultsPanel
               results={results}

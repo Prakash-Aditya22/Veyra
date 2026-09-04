@@ -9,8 +9,11 @@ import Legend from '../components/Legend.jsx';
 import { EmptyState, ErrorState, TableSkeleton } from '../components/States.jsx';
 import { geocode, routeRisk, ApiError } from '../lib/api.js';
 import { scoreToDisplay } from '../lib/riskScale.js';
-import { tierOf, markerRadius } from '../lib/risk.js';
-import { SPRING, staggerDelay, REVEAL_Y } from '../lib/motion.js';
+import { tierOf, markerRadius, THIN_FILL_OPACITY } from '../lib/risk.js';
+import { MIN_CRASHES_ALL, MIN_CRASHES_EVIDENCED } from '../lib/filters.js';
+// The API's lon -> Leaflet's lng happens in lib/geo.js and only there.
+import { toLatLngs } from '../lib/geo.js';
+import { SPRING, staggerDelay, REVEAL_Y, CROSSFADE } from '../lib/motion.js';
 import { num } from '../lib/format.js';
 import './Route.css';
 
@@ -20,15 +23,6 @@ const GB_ZOOM = 6;
 
 const DEBOUNCE_MS = 300;
 const MIN_QUERY = 3;
-
-/*
-  The UI's own floor is six crashes: 86% of segments rest on fewer than that
-  and their scores are noise. Unchecking the box drops the floor to one and
-  the extra segments arrive flagged `thinlyEvidenced`, so they can be drawn
-  and listed as the weaker evidence they are.
-*/
-const MIN_CRASHES_EVIDENCED = 6;
-const MIN_CRASHES_ALL = 1;
 
 /**
  * The brief's four cases. An aborted request never reaches here - it throws a
@@ -48,15 +42,6 @@ function messageFor(err) {
     default:
       return err.message;
   }
-}
-
-/**
- * The API speaks GeoJSON order - {lon, lat} - and Leaflet speaks [lat, lng].
- * Every coordinate crossing that boundary passes through here, so the flip
- * exists in exactly one place rather than at each call site.
- */
-function toLatLngs(geometry) {
-  return geometry.map((c) => [c.lat, c.lon]);
 }
 
 /** Frames the chosen route. Reduced motion gets the jump, not the flight. */
@@ -373,12 +358,21 @@ export default function RouteScreen() {
                 regression's estimate for 2022-23 built from 2019-21 features,
                 not a tally of what happened - and it is a property of the
                 corridor across all traffic, not of one reader's trip.
+
+                The second sentence names the metric's shape. "Safest" is the
+                lowest expectedKsi, and expectedKsi is an unnormalised SUM over
+                the segments a route passes: a longer route accumulates more
+                segments, so the figure grows with distance and is not a rate
+                per kilometre. Saying so is the condition on which the strongest
+                label on this screen is honest.
               */}
               <p className="route-form__note">
                 Risk figures are expected killed-or-seriously-injured casualties
                 on each corridor over two years, across all traffic - a model
                 estimate, not a tally of past crashes, and not the risk of a
-                single journey.
+                single journey. Each figure is summed over the whole route, so
+                it grows with distance: a longer way round passes more scored
+                segments and is not compared per kilometre.
               </p>
             </div>
           )}
@@ -439,8 +433,8 @@ export default function RouteScreen() {
                   pathOptions={{
                     className: `route-spot route-spot--${tier.key}`,
                     weight: 1.5,
-                    fillOpacity: b.thinlyEvidenced ? 0.45 : 0.85,
-                    opacity: b.thinlyEvidenced ? 0.45 : 1,
+                    fillOpacity: b.thinlyEvidenced ? THIN_FILL_OPACITY : 0.85,
+                    opacity: b.thinlyEvidenced ? THIN_FILL_OPACITY : 1,
                   }}
                 />
               );
@@ -465,7 +459,7 @@ export default function RouteScreen() {
             aria-label="Blackspots along the selected route"
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.18 }}
+            transition={{ duration: CROSSFADE }}
           >
             <div className="route-spots__head">
               <h2 className="panel-title">Blackspots on this route</h2>
