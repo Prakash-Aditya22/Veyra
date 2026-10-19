@@ -73,3 +73,17 @@
 .legend--strip .legend__item {
   grid-template-columns: 10px auto auto;
 }
+
+/* Dashed swatch: segments with fewer than 6 collisions in the history window. */
+.legend__swatch--dashed {
+  background: transparent;
+  border: 1.5px dashed var(--steel-grey);
+}
+
+.legend__note {
+  max-width: 220px;
+  padding-top: 6px;
+  font-size: 0.6875rem;
+  line-height: 1.45;
+  color: var(--steel-grey);
+}

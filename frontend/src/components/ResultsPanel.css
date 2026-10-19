@@ -109,3 +109,40 @@
     border-top: 1px solid var(--structural-line);
   }
 }
+
+.results__more {
+  display: grid;
+  padding: var(--s3);
+}
+
+.result-row__rank {
+  min-width: 2.5rem;
+}
+
+.result-row {
+  grid-template-columns: 3rem 1fr auto;
+}
+
+/* --- Phase 5: list semantics and focus --- */
+
+.results__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.results__list:focus-visible {
+  outline: 2px solid var(--beacon-teal-lift);
+  outline-offset: -2px;
+}
+
+/* Inside a scrolling container an outside ring would be clipped; draw it inside the row. */
+.result-row:focus-visible {
+  outline: 2px solid var(--beacon-teal-lift);
+  outline-offset: -2px;
+  background: var(--raised-slate);
+}
+
+.result-row__warn {
+  color: var(--notice-amber);
+}

@@ -5,24 +5,33 @@ import { ArrowRight } from '@phosphor-icons/react';
 import MapFragment from '../components/MapFragment.jsx';
 import MapCanvas from '../components/MapCanvas.jsx';
 import GradientWaves from '../components/GradientWaves.jsx';
-import RiskBadge from '../components/RiskBadge.jsx';
+import PriorityBadge from '../components/PriorityBadge.jsx';
 import ProvenanceStrip from '../components/ProvenanceStrip.jsx';
 import CountUp from '../components/motion/CountUp.jsx';
 import { gsap, ScrollTrigger } from '../lib/gsapScroll.js';
-import { BLACKSPOTS, DATASET } from '../data/blackspots.js';
-import { MODEL_RUN } from '../data/series.js';
-import { num, shortDate } from '../lib/format.js';
+import { useData } from '../data/DataContext.jsx';
+import { fixed, int, ksi, period, pct } from '../lib/format.js';
+import { BASEMAP } from '../config/basemap.js';
+import { PRODUCT, PRODUCT_SUBTITLE, usePageTitle } from '../lib/usePageTitle.js';
 import './Landing.css';
 
-// The two crops in the headline are centred on the corridor's two
-// highest-scoring clusters, so the imagery is the dataset's own.
-const [TOP, SECOND] = BLACKSPOTS;
-
-const PREVIEW_ROWS = BLACKSPOTS.slice(0, 5);
+/*
+  Overview. Every figure on this page comes from the loaded ML release (manifest, segments,
+  context.json); nothing is typed in by hand. The two headline crops are centred on the two
+  highest-ranked segments, so the imagery is the data's own.
+*/
 
 export default function Landing() {
   const reduce = useReducedMotion();
   const rootRef = useRef(null);
+  const data = useData();
+  const ready = data.status === 'ready';
+  const r = ready ? data.release : null;
+  const [top, second] = ready ? data.segments : [];
+  const preview = ready ? data.segments.slice(0, 5) : [];
+  const holdout = ready ? data.context?.holdout ?? null : null;
+  usePageTitle(null);
+  const topSum = ready ? data.segments.filter((s) => s.stratum !== 'reference_case').reduce((a, s) => a + s.score, 0) : 0;
 
   const rise = (delay = 0) => ({
     initial: reduce ? false : { opacity: 0, y: 14 },
@@ -46,7 +55,8 @@ export default function Landing() {
     are otherwise global and would leak across route changes.
   */
   useLayoutEffect(() => {
-    if (reduce) return undefined;
+    // The choreography targets rows rendered from the data, so it starts once the data are ready.
+    if (reduce || !ready) return undefined;
 
     // The nav bar is sticky with its own z-index, and a pinned section is
     // otherwise fixed flush to the viewport top — without this offset its
@@ -161,7 +171,7 @@ export default function Landing() {
       cancelAnimationFrame(id);
       ctx.revert();
     };
-  }, [reduce]);
+  }, [reduce, ready]);
 
   return (
     <div className="landing" ref={rootRef}>
@@ -197,17 +207,26 @@ export default function Landing() {
 
         <div className="hero__type">
           <motion.h1 className="hero__headline" {...rise(0)}>
-            A few stretches
-            <MapFragment lat={TOP.lat} lng={TOP.lng} label={TOP.name} />
-            account for most of the
-            <MapFragment lat={SECOND.lat} lng={SECOND.lng} label={SECOND.name} />
-            harm.
+            Ranking Great Britain&rsquo;s roads
+            {top && <MapFragment lat={top.lat} lng={top.lon} label={top.location} />}
+            by expected serious and fatal
+            {second && <MapFragment lat={second.lat} lng={second.lon} label={second.location} />}
+            casualties.
           </motion.h1>
 
           <motion.p className="hero__sub" {...rise(0.06)}>
-            Historical incident records for the Bhubaneswar to Cuttack corridor, clustered
-            and scored so the worst stretches surface first.
+            {ready
+              ? `A forecast for ${period(r.forecastPeriod)} from police-reported collisions in ${period(
+                  r.historyPeriod,
+                )} (DfT STATS19), on OS Open Roads segments across England, Scotland and Wales. It ranks the expected casualty burden on each segment; it does not predict individual crashes.`
+              : 'Loading the Great Britain forecast.'}
           </motion.p>
+          {top && (
+            <p className="hero__credit">
+              Map crops: segments ranked 1 and 2 nationally.{' '}
+              {BASEMAP.disabled ? 'No basemap configured.' : `Basemap ${BASEMAP.attributionText || 'attribution not configured'}.`}
+            </p>
+          )}
         </div>
       </section>
 
@@ -215,23 +234,17 @@ export default function Landing() {
       <section className="metrics">
         <div className="container metrics__inner">
           <div className="metric">
-            <p className="metric__value mono">
-              <CountUp value={DATASET.records} />
-            </p>
-            <p className="label">Records analysed</p>
+            <p className="metric__value mono">{ready ? <CountUp value={r.nationalSegments} /> : '—'}</p>
+            <p className="label">Road segments scored in Great Britain</p>
           </div>
           <div className="metric">
-            <p className="metric__value mono">
-              <CountUp value={DATASET.clusters} />
-            </p>
-            <p className="label">Clusters identified</p>
+            <p className="metric__value mono">{ready ? `${fixed(r.nationalKsiCoveragePct, 1)}%` : '—'}</p>
+            <p className="label">Of serious and fatal casualties lie on scored roads</p>
           </div>
           <div className="metric">
             {/* A span of years is not a quantity, so it does not count up. */}
-            <p className="metric__value mono">
-              {DATASET.from} to {DATASET.to}
-            </p>
-            <p className="label">Coverage window</p>
+            <p className="metric__value mono">{ready ? period(r.forecastPeriod) : '—'}</p>
+            <p className="label">Forecast period (two years combined)</p>
           </div>
         </div>
       </section>
@@ -239,19 +252,24 @@ export default function Landing() {
       {/* ---------------- Capability one: map, copy on the right ---------------- */}
       <section className="capability container">
         <div className="capability__visual">
-          <MapCanvas
-            blackspots={BLACKSPOTS}
-            selectedId={null}
-            interactive={false}
-            showLegend={false}
-          />
+          {ready && <MapCanvas segments={data.segments} selectedId={null} interactive={false} showLegend={false} />}
         </div>
         <div className="capability__copy">
-          <h2 className="capability__title">Read the whole corridor in one view</h2>
+          <h2 className="capability__title">Read the highest-priority roads in one view</h2>
           <p className="body-secondary">
-            Every cluster is drawn at its centroid, sized by how many records fall inside
-            it and filled with its danger tier. Filter by period, severity, road class or
-            conditions, and the map and the ranked panel move together.
+            {ready
+              ? `This demonstration loads the ${int(r.subset.nTop)} highest-ranked of ${int(
+                  r.nationalSegments,
+                )} scored segments, drawn on their OS Open Roads centrelines, plus ${int(
+                  r.subset.nReference,
+                )} lower-ranked reference cases. Together the top ${int(r.subset.nTop)} carry ${ksi(
+                  topSum,
+                  0,
+                )} expected serious or fatal casualties in ${period(r.forecastPeriod)}, ${pct(
+                  topSum,
+                  r.nationalExpectedKsi,
+                )} of the national forecast total of ${int(r.nationalExpectedKsi)}.`
+              : 'Loading.'}
           </p>
           <Link to="/explorer" className="capability__link">
             Open the map
@@ -263,35 +281,30 @@ export default function Landing() {
       {/* ---------------- Capability two: copy left, real ranked rows right ---------------- */}
       <section className="capability capability--flip container">
         <div className="capability__copy">
-          <h2 className="capability__title">Rank stretches by evidence, not impression</h2>
+          <h2 className="capability__title">Ranked by expected burden, shown with its uncertainty</h2>
           <p className="body-secondary">
-            The composite score combines how often a stretch appears, how severe those
-            records were, and how recent they are. Boundaries are fixed and published, so
-            a score of 74 means the same thing on every screen and in every filter state.
+            Each segment carries its national rank and the range that rank takes when the model is refitted on
+            resampled data. Membership of the top 1,000 is stable; exact positions are not, so neighbouring ranks are
+            not treated as different. Model explanations, single-event warnings and per-vehicle rates are shown where
+            the data support them, and marked not available where they do not.
           </p>
           <Link to="/rankings" className="capability__link">
-            See the full ranking
+            See the ranking
             <ArrowRight size={14} weight="bold" />
           </Link>
         </div>
 
-        {/*
-          Not a mock-up: these are the same row and badge components the
-          rankings screen renders, reading the same data.
-        */}
         <div className="capability__rows">
-          {PREVIEW_ROWS.map((b, i) => (
-            <Link key={b.id} to={`/explorer?cluster=${b.id}`} className="preview-row">
-              <span className="preview-row__rank mono">
-                {String(i + 1).padStart(2, '0')}
-              </span>
+          {preview.map((s) => (
+            <Link key={s.id} to={`/explorer?segment=${encodeURIComponent(s.id)}`} className="preview-row">
+              <span className="preview-row__rank mono">{int(s.rank)}</span>
               <span className="preview-row__body">
-                <span className="preview-row__name">{b.name}</span>
+                <span className="preview-row__name">{s.location}</span>
                 <span className="preview-row__meta mono">
-                  {num(b.incidents)} incidents, last {shortDate(b.lastIncident)}
+                  {ksi(s.score)} expected KSI, {period(s.forecastPeriod)}
                 </span>
               </span>
-              <RiskBadge score={b.score} size="sm" />
+              <PriorityBadge segment={s} size="sm" showRank={false} />
             </Link>
           ))}
         </div>
@@ -300,61 +313,66 @@ export default function Landing() {
       {/* ---------------- Methodology: asymmetric, spec values in mono ---------------- */}
       <section className="method container">
         <div className="method__intro">
-          <p className="label">How the scores are produced</p>
-          <h2 className="method__title">
-            Density clustering first, severity weighting second
-          </h2>
+          <p className="label">How the forecast is produced</p>
+          <h2 className="method__title">A frozen model, tested once on years it never saw</h2>
           <p className="body-secondary">
-            Records are cleaned and projected, then grouped by spatial density so clusters
-            follow the shape of the road rather than a grid. A severity classifier
-            estimates outcome from road class, hour, light and surface state. The two feed
-            a single composite score with recent records weighted higher.
+            Each road segment&rsquo;s recent collision record, road attributes and neighbouring roads feed a
+            gradient-boosted count model. Its specification was fixed on earlier years, then tested once on
+            2024&ndash;25 outcomes before being used to forecast {ready ? period(r.forecastPeriod) : 'the next two years'}.
           </p>
           <p className="method__caveat">
-            The model surfaces historical clustering. It describes where harm has
-            concentrated, not where harm will occur.
+            The forecast is an expected casualty burden. It is not a per-vehicle risk, not a probability that a
+            collision will happen, and not a statement of cause: it does not say what would reduce casualties.
           </p>
         </div>
 
         <dl className="method__spec">
           <div className="method__row">
-            <dt>Clustering</dt>
-            <dd>{MODEL_RUN.algorithm}</dd>
+            <dt>Model</dt>
+            <dd>LightGBM, Poisson objective</dd>
           </div>
           <div className="method__row">
-            <dt>Neighbourhood radius</dt>
-            <dd className="mono">{MODEL_RUN.epsilonMetres} m</dd>
+            <dt>Frozen specification</dt>
+            <dd className="mono">{ready ? r.frozenSpec.slice(0, 12) : '—'}</dd>
           </div>
           <div className="method__row">
-            <dt>Minimum cluster size</dt>
-            <dd className="mono">{MODEL_RUN.minSamples} records</dd>
+            <dt>Target</dt>
+            <dd>KSI casualties per segment, DfT severity-adjusted, two-year total</dd>
           </div>
           <div className="method__row">
-            <dt>Silhouette score</dt>
-            <dd className="mono">{MODEL_RUN.silhouette.toFixed(2)}</dd>
+            <dt>Segments</dt>
+            <dd>OS Open Roads, about 500 m, built without crash data</dd>
           </div>
-          <div className="method__row">
-            <dt>Severity classifier</dt>
-            <dd>{MODEL_RUN.classifier}</dd>
-          </div>
-          <div className="method__row">
-            <dt>Macro F1</dt>
-            <dd className="mono">{MODEL_RUN.macroF1.toFixed(2)}</dd>
-          </div>
-          <div className="method__row">
-            <dt>Recall, fatal class</dt>
-            <dd className="mono">{MODEL_RUN.recallFatal.toFixed(2)}</dd>
-          </div>
+          {holdout && (
+            <>
+              <div className="method__row">
+                <dt>Holdout, top 10% capture</dt>
+                <dd className="mono">
+                  {fixed(holdout.top10_capture_model_pct, 1)}% vs {fixed(holdout.top10_capture_crash_counts_pct, 1)}%
+                  for crash counts
+                </dd>
+              </div>
+              <div className="method__row">
+                <dt>Holdout population</dt>
+                <dd className="mono">2024–25 outcomes, all {int(r.nationalSegments)} segments</dd>
+              </div>
+            </>
+          )}
         </dl>
       </section>
 
       <footer className="landing__foot">
         <div className="container landing__foot-inner">
+          <p className="landing__foot-brand">
+            {PRODUCT} · {PRODUCT_SUBTITLE}
+          </p>
           <ProvenanceStrip />
           <p className="landing__foot-note">
-            Figures on this build are a demonstration fixture standing in for the
-            processed dataset. Clusters are precomputed and served as static output; the
-            interface does not read live traffic or incident feeds.
+            {ready
+              ? `Local demonstration build: ${int(data.segments.length)} of ${int(
+                  r.nationalSegments,
+                )} scored segments, copied from the verified v2 ML release. The forecast is precomputed; nothing here reads live traffic or incident feeds. Coverage is Great Britain only; Northern Ireland is not covered.`
+              : 'Loading.'}
           </p>
         </div>
       </footer>

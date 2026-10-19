@@ -100,3 +100,67 @@
     display: none;
   }
 }
+
+/* Zoom-dependent rendering note, top-left of the canvas, above the attribution layer. */
+.map-canvas__zoomnote {
+  position: absolute;
+  top: var(--s2);
+  left: var(--s2);
+  z-index: 500;
+  max-width: min(360px, calc(100% - 120px));
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(26, 28, 33, 0.88);
+  border: 1px solid var(--structural-line);
+  color: var(--steel-grey);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+}
+
+.leaflet-tooltip {
+  background: var(--raised-slate);
+  color: var(--bone-white);
+  border: 1px solid var(--structural-line);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  box-shadow: var(--shadow-card);
+}
+
+
+/* Light OpenStreetMap tiles, darkened and desaturated so the basemap stays a quiet graphite
+   ground under the risk ramp (DESIGN.md: no full-colour OSM tiles). Off for a dark provider. */
+.map-canvas--darken .leaflet-tile-pane {
+  filter: grayscale(1) invert(1) brightness(0.62) contrast(1.15);
+}
+
+/* --- Phase 5: keyboard focus on the map, tile notice, control focus --- */
+
+.map-canvas__map.leaflet-container:focus-visible {
+  outline: 2px solid var(--beacon-teal-lift);
+  outline-offset: -2px;
+}
+
+/* Control clusters clip overflow, so their focus ring is drawn inside the button. */
+.map-btn:focus-visible {
+  outline: 2px solid var(--beacon-teal-lift);
+  outline-offset: -3px;
+}
+
+.map-canvas__notice {
+  /* top of the canvas, below the zoom note, clear of the docked legend */
+  position: absolute;
+  left: 50%;
+  top: 64px;
+  transform: translateX(-50%);
+  z-index: 600;
+  max-width: min(460px, calc(100% - 32px));
+  padding: 8px 12px;
+  border-radius: var(--radius-interactive);
+  /* Status amber is banned on the map canvas (DESIGN.md); a neutral edge keeps it from reading as risk. */
+  border-left: 2px solid var(--steel-grey);
+  background: var(--panel-graphite);
+  color: var(--bone-white);
+  font-size: 0.75rem;
+  line-height: 1.45;
+  box-shadow: var(--shadow-card);
+}

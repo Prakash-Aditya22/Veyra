@@ -85,7 +85,7 @@ export function TableSkeleton({ rows = 8 }) {
 export function MapSkeleton() {
   return (
     <div className="skeleton-map">
-      <p className="label">Loading incident clusters</p>
+      <p className="label">Loading road segments</p>
     </div>
   );
 }

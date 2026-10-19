@@ -32,7 +32,7 @@ export function ChartTooltip({ active, payload, label, unit = 'incidents' }) {
           />
           <span className="chart-tooltip__name">{entry.name}</span>
           <span className="chart-tooltip__value mono">
-            {entry.value.toLocaleString('en-IN')}
+            {entry.value.toLocaleString('en-GB', { maximumFractionDigits: 2 })}
           </span>
         </p>
       ))}

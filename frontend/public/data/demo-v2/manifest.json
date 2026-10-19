@@ -1,0 +1,239 @@
+{
+ "bundle": "veyra-gb-demo",
+ "bundle_version": 1,
+ "generated_utc": "2026-10-17T05:38:14+00:00",
+ "generator": "ml/demo/make_frontend_demo_data.py",
+ "generator_args": {
+  "top": 1000
+ },
+ "provenance": {
+  "ml_branch": "ML",
+  "ml_head": "8f13aa4f12e220b9c3c625200fc2507d7b787e05",
+  "release_files_committed": false
+ },
+ "release": {
+  "score_version": "v2.0",
+  "contract_version": "1.0",
+  "frozen_spec_sha256": "b9487674e4f1da7951f787ef122b7f8caea033cebdfc34e26649de35562ad378",
+  "forecast_years": [
+   2026,
+   2027
+  ],
+  "history_years": [
+   2023,
+   2024,
+   2025
+  ],
+  "outputs_generated_utc": "2026-10-13T19:55:59+00:00",
+  "release_manifest_sha256": "ca9a860f6b4c3bdced7bf6acad598126de9dec4b11372960fd39f945ebcd027c"
+ },
+ "source_files": {
+  "data/v2/road_segments_ranked_v2.csv": "36e1dd585aeb2ee680e43bd65a40efbd69403b8d17c597a2ea3c805cb3467c09",
+  "data/v2/road_segments_top5000_v2.geojson": "513781d1e6add5765e28469af263cb51868bcb9080b87d71c10433ea567a2889",
+  "data/v2/extensions/segment_explanations_v2.csv": "a5007a4efd22a1aa5dabb07ff09c61cb7aafbde239d09d7329ec94333487a956",
+  "data/v2/extensions/segment_explanations_top5000_v2.json": "14ef181ab0bc66869ac67cd851ad04ccc7e49ad365eb619253d141a4cbdf18d5",
+  "data/v2/extensions/segment_stability_v2.csv": "aea0e470f1a675efca10c5a8c6f43f7296311b282b84f9d4ba3a3b5d59041635",
+  "data/v2/extensions/segment_single_event_sensitivity_v2.csv": "3f19ea153367481b5cfcb987bd9135f30545ebad65f9b7b33f68124439b33368",
+  "data/v2/road_segments_meta_v2.json": "210f8701247d0dc5b41400ff5fe7ff5ed1c98be411f3b127472ffd74c78ea6b2"
+ },
+ "coverage": {
+  "geography": "Great Britain (England, Scotland and Wales)",
+  "not_covered": "Northern Ireland, the Isle of Man and the Channel Islands: outside DfT STATS19 (GB) and OS Open Roads (GB); the model makes no claim there",
+  "national_segments_scored": 1827550,
+  "release_rows": 50015,
+  "national_expected_ksi_total": 57991.0,
+  "national_expected_ksi_total_source": "sum of blackspot_score over all scored segments (ml/outputs/road_segments_v2_full.parquet; INTEGRATION_CONTRACT.md 3.1)",
+  "national_ksi_on_scored_network_pct": 97.7
+ },
+ "selection": {
+  "rule": "national top 1,000 by rank (complete) plus the integration-fixture reference cases outside it; nothing else",
+  "n_segments": 1006,
+  "n_top": 1000,
+  "n_reference_cases": 6,
+  "reference_cases": {
+   "A551-E68F9612B4DB-00": [
+    "explained_without_map_json"
+   ],
+   "B5167-566A50C130D0-01": [
+    "no_history"
+   ],
+   "A6005-C33B1E4E8A91-01": [
+    "tie_pair"
+   ],
+   "A6005-C33B1E4E8A91-02": [
+    "tie_pair"
+   ],
+   "A629-71DA769EE189-07": [
+    "rank_50000"
+   ],
+   "U-A6B609EAE534-00": [
+    "lowest_ranked"
+   ]
+  },
+  "with_line_geometry": 1000,
+  "midpoint_only": 6,
+  "not_representative": "a top-ranked subset plus test cases, not a sample of the national network; sums and shares over it describe the subset only"
+ },
+ "release_constants": {
+  "score_version": "v2.0",
+  "score_model": "lgbm",
+  "score_definition": "expected KSI casualties (DfT severity-adjusted) on this segment, 2026-2027",
+  "forecast_period": "2026-2027",
+  "history_period": "2023-2025"
+ },
+ "fields": {
+  "segments.json": [
+   "rank",
+   "segment_id",
+   "location",
+   "road_id",
+   "road_class",
+   "road_number",
+   "road_name",
+   "form_of_way",
+   "length_m",
+   "lat",
+   "lon",
+   "blackspot_score",
+   "n_crashes",
+   "n_ksi",
+   "n_fatal",
+   "n_ksi_casualties",
+   "n_ksi_casualties_adjusted",
+   "speed_max",
+   "pct_night",
+   "pct_junction_v2",
+   "eb_expected_ksi",
+   "eb_excess_ksi_history",
+   "exposure_available",
+   "aadf",
+   "aadf_share_counted",
+   "ksi_per_100m_vkm_eb",
+   "data_sufficiency",
+   "max_single_collision_ksi",
+   "single_event_share",
+   "single_event_flag",
+   "demo_stratum",
+   "reference_cases"
+  ],
+  "explanations.json": {
+   "top": [
+    "contrib_rank",
+    "feature",
+    "label",
+    "group",
+    "display_value",
+    "shap_log",
+    "factor"
+   ],
+   "base_and_groups": "top 5,000 only (extensions/segment_explanations_top5000_v2.json)",
+   "source": "extensions/segment_explanations_v2.csv"
+  },
+  "stability.json": [
+   "rank_median",
+   "rank_p05",
+   "rank_p95",
+   "freq_top100",
+   "freq_top1000",
+   "freq_top5pct",
+   "stability_class",
+   "window_rank_min",
+   "window_rank_max"
+  ],
+  "single_event.json": [
+   "forecast_without_largest_collision",
+   "rank_without_largest_collision_one_at_a_time",
+   "rank_without_largest_collision_simultaneous",
+   "largest_collision_adj_ksi"
+  ],
+  "geometry.geojson": "release GeoJSON geometry unchanged; properties: segment_id only"
+ },
+ "score": {
+  "field": "blackspot_score",
+  "units": "expected killed-or-seriously-injured casualties (DfT severity-adjusted) on the segment, 2026 and 2027 combined",
+  "forecast_period": [
+   2026,
+   2027
+  ],
+  "history_period": [
+   2023,
+   2024,
+   2025
+  ],
+  "kind": "expected count (burden), not a probability and not a per-vehicle rate",
+  "order_by": "rank"
+ },
+ "rate": {
+  "field": "ksi_per_100m_vkm_eb",
+  "units": "adjusted KSI per 100 million vehicle-km, 2023-25",
+  "display_rule": "only when exposure_available and length_m >= 250",
+  "min_length_m": 250.0
+ },
+ "tiers": [
+  {
+   "key": "top100",
+   "min_rank": 1,
+   "max_rank": 100,
+   "label": "Ranks 1\u2013100",
+   "short": "1\u2013100",
+   "description": "the national top 100"
+  },
+  {
+   "key": "top1000",
+   "min_rank": 101,
+   "max_rank": 1000,
+   "label": "Ranks 101\u20131,000",
+   "short": "101\u20131,000",
+   "description": "the rest of the national top 1,000"
+  },
+  {
+   "key": "top1pct",
+   "min_rank": 1001,
+   "max_rank": 18275,
+   "label": "Ranks 1,001\u201318,275",
+   "short": "1,001\u201318,275",
+   "description": "the rest of the national top 1%"
+  },
+  {
+   "key": "below1pct",
+   "min_rank": 18276,
+   "max_rank": 1827550,
+   "label": "Ranks 18,276\u20131,827,550",
+   "short": "18,276+",
+   "description": "all remaining scored segments"
+  }
+ ],
+ "tier_rules": {
+  "population": "all 1,827,550 nationally scored segments, ranks 1 to 1,827,550",
+  "partition": "contiguous and mutually exclusive: each rank belongs to exactly one group",
+  "top1pct_cutoff_rank": 18275,
+  "top1pct_rounding": "floor(1% x 1,827,550) = floor(18,275.5) = 18,275 (rounded down)",
+  "ranks_unchanged": "groups only band the release `rank`; no score or rank is recomputed"
+ },
+ "files": {
+  "segments.json": {
+   "sha256": "5f50998a83344474faba713a001c980f1987a195883c0e26dfbd80e82b1f5727",
+   "bytes": 777678
+  },
+  "geometry.geojson": {
+   "sha256": "019e4f22bf39050e1b550b72f189b32215c88f82795c9be77a329a00920e23cd",
+   "bytes": 839399
+  },
+  "explanations.json": {
+   "sha256": "0e86be3d119d0db0226420f3bbe4005bc77516c7f5645cba376c9307d6c138f8",
+   "bytes": 952151
+  },
+  "stability.json": {
+   "sha256": "380b2132b09f4118df400c7d5030172406d86216ed65fdc110f892a34858b95e",
+   "bytes": 218678
+  },
+  "single_event.json": {
+   "sha256": "48e5c8176fba166dfad4272d0a885ad7df86c4de554c474817ba79c393c0ec48",
+   "bytes": 201884
+  },
+  "context.json": {
+   "sha256": "245d6b35be7000285fe8e65e9c188737bf0b7174fa5ffbc91006d818cc3ea4bb",
+   "bytes": 2527
+  }
+ }
+}

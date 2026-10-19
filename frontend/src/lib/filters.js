@@ -1,151 +1,123 @@
-import { BLACKSPOTS } from '../data/blackspots.js';
-import { tierOf } from './risk.js';
+import { ROAD_CLASS_LABELS, SUFFICIENCY_LABELS, rateView } from '../data/normalize.js';
+import { tierLabel } from './priority.js';
 
 /*
-  Filter definitions and the single pure function that applies them.
-
-  Periods are anchored to the last date present in the dataset, not to today.
-  Anchoring to `new Date()` would silently empty the map as the fixture ages,
-  and would misrepresent a precomputed dataset as a live one.
+  Filters over fields that exist in the v2 release. There is no region or local-authority
+  filter: the release has no reliable administrative field (`spatial_block` is a 50 km
+  validation grid, not an area). Filters that need an optional extension are offered only when
+  the data source provides it.
 */
-
-const DATASET_END = BLACKSPOTS.reduce(
-  (latest, b) => (b.lastIncident > latest ? b.lastIncident : latest),
-  '2019-01-01',
-);
-
-function monthsBefore(iso, months) {
-  const d = new Date(`${iso}T00:00:00`);
-  d.setMonth(d.getMonth() - months);
-  return d.toISOString().slice(0, 10);
-}
-
-export const PERIODS = [
-  { key: 'full', label: 'Full coverage, 2019 to 2024', since: '2019-01-01' },
-  { key: '36m', label: 'Final 36 months', since: monthsBefore(DATASET_END, 36) },
-  { key: '12m', label: 'Final 12 months', since: monthsBefore(DATASET_END, 12) },
-];
-
-export const TIER_FILTERS = [
-  { key: 'critical', label: 'Critical, 75 to 100' },
-  { key: 'severe', label: 'Severe, 50 to 74' },
-  { key: 'elevated', label: 'Elevated, 25 to 49' },
-  { key: 'watch', label: 'Watch, 0 to 24' },
-  { key: 'nodata', label: 'No data' },
-];
-
-export const ROAD_TYPES = [
-  'Dual carriageway',
-  'Single carriageway',
-];
-
-export const ROAD_CLASSES = [
-  'NH-16',
-  'NH-316',
-  'NH-55',
-  'SH-13',
-  'SH-60',
-  'SH-9A',
-  'Urban arterial',
-  'Urban collector',
-  'Rural district road',
-  'Coastal highway',
-];
-
-/*
-  The dataset records lighting and surface state as contributing factors rather
-  than as a separate weather column, so the condition filter matches on factor
-  text. Each entry names the factors that count as a hit.
-*/
-export const CONDITIONS = [
-  { key: 'wet', label: 'Wet surface', match: ['Wet surface, monsoon months'] },
-  {
-    key: 'dark',
-    label: 'Reduced visibility',
-    match: ['Reduced visibility after dusk', 'Unlit stretch adjacent to forest edge'],
-  },
-  {
-    key: 'hgv',
-    label: 'Heavy goods traffic',
-    match: ['Heavy goods vehicle share', 'Freight yard access conflict'],
-  },
-  {
-    key: 'pedestrian',
-    label: 'Pedestrian exposure',
-    match: [
-      'Pedestrian crossing without signal',
-      'Student pedestrian volume at peak hours',
-      'Pilgrim and tourist pedestrian volume',
-      'Passenger boarding from carriageway',
-    ],
-  },
-];
 
 export const EMPTY_FILTERS = {
-  period: 'full',
+  query: '',
   tiers: [],
-  roadTypes: [],
   roadClasses: [],
-  conditions: [],
+  sufficiency: [],
+  flags: [],
+  rate: [],
+  explanation: [],
+  stability: [],
 };
 
-export function isDefaultFilters(f) {
-  return (
-    f.period === 'full' &&
-    !f.tiers.length &&
-    !f.roadTypes.length &&
-    !f.roadClasses.length &&
-    !f.conditions.length
-  );
+export const FLAG_OPTIONS = [
+  { key: 'single_event', label: 'Single-event concentration (one collision dominates the history)' },
+  { key: 'one_collision', label: 'Leaves the top 1,000 without its largest collision' },
+];
+
+export const RATE_OPTIONS = [
+  { key: 'shown', label: 'Per-vehicle rate available' },
+  { key: 'not_available', label: 'Per-vehicle rate not available' },
+];
+
+export const EXPLANATION_OPTIONS = [
+  { key: 'available', label: 'Model explanation available' },
+  { key: 'not_available', label: 'Explanation not available' },
+];
+
+export const STABILITY_OPTIONS = [
+  { key: 'robust top-1000', label: 'Robust top 1,000 (in 90% or more of refits)' },
+  { key: 'borderline top-1000', label: 'Borderline top 1,000 (50 to 90%)' },
+  { key: 'robust top-5%', label: 'Robust top 5%' },
+  { key: 'variable', label: 'Variable' },
+];
+
+/** Options with counts, only for values present in the loaded data. */
+export function filterOptions(segments, tiers) {
+  const count = (pred) => segments.filter(pred).length;
+  return {
+    tiers: tiers
+      .map((t) => ({ key: t.key, label: tierLabel(t), hint: t.description, n: count((s) => s.tier?.key === t.key) }))
+      .filter((o) => o.n),
+    roadClasses: Object.entries(ROAD_CLASS_LABELS)
+      .map(([key, label]) => ({ key, label, n: count((s) => s.roadClass === key) }))
+      .filter((o) => o.n),
+    sufficiency: Object.entries(SUFFICIENCY_LABELS)
+      .map(([key, label]) => ({ key, label, n: count((s) => s.history.sufficiency === key) }))
+      .filter((o) => o.n),
+    flags: FLAG_OPTIONS.map((o) => ({ ...o, n: count((s) => matchesFlag(s, o.key)) })),
+    rate: RATE_OPTIONS.map((o) => ({ ...o, n: count((s) => rateKey(s) === o.key) })),
+    explanation: segments.some((s) => s.ext?.hasExplanation === null)
+      ? []
+      : EXPLANATION_OPTIONS.map((o) => ({ ...o, n: count((s) => explanationKey(s) === o.key) })),
+    stability: STABILITY_OPTIONS.map((o) => ({ ...o, n: count((s) => s.ext?.stabilityClass === o.key) })).filter((o) => o.n),
+  };
 }
 
-export function countActive(f) {
-  return (
-    (f.period === 'full' ? 0 : 1) +
-    f.tiers.length +
-    f.roadTypes.length +
-    f.roadClasses.length +
-    f.conditions.length
-  );
+function matchesFlag(s, key) {
+  if (key === 'single_event') return s.singleEvent.flag;
+  if (key === 'one_collision') return s.rank <= 1000 && s.ext?.oneCollisionRank != null && s.ext.oneCollisionRank > 1000;
+  return false;
 }
 
-export function applyFilters(blackspots, f) {
-  const period = PERIODS.find((p) => p.key === f.period) ?? PERIODS[0];
+const rateKey = (s) => (rateView(s).available ? 'shown' : 'not_available');
+const explanationKey = (s) => (s.ext?.hasExplanation ? 'available' : 'not_available');
 
-  return blackspots.filter((b) => {
-    if (b.lastIncident < period.since) return false;
-    if (f.tiers.length && !f.tiers.includes(tierOf(b.score).key)) return false;
-    if (f.roadTypes.length && !f.roadTypes.includes(b.roadType)) return false;
-    if (f.roadClasses.length && !f.roadClasses.includes(b.roadClass)) return false;
+/** Case-insensitive match on location, road number, name, class letter or segment ID. */
+export function matchesQuery(s, query) {
+  const q = query.trim().toLowerCase();
+  if (!q) return true;
+  return [s.location, s.roadId, s.roadName, s.roadNumber, s.id]
+    .filter(Boolean)
+    .some((v) => String(v).toLowerCase().includes(q));
+}
 
-    if (f.conditions.length) {
-      const factorLabels = b.factors.map((x) => x.label);
-      const hit = f.conditions.some((key) => {
-        const cond = CONDITIONS.find((c) => c.key === key);
-        return cond?.match.some((m) => factorLabels.includes(m));
-      });
-      if (!hit) return false;
-    }
-
+export function applyFilters(segments, f) {
+  return segments.filter((s) => {
+    if (!matchesQuery(s, f.query)) return false;
+    if (f.tiers.length && !f.tiers.includes(s.tier?.key)) return false;
+    if (f.roadClasses.length && !f.roadClasses.includes(s.roadClass)) return false;
+    if (f.sufficiency.length && !f.sufficiency.includes(s.history.sufficiency)) return false;
+    if (f.flags.length && !f.flags.every((k) => matchesFlag(s, k))) return false;
+    if (f.rate.length && !f.rate.includes(rateKey(s))) return false;
+    if (f.explanation.length && !f.explanation.includes(explanationKey(s))) return false;
+    if (f.stability.length && !f.stability.includes(s.ext?.stabilityClass)) return false;
     return true;
   });
 }
 
-/** Sorting for the rankings table and the docked results panel. */
-export function sortBlackspots(list, key, direction) {
-  const dir = direction === 'asc' ? 1 : -1;
+export function countActive(f) {
+  return (f.query.trim() ? 1 : 0) + Object.entries(f).filter(([k, v]) => k !== 'query' && v.length).reduce((n, [, v]) => n + v.length, 0);
+}
+
+export function isDefaultFilters(f) {
+  return countActive(f) === 0;
+}
+
+/** Table sorting. Ranking order always comes from `rank`, never from the rounded score. */
+export const SORTS = {
+  rank: { label: 'National rank', value: (s) => s.rank, dir: 'asc' },
+  collisions: { label: 'Collisions 2023–25', value: (s) => s.history.collisions, dir: 'desc' },
+  ksiHistory: { label: 'Serious/fatal casualties 2023–25', value: (s) => s.history.ksiCasualtiesAdjusted, dir: 'desc' },
+  name: { label: 'Road name', value: (s) => s.location, dir: 'asc' },
+};
+
+export function sortSegments(list, key = 'rank', direction) {
+  const spec = SORTS[key] ?? SORTS.rank;
+  const dir = (direction ?? spec.dir) === 'asc' ? 1 : -1;
   return [...list].sort((a, b) => {
-    let av = a[key];
-    let bv = b[key];
-
-    // Null scores always sink to the bottom, whichever way the column is sorted.
-    if (key === 'score') {
-      if (av === null && bv === null) return 0;
-      if (av === null) return 1;
-      if (bv === null) return -1;
-    }
-
-    if (typeof av === 'string') return av.localeCompare(bv) * dir;
-    return (av - bv) * dir;
+    const av = spec.value(a);
+    const bv = spec.value(b);
+    const c = typeof av === 'string' ? av.localeCompare(bv) : av - bv;
+    return c !== 0 ? c * dir : a.rank - b.rank; // ties fall back to rank
   });
 }

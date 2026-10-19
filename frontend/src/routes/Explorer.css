@@ -230,3 +230,37 @@
   min-height: 0;
   overflow: hidden;
 }
+
+.explorer__error {
+  padding: var(--s3);
+}
+
+/* Skip link: visually hidden (still announced) until focused, then a visible chip over the map. */
+.skip-link {
+  position: absolute;
+  left: var(--s2);
+  top: var(--s2);
+  z-index: 700;
+  padding: 8px 12px;
+  border-radius: var(--radius-interactive);
+  background: var(--panel-graphite);
+  border: 1px solid var(--beacon-teal-lift);
+  color: var(--bone-white);
+  font-size: 0.8125rem;
+}
+
+.skip-link:not(:focus):not(:focus-visible) {
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.explorer__canvas {
+  position: relative;
+}

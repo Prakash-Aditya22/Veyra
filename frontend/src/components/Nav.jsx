@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { List, X } from '@phosphor-icons/react';
+import { PRODUCT, PRODUCT_SUBTITLE } from '../lib/usePageTitle.js';
 import './Nav.css';
 
 const LINKS = [
@@ -21,8 +22,11 @@ export default function Nav() {
   return (
     <header className="nav">
       <div className="nav__inner">
-        <NavLink to="/" className="nav__brand" end>
-          <span className="nav__wordmark">Blackspot Atlas</span>
+        <NavLink to="/" className="nav__brand" end aria-label={`${PRODUCT}, ${PRODUCT_SUBTITLE}: overview`}>
+          <span className="nav__wordmark">{PRODUCT}</span>
+          <span className="nav__subtitle" aria-hidden="true">
+            {PRODUCT_SUBTITLE}
+          </span>
         </NavLink>
 
         <nav className="nav__links" aria-label="Primary">

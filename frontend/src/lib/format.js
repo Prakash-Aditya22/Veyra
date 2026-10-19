@@ -1,37 +1,54 @@
-/* Formatting helpers. Every number the user sees passes through one of these. */
+/* Formatting helpers. Every number the user sees passes through one of these (en-GB). */
 
-const MONTHS = [
-  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
-];
+const NA = 'Not available';
 
-export function num(value) {
-  if (value === null || value === undefined) return '--';
-  return value.toLocaleString('en-IN');
+export function int(value) {
+  if (value === null || value === undefined || Number.isNaN(value)) return NA;
+  return Math.round(value).toLocaleString('en-GB');
 }
 
-export function score(value) {
-  if (value === null || value === undefined) return '--';
-  return value.toFixed(1);
+/** Expected or adjusted casualty counts: two decimals, never rounded to a whole casualty. */
+export function ksi(value, digits = 2) {
+  if (value === null || value === undefined || Number.isNaN(value)) return NA;
+  return value.toLocaleString('en-GB', { minimumFractionDigits: digits, maximumFractionDigits: digits });
 }
 
-/** Dates read as "26 Nov 2024" - unambiguous, and short enough for a table cell. */
-export function shortDate(iso) {
-  if (!iso) return '--';
-  const d = new Date(`${iso}T00:00:00`);
-  return `${String(d.getDate()).padStart(2, '0')} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+export function fixed(value, digits = 1) {
+  if (value === null || value === undefined || Number.isNaN(value)) return NA;
+  return value.toLocaleString('en-GB', { minimumFractionDigits: digits, maximumFractionDigits: digits });
 }
 
-/** "07:00" through "23:00" for histogram axis ticks. */
-export function hourLabel(hour) {
-  return `${String(hour).padStart(2, '0')}:00`;
+/** Share 0-1 -> "37%" (or with decimals). */
+export function share(value, digits = 0) {
+  if (value === null || value === undefined || Number.isNaN(value)) return NA;
+  return `${(value * 100).toFixed(digits)}%`;
 }
 
-export function pct(part, whole) {
-  if (!whole) return '0.0';
-  return ((part / whole) * 100).toFixed(1);
+/** part / whole as a percentage with the denominator kept by the caller. */
+export function pct(part, whole, digits = 1) {
+  if (!whole) return NA;
+  return `${((part / whole) * 100).toFixed(digits)}%`;
 }
 
-export function coords(lat, lng) {
-  return `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+export function rank(value) {
+  if (value === null || value === undefined || Number.isNaN(value)) return NA;
+  return `#${Math.round(value).toLocaleString('en-GB')}`;
 }
+
+/** "2026-2027" -> "2026–27" */
+export function period(p) {
+  if (!p) return NA;
+  const [a, b] = String(p).split('-');
+  return b ? `${a}–${b.slice(2)}` : a;
+}
+
+export function metres(value) {
+  if (value === null || value === undefined) return NA;
+  return `${Math.round(value).toLocaleString('en-GB')} m`;
+}
+
+export function coords(lat, lon) {
+  return `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+}
+
+export const NOT_AVAILABLE = NA;

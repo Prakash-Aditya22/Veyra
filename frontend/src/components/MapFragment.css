@@ -61,3 +61,7 @@
     height: 0.66em;
   }
 }
+
+.map-fragment--darken .map-fragment__tile {
+  filter: grayscale(1) invert(1) brightness(0.62) contrast(1.15);
+}

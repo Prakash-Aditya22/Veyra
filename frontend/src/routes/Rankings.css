@@ -125,6 +125,11 @@
   background: var(--beacon-teal-wash);
 }
 
+/* A visible edge, not only a tint, so keyboard focus is clear (Phase 5). */
+.rank-table__row:focus-visible .rank-table__td:first-child {
+  box-shadow: inset 3px 0 0 var(--beacon-teal-lift);
+}
+
 .rank-table__td {
   height: 52px;
   padding: 0 var(--s3);
@@ -206,4 +211,15 @@
   .rank-table__name {
     min-width: 190px;
   }
+}
+
+.rankings__foot {
+  padding-top: var(--s2);
+  max-width: 90ch;
+}
+
+.rank-table__notes {
+  font-size: 0.75rem;
+  color: var(--steel-grey);
+  white-space: nowrap;
 }

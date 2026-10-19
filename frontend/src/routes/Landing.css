@@ -366,3 +366,16 @@
     border-top: 0;
   }
 }
+
+/* --- Phase 5: map-crop credit and footer brand line --- */
+.hero__credit {
+  margin-top: var(--s2);
+  font-size: 0.6875rem;
+  color: var(--dim-grey);
+}
+
+.landing__foot-brand {
+  font-weight: 700;
+  color: var(--bone-white);
+  letter-spacing: -0.01em;
+}

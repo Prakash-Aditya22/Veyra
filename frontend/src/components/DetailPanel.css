@@ -60,7 +60,7 @@
   color: var(--dim-grey);
 }
 
-/* --- Composite score --- */
+/* --- ML forecast --- */
 
 .detail__score-block {
   display: grid;
@@ -281,4 +281,82 @@
     grid-template-columns: repeat(2, 1fr);
     gap: var(--s3) var(--s2);
   }
+}
+
+/* --- Phase 4: GB segment panel additions --- */
+
+.detail__sub {
+  padding-top: 4px;
+  font-size: 0.8125rem;
+  color: var(--steel-grey);
+}
+
+.detail__note {
+  padding-top: var(--s1);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--steel-grey);
+}
+
+.detail__na {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--steel-grey);
+}
+
+.detail__na-word {
+  color: var(--bone-white);
+  font-weight: 600;
+}
+
+/* Low-confidence and single-event warnings: Notice Amber is permitted in panels only. */
+.detail__warnings {
+  display: grid;
+  gap: var(--s1);
+}
+
+.detail__warn {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  gap: var(--s1);
+  padding: var(--s1) var(--s2);
+  border-left: 2px solid var(--notice-amber);
+  background: rgba(180, 129, 58, 0.08);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--bone-white);
+}
+
+.detail__warn svg {
+  margin-top: 3px;
+  color: var(--notice-amber);
+}
+
+.kv__row dt {
+  flex: 1 1 auto;
+}
+
+.kv__row dd {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.factors__row--expl {
+  grid-template-columns: 1fr 64px 3.25rem;
+}
+
+.factors__value {
+  color: var(--dim-grey);
+  font-size: 0.75rem;
+}
+
+.factors__fill--down {
+  background: var(--steel-grey);
+}
+
+/* Focus lands on the heading when a segment is opened; show it without a box around the title. */
+.detail__name:focus-visible {
+  outline: 2px solid var(--beacon-teal-lift);
+  outline-offset: 4px;
 }

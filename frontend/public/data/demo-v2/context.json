@@ -1,0 +1,102 @@
+{
+ "what": "national context and model facts for the overview and statistics screens; research report values, not part of the backend contract",
+ "stats19_by_year": {
+  "source": "ml/reports/data_quality_by_year.csv",
+  "source_sha256": "8ab9e9bc446752a69d90badf09c3f904e8dc1d427622c1a80f55617be294b3fe",
+  "coverage": "Great Britain, all reported injury collisions (DfT STATS19)",
+  "rows": [
+   {
+    "collision_year": 2015,
+    "collisions": 140056,
+    "ksi_cas": 23811,
+    "adj_ksi_cas": 32175.74563,
+    "fatal_cas": 1730
+   },
+   {
+    "collision_year": 2016,
+    "collisions": 136621,
+    "ksi_cas": 25602,
+    "adj_ksi_cas": 31119.40582,
+    "fatal_cas": 1792
+   },
+   {
+    "collision_year": 2017,
+    "collisions": 129982,
+    "ksi_cas": 26409,
+    "adj_ksi_cas": 30183.78943,
+    "fatal_cas": 1793
+   },
+   {
+    "collision_year": 2018,
+    "collisions": 122635,
+    "ksi_cas": 27058,
+    "adj_ksi_cas": 30642.57688,
+    "fatal_cas": 1784
+   },
+   {
+    "collision_year": 2019,
+    "collisions": 117536,
+    "ksi_cas": 27125,
+    "adj_ksi_cas": 29747.12488,
+    "fatal_cas": 1752
+   },
+   {
+    "collision_year": 2020,
+    "collisions": 91199,
+    "ksi_cas": 21562,
+    "adj_ksi_cas": 23217.17787,
+    "fatal_cas": 1460
+   },
+   {
+    "collision_year": 2021,
+    "collisions": 101087,
+    "ksi_cas": 24921,
+    "adj_ksi_cas": 26396.83929,
+    "fatal_cas": 1558
+   },
+   {
+    "collision_year": 2022,
+    "collisions": 106004,
+    "ksi_cas": 27531,
+    "adj_ksi_cas": 28925.73475,
+    "fatal_cas": 1711
+   },
+   {
+    "collision_year": 2023,
+    "collisions": 104258,
+    "ksi_cas": 27654,
+    "adj_ksi_cas": 28973.09368,
+    "fatal_cas": 1624
+   },
+   {
+    "collision_year": 2024,
+    "collisions": 100927,
+    "ksi_cas": 27642,
+    "adj_ksi_cas": 28875.91216,
+    "fatal_cas": 1602
+   },
+   {
+    "collision_year": 2025,
+    "collisions": 101525,
+    "ksi_cas": 29296,
+    "adj_ksi_cas": 29918.44036,
+    "fatal_cas": 1538
+   }
+  ]
+ },
+ "holdout": {
+  "source": "ml/reports/headline.json",
+  "source_sha256": "c83221811b2d418823fb4933c7b606891a3013c2c77461cee85355225d57de0d",
+  "what": "frozen model tested once on 2024-25 outcomes (cutoff 2023); share of the population's 2024-25 adjusted KSI captured by its top 10% of segments",
+  "population": "all 1,827,550 scored segments",
+  "top10_capture_model_pct": 70.8,
+  "top10_capture_crash_counts_pct": 58.8,
+  "top10_capture_empirical_bayes_pct": 67.4,
+  "model_minus_counts_points_ci95": [
+   12.4,
+   8.1,
+   16.4
+  ],
+  "national_ksi_coverage_pct": 97.7
+ }
+}

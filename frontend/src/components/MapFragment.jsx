@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { BASEMAP, tileUrl } from '../config/basemap.js';
+import { isOsmBlockTile } from '../lib/tileGuard.js';
 import './MapFragment.css';
 
 /*
@@ -29,6 +32,9 @@ function worldPixel(lat, lng, zoom) {
   recognisable junction inside the slot.
 */
 export default function MapFragment({ lat, lng, zoom = 14, label }) {
+  // No basemap, or the provider sent its "Access blocked" image: keep the neutral slot and the pin.
+  const [blocked, setBlocked] = useState(false);
+  const showTiles = !BASEMAP.disabled && !blocked;
   const { x, y } = worldPixel(lat, lng, zoom);
   const tileX = Math.floor(x / TILE);
   const tileY = Math.floor(y / TILE);
@@ -43,19 +49,19 @@ export default function MapFragment({ lat, lng, zoom = 14, label }) {
         // Offset of this tile's top-left corner from the fragment centre.
         left: tx * TILE - x,
         top: ty * TILE - y,
-        src: `https://a.basemaps.cartocdn.com/dark_all/${zoom}/${tx}/${ty}.png`,
+        src: tileUrl(zoom, tx, ty),
       });
     }
   }
 
   return (
     <span
-      className="map-fragment"
+      className={`map-fragment${BASEMAP.darken ? ' map-fragment--darken' : ''}`}
       role="img"
       aria-label={label ? `Map detail at ${label}` : 'Map detail'}
     >
       <span className="map-fragment__inner" aria-hidden="true">
-        {tiles.map((t) => (
+        {(showTiles ? tiles : []).map((t) => (
           <img
             key={t.key}
             className="map-fragment__tile"
@@ -70,6 +76,10 @@ export default function MapFragment({ lat, lng, zoom = 14, label }) {
             // Lowercase: React 18 does not recognise the camelCase form and
             // passes it through as an unknown DOM attribute with a warning.
             fetchpriority="high"
+            crossOrigin={BASEMAP.cors ? 'anonymous' : undefined}
+            referrerPolicy={BASEMAP.referrerPolicy}
+            onLoad={(e) => BASEMAP.cors && isOsmBlockTile(e.currentTarget) && setBlocked(true)}
+            onError={() => setBlocked(true)}
             width={TILE}
             height={TILE}
             style={{

@@ -1,6 +1,13 @@
-# Design System: Accident Blackspot Detection & Visualization System
+# Design System: Veyra, Great Britain Road Safety Intelligence
 
-**Product:** A map-first web application that surfaces ML-derived accident blackspots, ranks road stretches by a composite danger score, and gives commuters and municipal authorities a way to read road risk at a glance.
+**Product:** A map-first web application that shows Great Britain road segments ranked by an ML forecast of expected killed-or-seriously-injured casualties (the v2 release of the ML pipeline), and gives commuters and municipal authorities a way to read where the forecast burden lies, with its uncertainty, at a glance.
+
+> **Phase 4 update (2026-10-14).** The product now displays real GB ML outputs. The original design's 0–100 index no longer exists: colours mark bands of the **national rank** of the ML forecast, published by the data release and drawn with the same four-colour ramp. The score itself is an expected casualty count (two-year total) and is always printed with its units. Sections below are updated where they described the old score; everything else is unchanged.
+>
+> **Phase 5 update (2026-10-17).**
+> - **Branding:** the product is **Veyra**, subtitled "Great Britain Road Safety Intelligence". The Veyra wordmark replaces the earlier working name; colours, type, layout and motion are unchanged. The subtitle never implies coverage beyond England, Scotland and Wales.
+> - **Rank groups:** they are labelled with their exact, non-overlapping ranks (below) instead of "Top 1,000"-style names that read as overlapping.
+> - **Accessibility:** a section was added under Motion & Interaction.
 
 **Audience:** Two modes of use in one interface — a commuter scanning a route in ten seconds, and a traffic authority reading a ranked table for twenty minutes. The design must serve the second without punishing the first.
 
@@ -46,10 +53,14 @@ Teal is deliberate: red, amber and orange are reserved wholesale for risk encodi
 
 This is the one sanctioned exception to the single-accent rule, and it exists because severity is the product. It is a **single-direction sequential ramp** (warm, monotonically darkening), not a rainbow, so it survives greyscale printing and the common forms of color vision deficiency.
 
-- **Risk Tier 1 — Watch** (`#C9A227`) — Muted ochre. Composite danger score 0–24.
-- **Risk Tier 2 — Elevated** (`#C2711F`) — Burnt amber. Score 25–49.
-- **Risk Tier 3 — Severe** (`#A33A2B`) — Brick. Score 50–74.
-- **Risk Tier 4 — Critical** (`#7A1F1A`) — Oxblood. Score 75–100.
+- **Ranks 18,276–1,827,550** (`#C9A227`) — Muted ochre. All remaining scored segments.
+- **Ranks 1,001–18,275** (`#C2711F`) — Burnt amber. The rest of the national top 1%.
+- **Ranks 101–1,000** (`#A33A2B`) — Brick. The rest of the national top 1,000.
+- **Ranks 1–100** (`#7A1F1A`) — Oxblood. The national top 100.
+
+The groups are contiguous and mutually exclusive: every rank from 1 to 1,827,550 belongs to exactly one. The top-1% cutoff is 1% of the nationally scored segments **rounded down** (floor(18,275.5) = 18,275). Labels are always the exact ranks ("Ranks 101–1,000"), never a name such as "Top 1,000" that reads as containing the group above it. Compact form for badges and chart axes: "Ranks 18,276+".
+
+Group boundaries are national ranks of the ML forecast, published in the data release (`manifest.json` → `tiers`, `tier_rules`). A group is a band of rank, not a hazard index, a probability or a per-vehicle risk. Segments with fewer than 6 collisions in the history window are drawn dashed and labelled; every v2 segment has a forecast, so "No Data" is reserved for genuinely missing values.
 - **No Data** (`#3A3E46`) — Neutral graphite for road segments with insufficient records. Absence of data must never be rendered as absence of risk.
 
 **Ramp rules:**
@@ -101,7 +112,7 @@ Inside dense regions — the rankings table, the filter rail, the stats column �
 ### Rankings Table (the ranked list of dangerous stretches)
 A borderless table over Panel Graphite. Header row in Label style, sticky on scroll, separated by one Structural Line. Rows are `52px` tall with a `1px` bottom rule; hover fills Raised Slate; the selected row fills Beacon Teal Wash with a `2px` Beacon Teal left edge and simultaneously flies the map to that cluster.
 
-Each row carries: rank (mono), stretch name, a risk badge (ramp color chip plus tier word plus mono score), incident count (mono), and last-incident date (mono, Steel Grey). Sortable columns show a small chevron in Steel Grey; the active sort column's header turns Bone White.
+Each row carries: rank (mono), segment name and ID, a rank-group badge (ramp color chip plus the exact rank group plus mono rank), the expected casualty forecast with its units, the rank range across refits, and recorded collisions (mono). Sortable columns show a small chevron in Steel Grey; the active sort column's header turns Bone White.
 
 ### Map Canvas
 - **Basemap:** dark, desaturated tiles (CartoDB Dark Matter or equivalent). Never the default OpenStreetMap color tiles — their road and landuse colors collide directly with the risk ramp.
@@ -109,7 +120,7 @@ Each row carries: rank (mono), stretch name, a risk badge (ramp color chip plus 
 - **Clusters:** cluster bubbles inherit the color of their highest-severity member, never an average. Count sits inside in JetBrains Mono.
 - **Heat layer:** the same ramp as a continuous gradient, maximum 55% opacity so street geometry stays readable underneath.
 - **Selected blackspot:** a `2px` Bone White ring plus a slow perpetual pulse. One selection at a time.
-- **Legend:** permanently docked bottom-left, never collapsible, showing all four tiers with score ranges plus the No Data swatch. A risk map without a visible legend is unreadable.
+- **Legend:** permanently docked bottom-left, never collapsible, showing all four rank groups with their exact ranks and descriptions, the top-1% rounding rule and the low-history (dashed) swatch. A risk map without a visible legend is unreadable.
 - **Attribution:** bottom-right, `0.6875rem`, Dim Grey. Required for OpenStreetMap tiles — do not remove it.
 - **Controls:** custom zoom and layer controls in Panel Graphite matching the interface. The default Leaflet control chrome is banned.
 
@@ -132,7 +143,7 @@ Composed, not apologetic. A muted line-art road-fork mark, a plain statement of 
 Inline and specific. A Risk Tier 3 left border on a Panel Graphite strip, the failure in plain language, and a retry action. Never a full-screen error takeover that discards the user's filter state.
 
 ### Data-Provenance Strip
-Every screen carries a `0.75rem` Dim Grey line stating dataset coverage and model run date, for example: `Dataset 2019–2024 · 18,462 records · clusters computed 2026-03-14`. This product makes claims about public safety; it must always say what it is claiming from.
+Every screen carries a `0.75rem` Dim Grey line stating the ML release, geography, periods and how much of the national model is loaded, for example: `ML release v2.0 · Great Britain (England, Scotland, Wales) · STATS19 2023–25 → forecast 2026–27 · 1,006 of 1,827,550 scored segments loaded`. This product makes claims about public safety; it must always say what it is claiming from.
 
 ---
 
@@ -169,6 +180,12 @@ Every screen carries a `0.75rem` Dim Grey line stating dataset coverage and mode
 
 ---
 
+### Accessibility (Phase 5)
+- **Focus:** one teal focus ring everywhere (`:focus-visible`). Inside scrolling or clipped containers it is drawn inside the element (negative offset), never removed.
+- **Map alternative:** map features are canvas-drawn and not focusable, so the segment list is the keyboard alternative. It is a list of buttons with Up/Down/Home/End movement. Opening a segment moves focus to its heading; "Back to results" returns focus to its row. A "Skip the map" link jumps to the list.
+- **Announcements:** selection and match counts go to a polite live region. Chart panels carry a text summary of their data.
+- **Words, not colour alone:** every colour has words. Warnings, missing data ("Not available" with the reason) and disabled controls are described in text.
+
 ## 7. Hero Section (Landing / Project Overview)
 
 The landing page is the first thing evaluators and authorities see. It is left-aligned and asymmetric — a type column occupying roughly 55% of the width, with a live, non-interactive map fragment bleeding off the right edge showing real clustered blackspots.
@@ -187,7 +204,7 @@ Prompt Stitch for these screens using the rules above:
 
 1. **Landing / Overview** — asymmetric hero with inline map typography, zig-zag capability section, methodology summary, data provenance.
 2. **Blackspot Explorer** — the primary screen. Filter rail, dark map canvas with graded markers and clusters, docked ranked results panel, permanent legend.
-3. **Blackspot Detail** — the panel or modal that opens on selection: composite score with tier badge, contributing factor breakdown, incident-time histogram, severity split, nearest landmarks, last-incident date.
+3. **Segment Detail** — the panel that opens on selection: the ML forecast with its units and priority badge, rank range across refits, warnings (low history, single event), recorded history, model attributions (labelled as attributions, not causes) and the per-vehicle rate in a separate block, each shown as "Not available" when the data do not support it.
 4. **Rankings Table** — full-width sortable table of the most dangerous stretches with sticky header, risk badges, and mono metrics.
 5. **Statistics Dashboard** — accidents by month, by hour of day, by severity, by road type. Four chart panels on an asymmetric 2:1 grid, not four equal cards.
 6. **Route Risk Check** (stretch) — origin/destination inputs, drawn route, blackspots flagged along it with a cumulative route risk readout.
@@ -199,10 +216,10 @@ Prompt Stitch for these screens using the rules above:
 
 The subject is injury and death on public roads. Copy is factual, specific, and never dramatized.
 
-- State findings, do not editorialize. "Score 78.4 — Critical. 23 incidents since 2019, 6 fatal." Not "This road is a death trap."
-- Never imply prediction certainty. The model surfaces historical clustering; copy says "historically high-risk", never "will be dangerous".
+- State findings, do not editorialize. "6.43 expected serious or fatal casualties, 2026–27. Rank #10 (range #1–#687 across refits)." Not "This road is a death trap."
+- Never imply prediction certainty. The forecast is an expected count with a rank range; copy never says "will be dangerous", never calls it a probability, and never presents model attributions as causes.
 - Attribute every figure to its dataset and date range.
-- Placeholder and demo data must be plausible and irregular — `1,847` records, `74.2` score, `NH-16 near Chandaka junction` — never `1,000`, never `99.9%`, never "Main Street".
+- Demo data are real records from the ML release, never hand-authored stand-ins. Where a value does not exist, the interface says "Not available" with the reason.
 
 ---
 
@@ -237,4 +254,4 @@ The subject is injury and death on public roads. Copy is factual, specific, and 
 - No generic placeholder names: "John Doe", "Acme", "Nexus", "Main Street", "Lorem ipsum".
 - No fake round numbers: `99.99%`, `50%`, `10,000 users`.
 - No hotlinked Unsplash URLs — use `picsum.photos` or inline SVG for any placeholder imagery.
-- No claim of live or real-time data unless the pipeline actually delivers it. The system serves precomputed clusters; the interface must say so.
+- No claim of live or real-time data unless the pipeline actually delivers it. The system serves a precomputed forecast; the interface must say so.

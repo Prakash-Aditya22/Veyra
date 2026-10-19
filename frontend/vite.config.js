@@ -12,7 +12,7 @@ export default defineConfig({
         // The three heavy dependencies change far less often than app code,
         // so splitting them keeps them cached across deploys.
         manualChunks: {
-          leaflet: ['leaflet', 'react-leaflet', 'leaflet.heat'],
+          leaflet: ['leaflet', 'react-leaflet'],
           charts: ['recharts'],
           motion: ['motion'],
         },

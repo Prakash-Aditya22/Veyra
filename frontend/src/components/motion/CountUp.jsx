@@ -23,7 +23,7 @@ import { SPRING } from '../../lib/motion.js';
 */
 export default function CountUp({
   value,
-  format = (v) => Math.round(v).toLocaleString('en-IN'),
+  format = (v) => Math.round(v).toLocaleString('en-GB'),
   className,
   duration = 1200,
 }) {

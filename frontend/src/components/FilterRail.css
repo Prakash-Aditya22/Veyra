@@ -149,3 +149,59 @@
     border-radius: var(--radius-surface) var(--radius-surface) 0 0;
   }
 }
+
+/* --- Phase 4 additions: search, counts, notes --- */
+
+.filter-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: var(--steel-grey);
+}
+
+.filter-search svg {
+  position: absolute;
+  left: 10px;
+  pointer-events: none;
+}
+
+.filter-search__input {
+  width: 100%;
+  padding-left: 32px;
+}
+
+.filter-option__n {
+  margin-left: auto;
+  font-size: 0.6875rem;
+  color: var(--dim-grey);
+}
+
+.filter-group__note {
+  padding-top: 4px;
+  font-size: 0.6875rem;
+  line-height: 1.45;
+  color: var(--dim-grey);
+}
+
+.filter-rail__nofilter {
+  padding: var(--s2) var(--s3) 0;
+}
+
+/* --- Phase 5: option hints and a visible focus ring on the whole option row --- */
+
+.filter-option__text {
+  display: grid;
+  gap: 1px;
+}
+
+.filter-option__hint {
+  font-size: 0.6875rem;
+  color: var(--dim-grey);
+  line-height: 1.35;
+}
+
+/* The native checkbox is small; ring the whole row when it has keyboard focus. */
+.filter-option:has(.filter-option__input:focus-visible) {
+  outline: 2px solid var(--beacon-teal-lift);
+  outline-offset: -2px;
+}

@@ -1,26 +1,30 @@
-import { DATASET } from '../data/blackspots.js';
-import { num } from '../lib/format.js';
+import { useData } from '../data/DataContext.jsx';
+import { int, period } from '../lib/format.js';
 import './ProvenanceStrip.css';
 
 /**
- * On every screen. This product makes claims about public safety, so it must
- * always state what it is claiming from - including that the figures are a
- * demonstration fixture rather than the processed dataset.
+ * On every screen. States what the figures are claimed from: the ML release, its periods,
+ * the geography, and how much of the national model is loaded here.
  */
 export default function ProvenanceStrip({ className = '' }) {
+  const data = useData();
+  if (data.status !== 'ready') return null;
+  const r = data.release;
   return (
     <p className={`provenance ${className}`}>
-      <span className="mono">{DATASET.label}</span>
+      <span className="mono">ML release {r.version}</span>
+      <span className="provenance__sep" aria-hidden="true" />
+      <span>Great Britain (England, Scotland, Wales)</span>
       <span className="provenance__sep" aria-hidden="true" />
       <span className="mono">
-        {DATASET.from} to {DATASET.to}
+        STATS19 {period(r.historyPeriod)} → forecast {period(r.forecastPeriod)}
       </span>
       <span className="provenance__sep" aria-hidden="true" />
-      <span className="mono">{num(DATASET.records)} records</span>
+      <span className="mono">
+        {int(data.segments.length)} of {int(r.nationalSegments)} scored segments loaded
+      </span>
       <span className="provenance__sep" aria-hidden="true" />
-      <span className="mono">{DATASET.clusters} clusters</span>
-      <span className="provenance__sep" aria-hidden="true" />
-      <span className="mono">computed {DATASET.computedOn}</span>
+      <span>{data.source.label}</span>
     </p>
   );
 }

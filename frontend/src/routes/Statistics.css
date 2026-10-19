@@ -201,3 +201,71 @@
     display: none;
   }
 }
+
+/* --- Phase 4: population facts and stability list --- */
+
+.stats__link {
+  color: var(--beacon-teal-lift);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.stats__facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s3);
+  margin: 0;
+  padding-top: var(--s3);
+}
+
+.stats__facts dt {
+  font-size: var(--type-label);
+  color: var(--steel-grey);
+}
+
+.stats__facts dd {
+  margin: 2px 0 0;
+  color: var(--bone-white);
+  font-size: var(--type-readout);
+}
+
+.stab-list {
+  list-style: none;
+  margin: 0;
+  padding: var(--s2) 0 0;
+  display: grid;
+  gap: var(--s2);
+}
+
+.stab-list__row {
+  display: grid;
+  grid-template-columns: 9.5rem 1fr 6.5rem;
+  align-items: center;
+  gap: var(--s2);
+  font-size: 0.8125rem;
+  color: var(--steel-grey);
+}
+
+.stab-list__track {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(148, 163, 184, 0.1);
+  overflow: hidden;
+}
+
+.stab-list__fill {
+  display: block;
+  height: 100%;
+  background: var(--beacon-teal-lift);
+}
+
+.stab-list__n {
+  text-align: right;
+  color: var(--bone-white);
+}
+
+@media (max-width: 767px) {
+  .stats__facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
