@@ -1,0 +1,46 @@
+segment_id,feature,label,family,value_before,value_after,shap_log_before,shap_log_after,shap_log_change
+A57-842C4722100B-00,h_n_coll,"Collisions on this segment, last 3 years",collision counts,7.0,6.0,1.309729,1.186856,-0.122872
+A57-842C4722100B-00,h_adj_ksi_cas,"Serious/fatal casualties here (adjusted), last 3 years",serious/fatal counts,45.467892,1.64933,0.013956,0.019387,0.005431
+A57-842C4722100B-00,h_n_ksi_cas,"Serious/fatal casualties here (as reported), last 3 years",serious/fatal counts,28.0,1.0,0.05424,0.002285,-0.051954
+A57-842C4722100B-00,h_n_fatal_cas,"Fatal casualties here, last 3 years",serious/fatal counts,0.0,0.0,0.000146,0.000103,-4.3e-05
+A57-842C4722100B-00,h_n_cas,"All casualties here, last 3 years",all-casualty count,148.0,6.0,0.776097,0.558994,-0.217104
+A57-842C4722100B-00,h_is_ksi_collision,"Serious/fatal collisions here, last 3 years",serious/fatal counts,2.0,1.0,0.00635,-0.000681,-0.007031
+A57-842C4722100B-00,h_is_fatal_collision,"Fatal collisions here, last 3 years",serious/fatal counts,0.0,0.0,4e-05,4.1e-05,1e-06
+A57-842C4722100B-00,h_last_n_coll,Collisions here in the most recent year,collision counts,3.0,2.0,0.038368,0.035297,-0.003071
+A57-842C4722100B-00,h_last_adj_ksi_cas,Serious/fatal casualties here in the most recent year,serious/fatal counts,44.95076,1.1322,0.072898,0.045461,-0.027437
+A57-842C4722100B-00,h_years_with_crash,Years (of 3) with at least one collision here,collision counts,3.0,3.0,0.089444,0.091375,0.001931
+A57-842C4722100B-00,h_share_junction,Share of recent collisions at junctions,crash circumstances,0.714286,0.833333,0.023801,0.041549,0.017748
+A57-842C4722100B-00,h_share_dark,Share of recent collisions in darkness,crash circumstances,0.285714,0.333333,-0.04524,0.015849,0.061089
+A57-842C4722100B-00,h_share_urban,Share of recent collisions in urban areas,crash circumstances,1.0,1.0,0.021533,0.022196,0.000662
+A57-842C4722100B-00,h_share_wet,Share of recent collisions on wet or icy roads,crash circumstances,0.571429,0.5,0.050279,0.063907,0.013628
+A57-842C4722100B-00,h_speed_median,Typical speed limit at recent collisions,crash circumstances,30.0,30.0,0.038412,0.042078,0.003666
+A57-842C4722100B-00,h_share_single_vehicle,Share of recent collisions involving one vehicle,crash circumstances,0.714286,0.666667,0.043886,0.024119,-0.019766
+A57-842C4722100B-00,h_ksi_share,Share of recent collisions that were serious/fatal,serious/fatal share,0.285714,0.166667,-0.023463,0.005777,0.029241
+A57-842C4722100B-00,h_adj_ksi_per_km,"Serious/fatal casualties per km, last 3 years",serious/fatal counts,99.480858,3.608629,0.041546,0.013974,-0.027572
+A57-842C4722100B-00,h_coll_per_km,"Collisions per km, last 3 years",collision counts,15.315556,13.127619,0.040715,0.081181,0.040466
+A57-842C4722100B-00,log_length,Segment length,road and context (values unchanged),6.124796,6.124796,0.544753,0.546537,0.001783
+A57-842C4722100B-00,cls_M,Road class: motorway,road and context (values unchanged),0.0,0.0,-0.000534,-0.000641,-0.000107
+A57-842C4722100B-00,cls_A,Road class: A road,road and context (values unchanged),1.0,1.0,0.532378,0.55137,0.018992
+A57-842C4722100B-00,cls_B,Road class: B road,road and context (values unchanged),0.0,0.0,-0.006845,-0.007098,-0.000253
+A57-842C4722100B-00,cls_C,Road class: C road,road and context (values unchanged),0.0,0.0,0.04258,0.045852,0.003272
+A57-842C4722100B-00,cls_U,Road class: unclassified,road and context (values unchanged),0.0,0.0,0.171867,0.177509,0.005641
+A57-842C4722100B-00,cls_N,Road class: not classified,road and context (values unchanged),0.0,0.0,0.123821,0.125093,0.001272
+A57-842C4722100B-00,fw_collapsed_dual,Dual carriageway (drawn as one line),road and context (values unchanged),0.0,0.0,-0.000486,-0.000551,-6.5e-05
+A57-842C4722100B-00,fw_dual,Dual carriageway (drawn per carriageway),road and context (values unchanged),0.0,0.0,0.001395,0.001375,-2.1e-05
+A57-842C4722100B-00,fw_roundabout,Roundabout,road and context (values unchanged),0.0,0.0,0.000131,0.000109,-2.2e-05
+A57-842C4722100B-00,fw_slip,Slip road,road and context (values unchanged),0.0,0.0,0.000291,0.000293,3e-06
+A57-842C4722100B-00,fw_single,Single carriageway,road and context (values unchanged),1.0,1.0,0.008967,0.006057,-0.002909
+A57-842C4722100B-00,share_roundabout,Share of segment that is roundabout,road and context (values unchanged),0.0,0.0,0.000351,0.000236,-0.000114
+A57-842C4722100B-00,share_slip,Share of segment that is slip road,road and context (values unchanged),0.0,0.0,0.004778,0.004698,-8e-05
+A57-842C4722100B-00,n_junctions,Junctions on the segment,road and context (values unchanged),16.0,16.0,0.896259,0.98566,0.089402
+A57-842C4722100B-00,junctions_per_km,Junctions per km,road and context (values unchanged),35.006985,35.006985,0.064247,0.09867,0.034423
+A57-842C4722100B-00,primary_route,Primary route,road and context (values unchanged),1.0,1.0,0.099601,0.096284,-0.003317
+A57-842C4722100B-00,trunk_road,Trunk road,road and context (values unchanged),0.0,0.0,-0.000412,-0.000261,0.000151
+A57-842C4722100B-00,tunnel,Tunnel,road and context (values unchanged),0.0,0.0,0.0,0.0,0.0
+A57-842C4722100B-00,named,Road has a street name,road and context (values unchanged),1.0,1.0,0.050378,0.062049,0.011671
+A57-842C4722100B-00,stroke_pieces,Length of the whole junction-to-junction stretch (in ~500 m pieces),road and context (values unchanged),2.0,2.0,0.087187,0.092973,0.005786
+A57-842C4722100B-00,net_km_1km,"Road network density, 1 km square (urbanity proxy)",road and context (values unchanged),21.878496,21.878496,0.125575,0.175163,0.049588
+A57-842C4722100B-00,net_km_3km,"Road network density, 3x3 km (urbanity proxy)",road and context (values unchanged),128.78093,128.78093,-0.054159,-0.019631,0.034528
+A57-842C4722100B-00,nb_adj_ksi_3km,"Serious/fatal casualties on nearby roads (3x3 km), last 3 years",road and context (values unchanged),143.033005,143.033005,0.751909,0.939396,0.187488
+A57-842C4722100B-00,nb_coll_3km,"Collisions on nearby roads (3x3 km), last 3 years",road and context (values unchanged),482.0,482.0,0.337933,0.348313,0.01038
+A57-842C4722100B-00,stroke_adj_ksi_other,"Serious/fatal casualties elsewhere on the same stretch, last 3 years",road and context (values unchanged),4.11918,4.11918,0.575428,0.626785,0.051356

@@ -1,0 +1,232 @@
+{
+  "release": "v2.0",
+  "contract_version": "1.0",
+  "status": "production",
+  "status_note": "the only ML output intended for the backend; everything under not_for_loading is research, demo or legacy",
+  "manifest_created_utc": "2026-10-14T17:42:56+00:00",
+  "outputs_generated_utc": {
+    "value": "2026-10-13T19:55:59+00:00",
+    "source": "file modification time of road_segments_ranked_v2.csv; the v2 forecast step does not record a generation timestamp"
+  },
+  "score": {
+    "field": "blackspot_score",
+    "definition": "expected KSI casualties (DfT severity-adjusted) on this segment, 2026-2027",
+    "units": "expected DfT severity-adjusted KSI casualties per segment, total over the two forecast years",
+    "forecast_years": [
+      2026,
+      2027
+    ],
+    "horizon_years": 2,
+    "history_years": [
+      2023,
+      2024,
+      2025
+    ],
+    "kind": "expected count (burden), not a per-vehicle rate",
+    "order_by": "rank (ascending); do not re-rank from the rounded CSV score"
+  },
+  "model": {
+    "selected": "lgbm",
+    "frozen_spec_sha256": "b9487674e4f1da7951f787ef122b7f8caea033cebdfc34e26649de35562ad378",
+    "spec_frozen_on": "development folds with cutoffs 2019-2021 (data up to 2023)",
+    "production_fold": {
+      "cutoff": 2025,
+      "train_features": "2021-2023",
+      "train_target": "2024-2025",
+      "test_features": "2023-2025",
+      "test_target": "2026-2027"
+    },
+    "holdout_fold_already_examined": {
+      "cutoff": 2023,
+      "train_features": "2019-2021",
+      "train_target": "2022-2023",
+      "test_features": "2021-2023",
+      "test_target": "2024-2025"
+    },
+    "saved_model_file": {
+      "path": "ml/outputs/explainability/production_lgbm.txt",
+      "sha256": "dd116b22425f47cb44f500ce00fb8ae573be2109a8df66cdf1c8fd9c2934c795",
+      "note": "reconstructed in Phase 2 and verified to reproduce every stored score"
+    }
+  },
+  "network": {
+    "segmentation": "OS Open Roads centrelines (2026-04 release); junction-to-junction strokes of one road cut into round(L/500) equal pieces; independent of crash data",
+    "n_segments_scored_nationally": 1827550,
+    "segment_id_stability": "stable for one OS Open Roads release and segmentation code; a new OS release can change IDs"
+  },
+  "inputs": {
+    "stats19_collision_2021": {
+      "url": "https://data.dft.gov.uk/road-accidents-safety-data/dft-road-casualty-statistics-collision-2021.csv",
+      "sha256": "e729a3276859120261c616cbc0ac4ac7be034a608895928c41c765b3e3749ba9",
+      "downloaded_utc": "2026-10-13T15:36:24+00:00"
+    },
+    "stats19_collision_2022": {
+      "url": "https://data.dft.gov.uk/road-accidents-safety-data/dft-road-casualty-statistics-collision-2022.csv",
+      "sha256": "b0a704f7826f53774472254cf0dd5c0d2ec3fef006622a10a2a15f31571d4e7a",
+      "downloaded_utc": "2026-10-13T15:36:31+00:00"
+    },
+    "stats19_collision_2023": {
+      "url": "https://data.dft.gov.uk/road-accidents-safety-data/dft-road-casualty-statistics-collision-2023.csv",
+      "sha256": "0c01d4194b4e4c5e1b242a43c633bc30e22cf16e8becca698e63a37f71410cfa",
+      "downloaded_utc": "2026-10-13T15:36:38+00:00"
+    },
+    "stats19_collision_2024": {
+      "url": "https://data.dft.gov.uk/road-accidents-safety-data/dft-road-casualty-statistics-collision-2024.csv",
+      "sha256": "32a78f4662e309160f37b1ea2b82017e85e07b62a022d680da7140e88706a17c",
+      "downloaded_utc": "2026-10-13T15:36:45+00:00"
+    },
+    "stats19_collision_2025": {
+      "url": "https://data.dft.gov.uk/road-accidents-safety-data/dft-road-casualty-statistics-collision-2025.csv",
+      "sha256": "e699c19bdb82e47e449b6f3381ac87631865f6a31cef118c9955ba80ca870e2b",
+      "downloaded_utc": "2026-10-13T15:36:52+00:00"
+    },
+    "stats19_casualty_all": {
+      "url": "https://data.dft.gov.uk/road-accidents-safety-data/dft-road-casualty-statistics-casualty-1979-latest-published-year.csv",
+      "sha256": "c7d390b571131e3e3262c8a1721abff167b2a68b030bbd371494038e8c57db83",
+      "downloaded_utc": "2026-10-13T15:41:50+00:00"
+    },
+    "dft_aadf": {
+      "url": "https://storage.googleapis.com/dft-statistics/road-traffic/downloads/data-gov-uk/dft_traffic_counts_aadf.zip",
+      "sha256": "5273cf63da4ca8b317bfe972d8a345e7932db0fff7a7789998a890f0081232b6",
+      "downloaded_utc": "2026-10-13T15:41:59+00:00"
+    },
+    "os_open_roads": {
+      "url": "https://api.os.uk/downloads/v1/products/OpenRoads/downloads?area=GB&format=ESRI%C2%AE+Shapefile&redirect",
+      "sha256": "bb2bbff8be3d637b38ed5d06277856c15f41ea262614edf974be8f4b96fdc791",
+      "downloaded_utc": "2026-10-13T15:54:49+00:00"
+    },
+    "stats19_data_guide_2025": {
+      "url": "https://assets.publishing.service.gov.uk/media/6ab2a71d997a4b2950cced58/dft-road-casualty-statistics-road-safety-open-dataset-data-guide-2025.xlsx",
+      "sha256": "51b08606ef3dad1ae5d4c8726241b022fc8e4bbdc910ef0e5cc2fb92b054fc12",
+      "downloaded_utc": "2026-10-13T16:10:30+00:00"
+    }
+  },
+  "files": [
+    {
+      "path": "data/v2/road_segments_ranked_v2.csv",
+      "role": "required",
+      "present": true,
+      "format": "CSV, UTF-8, header, comma",
+      "purpose": "every scored segment in the national top 50,000 plus every segment with >= 6 collisions in 2023-25; one row per segment",
+      "relation": "extends data/road_segments_ranked.csv (v1 columns first, same order) - new segment IDs",
+      "regenerate": ".venv/Scripts/python ml/pipeline.py forecast",
+      "consumer": "backend: load into PostgreSQL/PostGIS (road_segment_v2)",
+      "rows": 50015,
+      "bytes": 22275931,
+      "sha256": "36e1dd585aeb2ee680e43bd65a40efbd69403b8d17c597a2ea3c805cb3467c09",
+      "modified_utc": "2026-10-13T19:55:59+00:00"
+    },
+    {
+      "path": "data/v2/road_segments_meta_v2.json",
+      "role": "required",
+      "present": true,
+      "format": "JSON object",
+      "purpose": "version, frozen-spec hash, periods, column notes",
+      "relation": "extends data/road_segments_meta.json",
+      "regenerate": ".venv/Scripts/python ml/pipeline.py forecast",
+      "consumer": "backend: store with the load; check score_version",
+      "rows": null,
+      "bytes": 2848,
+      "sha256": "210f8701247d0dc5b41400ff5fe7ff5ed1c98be411f3b127472ffd74c78ea6b2",
+      "modified_utc": "2026-10-13T19:55:59+00:00"
+    },
+    {
+      "path": "data/v2/road_segments_top500_v2.json",
+      "role": "optional",
+      "present": true,
+      "format": "JSON array of row objects (same fields as the CSV, full precision)",
+      "purpose": "top 500 for serving before the database exists",
+      "relation": "extends data/road_segments_top500.json",
+      "regenerate": ".venv/Scripts/python ml/pipeline.py forecast",
+      "consumer": "backend/frontend: static fallback",
+      "rows": 500,
+      "bytes": 813801,
+      "sha256": "cc38a6d897690a5a53236020bb9f757ddfbb4306057e6cd8323cc56ba2149686",
+      "modified_utc": "2026-10-13T19:55:59+00:00"
+    },
+    {
+      "path": "data/v2/road_segments_top5000_v2.geojson",
+      "role": "optional",
+      "present": true,
+      "format": "GeoJSON FeatureCollection (RFC 7946, WGS84 lon/lat)",
+      "purpose": "real OS Open Roads centreline geometry for the top 5,000",
+      "relation": "new in v2 (v1 had midpoints only)",
+      "regenerate": ".venv/Scripts/python ml/pipeline.py forecast",
+      "consumer": "backend: segment geometry table; frontend: lines",
+      "rows": 5000,
+      "bytes": 5258252,
+      "sha256": "513781d1e6add5765e28469af263cb51868bcb9080b87d71c10433ea567a2889",
+      "modified_utc": "2026-10-13T19:56:06+00:00"
+    },
+    {
+      "path": "data/v2/extensions/segment_explanations_v2.csv",
+      "role": "optional",
+      "present": true,
+      "format": "CSV, 5 rows per segment",
+      "purpose": "top-5 TreeSHAP attributions of the production model per exported segment",
+      "relation": "new, additive",
+      "regenerate": ".venv/Scripts/python ml/experiments/explain_blackspot.py",
+      "consumer": "backend: segment_explanation_v2 table",
+      "rows": 250075,
+      "bytes": 27805731,
+      "sha256": "a5007a4efd22a1aa5dabb07ff09c61cb7aafbde239d09d7329ec94333487a956",
+      "modified_utc": "2026-10-14T12:01:21+00:00"
+    },
+    {
+      "path": "data/v2/extensions/segment_explanations_top5000_v2.json",
+      "role": "optional",
+      "present": true,
+      "format": "JSON object keyed by segment_id",
+      "purpose": "explanations for the 5,000 mapped segments, with group factors",
+      "relation": "new, additive",
+      "regenerate": ".venv/Scripts/python ml/experiments/explain_blackspot.py",
+      "consumer": "map/frontend",
+      "rows": 5000,
+      "bytes": 3421617,
+      "sha256": "14ef181ab0bc66869ac67cd851ad04ccc7e49ad365eb619253d141a4cbdf18d5",
+      "modified_utc": "2026-10-14T12:01:24+00:00"
+    },
+    {
+      "path": "data/v2/extensions/segment_stability_v2.csv",
+      "role": "optional",
+      "present": true,
+      "format": "CSV, 1 row per segment",
+      "purpose": "rank ranges and top-k frequencies across refits; window range; simultaneous drop-one rank",
+      "relation": "new, additive",
+      "regenerate": ".venv/Scripts/python ml/experiments/ranking_stability.py --boot 20 --seeds 5",
+      "consumer": "backend: segment_stability_v2 table",
+      "rows": 50015,
+      "bytes": 6086208,
+      "sha256": "aea0e470f1a675efca10c5a8c6f43f7296311b282b84f9d4ba3a3b5d59041635",
+      "modified_utc": "2026-10-14T11:35:15+00:00"
+    },
+    {
+      "path": "data/v2/extensions/segment_single_event_sensitivity_v2.csv",
+      "role": "optional",
+      "present": true,
+      "format": "CSV, top 1,000",
+      "purpose": "forecast and rank without the segment's largest collision, one-at-a-time and simultaneous",
+      "relation": "new, additive (Phase 3)",
+      "regenerate": ".venv/Scripts/python ml/experiments/single_event_case.py",
+      "consumer": "backend: optional warning text",
+      "rows": 1000,
+      "bytes": 57878,
+      "sha256": "3f19ea153367481b5cfcb987bd9135f30545ebad65f9b7b33f68124439b33368",
+      "modified_utc": "2026-10-14T17:27:02+00:00"
+    }
+  ],
+  "documentation": [
+    "data/v2/README.md",
+    "data/v2/INTEGRATION_CONTRACT.md",
+    "data/v2/extensions/README.md"
+  ],
+  "schema": "data/v2/integration_schema_v2.json",
+  "not_for_loading": {
+    "ml/outputs/road_segments_v2_full.parquet": "national table (1.83 M rows), regenerable, gitignored; research and audits",
+    "ml/outputs/explainability/": "saved production model and SHAP research outputs",
+    "ml/reports/": "research reports and evidence tables (historical windows, stability, audits)",
+    "ml/demo/*.html": "demo maps (reference implementation of the UI rules, not an API)",
+    "ml/tests/fixtures/integration/": "small test fixture, a subset of this release",
+    "data/road_segments_*": "v1 outputs (superseded, kept for compatibility)"
+  }
+}

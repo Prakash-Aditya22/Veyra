@@ -1,0 +1,8 @@
+segment_id,rank,forecast,forecast_without_largest_collision,rank_without_largest_collision_one_at_a_time,rank_without_largest_collision_simultaneous,largest_collision_adj_ksi,single_event_flag
+B5339-8AD45E53257A-00,1,9.3004,8.8336,1,1,1.1588,False
+A100-22D1CA35BA35-00,2,7.5366,7.686,2,3,1.0,False
+A57-842C4722100B-00,10,6.4306,7.8219,2,2,43.8186,True
+A57-842C4722100B-01,140,3.5906,3.7924,112,91,1.0,False
+A4-FA629E609A3F-00,147,3.5472,3.1508,210,183,3.0,False
+A5038-13F65FF58090-01,240,3.0105,3.8016,111,89,1.0,False
+A34-97BCC110FCF3-02,369,2.6158,1.6938,1032,887,1.0,False

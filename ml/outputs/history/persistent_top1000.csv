@@ -1,0 +1,499 @@
+segment_id,rank_2019,rank_2020,rank_2021,rank_2022,rank_2023,rank_2025,location,road_class,single_event_flag,history_adj_ksi_2023_2025
+B5339-8AD45E53257A-00,361,328,383,294,403,1,B5339 (Hanover Street) 0.0-0.6 km of stretch 0,B,False,8.34
+A100-22D1CA35BA35-00,37,30,18,25,19,2,A100 (Tower Bridge Road) 0.0-0.7 km of stretch 0,A,False,10.0
+A5201-39DDAB72668E-00,22,78,93,35,16,3,A5201 (Old Street) 0.0-0.6 km of stretch 2,A,False,12.0
+A40-D973136C7407-03,7,118,86,118,7,4,A40 (Oxford Street) 1.6-2.1 km of stretch 400,A,False,15.0
+A3-184160459333-00,97,24,157,184,157,5,A3 (King William Street) 0.0-0.6 km of stretch 25,A,False,12.0
+A3220-CC5E52AD1CD2-00,109,108,212,103,65,6,A3220 (Holland Road) 0.0-0.6 km of stretch 46,A,False,13.0
+A3212-DD2C482CDA6F-00,63,251,323,106,75,7,A3212 (Whitehall) 0.0-0.7 km of stretch 5,A,False,11.0
+A202-57643AC9CCD6-06,76,49,45,30,62,8,A202 (Camberwell New Road) 3.2-3.7 km of stretch 5,A,False,10.0
+A40-D973136C7407-01,15,155,206,169,6,9,A40 (Oxford Street) 0.5-1.0 km of stretch 400,A,False,14.0
+A11-D59FDA3BF688-01,42,41,39,24,85,11,A11 (Mile End Road) 0.5-1.1 km of stretch 188,A,False,11.0
+A4-BC4BF902D8F8-00,101,195,534,247,9,12,A4 (Piccadilly) 0.0-0.6 km of stretch 305,A,False,12.0
+A315-31AF52010F16-00,357,819,898,477,179,13,A315 (King Street) 0.0-0.7 km of stretch 4,A,False,14.0
+A3-94B3DABF3212-02,39,4,7,5,2,14,A3 (Clapham High Street) 1.0-1.5 km of stretch 212,A,False,14.0
+A10-1B729B2C01ED-00,5,3,6,2,10,15,A10 (Stamford Hill) 0.0-0.5 km of stretch 30,A,False,10.0
+A3-579D27C88E8C-05,51,51,37,10,23,16,A3 (Elephant and Castle) 2.6-3.2 km of stretch 131,A,False,13.0
+A400-37E2E5192EDB-02,250,294,610,413,63,17,A400 (Charing Cross Road) 1.0-1.4 km of stretch 2,A,False,6.0
+A10-3C60FEB87E7B-05,41,42,33,39,53,18,A10 (High Road) 2.4-2.9 km of stretch 59,A,False,14.0
+A11-D59FDA3BF688-02,56,16,3,1,3,19,A11 (Mile End Road) 1.1-1.6 km of stretch 188,A,False,6.0
+A5-92878A35AF73-02,193,161,140,88,24,20,A5 (Edgware Road) 1.0-1.5 km of stretch 329,A,False,16.0
+A215-2C00A324A7E3-07,25,26,60,119,29,21,A215 (Camberwell Road) 3.5-4.0 km of stretch 5,A,False,15.0
+A24-46DD009FA18E-03,24,1,1,6,4,22,A24 (Upper Tooting Road) 1.6-2.1 km of stretch 49,A,False,9.0
+A23-23B0A5840334-04,2,2,2,3,1,23,A23 (Brixton Road) 2.1-2.6 km of stretch 37,A,False,12.0
+A201-DD68A7F79D36-00,17,39,29,148,40,24,A201 (New Kent Road) 0.0-0.5 km of stretch 15,A,False,13.0
+A23-23B0A5840334-02,89,80,77,128,54,25,A23 (Brixton Road) 1.0-1.5 km of stretch 37,A,False,12.0
+A107-A9CDDE7079EA-00,84,82,102,107,80,26,A107 (Amhurst Road) 0.0-0.6 km of stretch 19,A,False,8.0
+A215-F384DBCC4435-00,235,404,242,152,67,27,A215 (Walworth Road) 0.0-0.5 km of stretch 23,A,False,9.0
+A2-FC13206659F5-01,69,21,52,33,59,28,A2 (Old Kent Road) 0.5-0.9 km of stretch 299,A,False,10.0
+A315-5CCC777A4098-01,142,98,108,86,26,29,A315 (Kensington High Street) 0.6-1.1 km of stretch 8,A,False,15.0
+A2-FC13206659F5-03,38,61,51,52,56,30,A2 (Old Kent Road) 1.4-1.9 km of stretch 299,A,False,12.0
+A4204-D8D40B9D4DEB-00,350,359,397,228,108,31,A4204 (Kensington Church Street) 0.0-0.7 km of stretch 6,A,False,7.0
+A1208-CE780191E1A5-00,294,187,100,124,162,32,A1208 (Hackney Road) 0.0-0.5 km of stretch 2,A,False,7.0
+A11-D59FDA3BF688-00,71,18,11,4,21,33,A11 (Mile End Road) 0.0-0.5 km of stretch 188,A,False,11.0
+A1-A2B07315C7AC-00,83,77,132,190,174,34,A1 (Upper Street) 0.0-0.5 km of stretch 538,A,False,9.0
+A503-D7AF8BBAACD3-00,11,8,5,14,57,35,A503 (Seven Sisters Road) 0.0-0.6 km of stretch 17,A,False,9.0
+A11-174D380B5DFB-00,20,31,8,142,72,36,A11 (Whitechapel High Street) 0.0-0.4 km of stretch 21,A,False,5.0
+A501-1978721D750E-01,26,97,97,126,90,37,A501 (Euston Road) 0.5-1.0 km of stretch 4,A,False,6.0
+A40-D973136C7407-02,62,130,73,37,8,38,A40 (Oxford Street) 1.0-1.6 km of stretch 400,A,False,10.0
+A202-57643AC9CCD6-02,103,27,58,29,123,39,A202 (Peckham High Street) 1.1-1.6 km of stretch 5,A,False,7.0
+A2-55D9CD95C54D-00,128,113,101,85,103,40,A2 (New Cross Road) 0.0-0.5 km of stretch 99,A,False,10.0
+A105-21E26DD6BC6A-03,113,85,151,251,49,41,A105 (High Road) 1.6-2.1 km of stretch 1,A,False,10.0
+A401-4794A44FABCD-00,74,229,229,210,11,43,A401 (Shaftesbury Avenue) 0.0-0.5 km of stretch 1,A,False,12.0
+A201-14606265C0F6-01,108,238,594,242,38,44,A201 (Farringdon Road) 0.6-1.1 km of stretch 1,A,False,11.0
+A13-51D3FD6FA07A-04,13,6,12,64,47,45,A13 (Commercial Road) 1.8-2.3 km of stretch 60,A,False,5.0
+A1-0399B631A243-04,67,102,103,18,35,46,A1 (Holloway Road) 2.1-2.6 km of stretch 11,A,False,9.0
+A212-4669B65BCB51-00,745,314,211,267,265,47,A212 (Wellesley Road) 0.0-0.7 km of stretch 7,A,False,6.0
+A202-57643AC9CCD6-05,59,104,106,55,119,49,A202 (Camberwell Church Street) 2.6-3.2 km of stretch 5,A,False,8.0
+A24-46DD009FA18E-07,363,184,31,21,13,50,A24 (Balham High Road) 3.6-4.1 km of stretch 49,A,False,6.0
+A11-174D380B5DFB-01,50,55,126,89,109,51,A11 (Whitechapel Road) 0.4-0.9 km of stretch 21,A,False,10.0
+A315-5CCC777A4098-02,170,169,150,129,43,52,A315 (Kensington Road) 1.1-1.7 km of stretch 8,A,False,12.0
+A1-0399B631A243-01,204,123,186,56,169,54,A1 (Holloway Road) 0.5-1.0 km of stretch 11,A,False,6.0
+A10-0EC3099F2CFF-00,249,212,165,98,145,55,A10 (Stoke Newington High Street) 0.0-0.7 km of stretch 18,A,False,6.0
+A404-7BFDABA18FE7-08,269,558,290,302,148,56,A404 (High Street Harlesden) 4.0-4.5 km of stretch 58,A,False,9.0
+A11-DDEAF518C2A5-01,33,33,22,15,31,57,A11 (Bow Road) 0.5-1.0 km of stretch 195,A,False,9.0
+A105-21E26DD6BC6A-04,267,134,164,215,206,58,A105 (High Road) 2.1-2.6 km of stretch 1,A,False,7.0
+A40-D973136C7407-00,44,141,191,46,5,59,A40 (Oxford Street) 0.0-0.5 km of stretch 400,A,False,6.0
+A308-25F648EEE46C-00,430,428,40,80,132,60,A308 (King's Road) 0.0-0.4 km of stretch 22,A,False,8.0
+A23-23B0A5840334-09,171,35,59,96,152,61,A23 (Streatham Hill) 4.6-5.1 km of stretch 37,A,False,12.0
+A23-23B0A5840334-10,77,23,20,42,44,62,A23 (Streatham High Road) 5.1-5.6 km of stretch 37,A,False,14.0
+A13-51D3FD6FA07A-02,178,47,21,138,93,63,A13 (Commercial Road) 0.9-1.4 km of stretch 60,A,False,6.0
+A202-57643AC9CCD6-03,10,19,17,63,33,64,A202 (Peckham High Street) 1.6-2.1 km of stretch 5,A,False,9.0
+A10-C0F82C62C7C4-08,23,69,49,19,17,65,A10 (Kingsland High Street) 3.9-4.4 km of stretch 187,A,False,6.0
+A2-D66AFA29C1F9-02,61,38,138,91,81,66,A2 (Old Kent Road) 1.0-1.5 km of stretch 256,A,False,10.0
+A308-25F648EEE46C-01,195,166,98,275,83,67,A308 (New King's Road) 0.4-0.9 km of stretch 22,A,False,5.0
+A2030-B0DD4EF35258-00,417,598,643,836,710,68,A2030 (Goldsmith Avenue) 0.0-0.7 km of stretch 45,A,False,6.45
+A2-D66AFA29C1F9-00,114,52,50,144,137,69,A2 (New Cross Road) 0.0-0.5 km of stretch 256,A,False,6.0
+A3-94B3DABF3212-00,14,5,10,71,42,70,A3 (Clapham Road) 0.0-0.5 km of stretch 212,A,False,9.0
+A201-14606265C0F6-03,1,127,457,872,295,71,A201 (New Bridge Street) 1.7-2.2 km of stretch 1,A,False,13.0
+A315-6E183DC1A7CD-00,271,484,395,392,346,72,A315 (Hanworth Road) 0.0-0.7 km of stretch 10,A,False,5.0
+A400-37E2E5192EDB-03,121,122,676,269,55,73,A400 (Charing Cross Road) 1.4-1.9 km of stretch 2,A,False,7.0
+A109-236BD33D6974-00,825,694,330,604,238,74,A109 (Lordship Lane) 0.0-0.4 km of stretch 2,A,False,9.0
+A1202-0EEE91AABFFD-00,21,265,300,82,32,75,A1202 (Great Eastern Street) 0.0-0.3 km of stretch 2,A,False,9.0
+A6008-FDDEA4053AC3-00,221,259,247,274,233,76,A6008 (Upper Parliament Street) 0.0-0.3 km of stretch 62,A,False,5.0
+A3212-CE6572BFF396-00,329,343,158,34,82,77,A3212 (Chelsea Embankment) 0.0-0.5 km of stretch 3,A,False,9.0
+A3-579D27C88E8C-07,54,232,117,41,20,78,A3 (Borough High Street) 3.7-4.2 km of stretch 131,A,False,6.0
+A10-1B729B2C01ED-02,27,7,9,11,60,79,A10 (Stamford Hill) 1.1-1.6 km of stretch 30,A,False,11.0
+A23-F5E071BC393D-00,78,234,757,214,142,81,A23 (London Road) 0.0-0.5 km of stretch 242,A,False,7.0
+A3036-B0792EBC3A6E-00,384,223,362,237,273,83,A3036 (Wandsworth Road) 0.0-0.4 km of stretch 10,A,False,6.0
+A13-13639AF725BB-03,291,103,319,283,335,84,A13 (Commercial Road) 1.6-2.1 km of stretch 11,A,False,11.0
+A202-7D50CAF0FBE4-03,43,110,53,13,46,86,A202 (Camberwell New Road) 1.6-2.1 km of stretch 7,A,False,6.0
+A23-9479D1D7CC3D-03,629,401,201,211,78,87,A23 (London Road) 1.4-1.9 km of stretch 146,A,False,10.0
+A11-DDEAF518C2A5-00,32,40,13,9,12,88,A11 (Mile End Road) 0.0-0.5 km of stretch 195,A,False,5.0
+A100-8E9ADD52675D-01,75,34,67,47,58,89,A100 (Tower Bridge Road) 0.6-1.2 km of stretch 4,A,False,4.0
+A215-2C00A324A7E3-05,65,50,133,178,213,91,A215 (Camberwell Green) 2.5-3.0 km of stretch 5,A,False,10.0
+A118-895ECC399ADB-01,127,198,63,97,189,92,A118 (Romford Road) 0.5-1.0 km of stretch 41,A,False,6.0
+A404-7BFDABA18FE7-02,284,199,177,130,77,94,A404 (Harrow Road) 1.0-1.5 km of stretch 58,A,False,8.0
+A112-7FC79E6D0FB2-03,632,410,185,313,209,95,A112 (Hoe Street) 1.6-2.2 km of stretch 12,A,False,7.0
+A3-579D27C88E8C-06,424,254,349,58,151,96,A3 (Borough High Street) 3.2-3.7 km of stretch 131,A,False,5.0
+A235-A5B8E09383D9-01,314,263,137,384,107,97,A235 (London Road) 0.4-0.9 km of stretch 3,A,False,6.0
+A219-66EFA7929BE3-05,169,154,94,226,263,99,A219 (Fulham Palace Road) 2.5-3.0 km of stretch 32,A,False,4.0
+A24-46DD009FA18E-01,299,193,55,72,184,100,A24 (Tooting High Street) 0.5-1.0 km of stretch 49,A,False,7.0
+A1-0399B631A243-02,174,36,85,59,171,101,A1 (Holloway Road) 1.0-1.6 km of stretch 11,A,False,5.0
+A2-088F208124F6-00,282,245,304,531,313,102,A2 (New Cross Road) 0.0-0.3 km of stretch 5,A,False,7.0
+A202-57643AC9CCD6-04,159,99,92,32,79,103,A202 (Peckham Road) 2.1-2.6 km of stretch 5,A,False,6.0
+A202-7D50CAF0FBE4-00,433,618,428,337,353,104,A202 (Harleyford Road) 0.0-0.5 km of stretch 7,A,False,8.0
+A4-8C7506BDB22D-01,449,276,218,160,128,105,A4 (Brompton Road) 0.5-1.0 km of stretch 217,A,False,5.0
+A10-C0F82C62C7C4-09,82,70,96,40,101,106,A10 (Stoke Newington Road) 4.4-4.9 km of stretch 187,A,False,5.0
+A205-09DB22341AA9-00,192,210,156,70,183,107,A205 (Catford Road) 0.0-0.5 km of stretch 3,A,False,7.0
+A3036-3D57698A3789-08,394,299,235,221,204,108,A3036 (St John's Hill) 3.9-4.4 km of stretch 5,A,False,9.0
+A217-6DA38FB1D351-00,697,375,172,185,203,109,A217 (Wandsworth Bridge Road) 0.0-0.5 km of stretch 34,A,False,2.0
+A3-579D27C88E8C-02,72,109,143,176,199,110,A3 (Kennington Park Road) 1.1-1.6 km of stretch 131,A,False,6.0
+A404-7BFDABA18FE7-01,175,191,105,222,228,111,A404 (Harrow Road) 0.5-1.0 km of stretch 58,A,False,5.0
+A1010-3D8BF48D1DEE-04,168,73,195,327,92,113,A1010 (Fore Street) 1.9-2.4 km of stretch 1,A,False,5.0
+A2-D66AFA29C1F9-01,119,307,162,166,144,114,A2 (New Cross Road) 0.5-1.0 km of stretch 256,A,False,7.0
+A100-8E9ADD52675D-00,125,54,173,84,317,115,A100 (Tower Bridge Approach) 0.0-0.6 km of stretch 4,A,False,7.0
+A302-EA0031C56F8F-00,100,125,357,415,527,116,A302 (Grosvenor Place) 0.0-0.5 km of stretch 15,A,False,7.0
+A404-7BFDABA18FE7-00,224,189,169,208,286,118,A404 (Harrow Road) 0.0-0.5 km of stretch 58,A,False,5.0
+A10-C0F82C62C7C4-01,6,14,43,245,176,119,A10 (Bishopsgate) 0.5-1.0 km of stretch 187,A,False,8.0
+A315-8686B9C474AC-00,655,642,564,93,14,120,A315 (King Street) 0.0-0.5 km of stretch 16,A,False,11.0
+A2217-32D46CB6B7F8-03,599,225,386,324,359,121,A2217 (Coldharbour Lane) 1.6-2.1 km of stretch 4,A,False,10.0
+A40-1A4E8D49C60E-06,129,135,230,162,345,122,A40 (Western Avenue) 3.0-3.5 km of stretch 52,A,False,9.0
+A24-46DD009FA18E-02,52,22,25,16,27,123,A24 (Tooting High Street) 1.0-1.6 km of stretch 49,A,False,6.0
+A406-33E67ECC0915-03,574,336,267,110,389,124,A406 (North Circular Road) 1.6-2.1 km of stretch 55,A,False,6.0
+A5-92878A35AF73-07,31,60,38,26,18,125,A5 (Kilburn High Road) 3.5-4.0 km of stretch 329,A,False,5.0
+A13-51D3FD6FA07A-01,18,15,28,43,76,126,A13 (Commercial Road) 0.5-0.9 km of stretch 60,A,False,3.0
+A402-6CE86FA53099-03,318,211,431,241,197,127,A402 (Notting Hill Gate) 1.4-1.9 km of stretch 3,A,False,6.0
+A2217-32D46CB6B7F8-01,300,498,175,186,122,128,A2217 (Coldharbour Lane) 0.5-1.0 km of stretch 4,A,False,6.0
+A23-23B0A5840334-03,133,75,44,65,30,129,A23 (Brixton Road) 1.5-2.1 km of stretch 37,A,False,5.0
+A202-57643AC9CCD6-01,35,43,42,76,91,130,A202 (Queen's Road) 0.5-1.1 km of stretch 5,A,False,12.0
+A504-96FF97750375-00,701,176,193,246,367,131,A504 (Turnpike Lane) 0.0-0.6 km of stretch 21,A,False,8.0
+A219-F8910757C5D3-00,368,304,130,28,84,133,A219 (Putney High Street) 0.0-0.6 km of stretch 67,A,False,9.0
+A5-92878A35AF73-01,12,11,27,54,100,134,A5 (Edgware Road) 0.5-1.0 km of stretch 329,A,False,9.0
+A13-13639AF725BB-02,183,128,70,94,115,135,A13 (East India Dock Road) 1.0-1.6 km of stretch 11,A,False,6.0
+A3217-954953CD5164-01,466,445,196,171,125,136,A3217 (King's Road) 0.5-1.1 km of stretch 1,A,False,9.0
+A400-37E2E5192EDB-00,151,186,344,563,604,138,A400 (Tottenham Court Road) 0.0-0.5 km of stretch 2,A,False,8.0
+A1-0399B631A243-05,148,148,61,23,25,139,A1 (Holloway Road) 2.6-3.1 km of stretch 11,A,False,3.0
+A215-F384DBCC4435-01,45,114,167,100,126,142,A215 (Walworth Road) 0.5-1.0 km of stretch 23,A,False,7.0
+A10-3C60FEB87E7B-03,160,119,64,68,102,143,A10 (Bruce Grove) 1.4-1.9 km of stretch 59,A,False,7.0
+A2-D66AFA29C1F9-03,91,106,276,154,349,144,A2 (Old Kent Road) 1.5-2.0 km of stretch 256,A,False,7.0
+A5202-19BF9BCD992E-00,352,474,783,667,437,145,A5202 (Pancras Road) 0.0-0.5 km of stretch 0,A,False,5.0
+A4-FA629E609A3F-00,58,277,606,825,504,147,A4 (Charing Cross) 0.0-0.1 km of stretch 411,A,False,6.0
+A501-9DF738820B2D-01,36,159,198,177,114,148,A501 (City Road) 0.5-0.9 km of stretch 30,A,False,7.0
+A4018-AB4B4332FE8E-00,112,112,468,135,360,149,A4018 (Park Street) 0.0-0.6 km of stretch 35,A,False,5.4
+A24-46DD009FA18E-08,86,53,23,7,48,150,A24 (Balham Hill) 4.1-4.7 km of stretch 49,A,False,5.0
+A4-01A28E923D00-00,93,165,270,122,34,151,A4 (Haymarket) 0.0-0.4 km of stretch 4,A,False,10.0
+A329-70D4EA969D73-00,145,538,332,321,118,153,A329 (King's Road) 0.0-0.6 km of stretch 66,A,False,8.29
+A203-20345AFF0CD8-00,504,246,123,105,247,154,A203 (South Lambeth Road) 0.0-0.6 km of stretch 2,A,False,4.0
+A2-FC13206659F5-02,88,17,111,125,224,155,A2 (Old Kent Road) 0.9-1.4 km of stretch 299,A,False,6.0
+B317-0FCB1D468F09-00,404,286,325,202,222,156,B317 (North End Road) 0.0-0.6 km of stretch 0,B,False,6.0
+A5202-B69F2F76948D-00,439,528,931,467,334,157,A5202 (Royal College Street) 0.0-0.7 km of stretch 6,A,False,3.0
+A24-46DD009FA18E-06,124,57,66,69,227,158,A24 (Balham High Road) 3.1-3.6 km of stretch 49,A,False,5.0
+A4200-AC62AF709925-00,111,369,803,640,284,160,A4200 (Woburn Place) 0.0-0.6 km of stretch 5,A,False,2.0
+A105-C2DFD41B76F5-02,66,173,199,180,61,161,A105 (Green Lanes) 1.0-1.5 km of stretch 26,A,False,8.0
+A219-4E6B0DE96A0C-01,448,239,125,50,136,162,A219 (Wood Lane) 0.5-1.1 km of stretch 23,A,False,5.0
+A4020-63DDCCA024DF-00,102,150,145,81,124,163,A4020 (Uxbridge Road) 0.0-0.5 km of stretch 24,A,False,6.0
+A3205-D8AAED24DE91-05,187,133,214,113,178,165,A3205 (York Road) 2.5-3.0 km of stretch 16,A,False,6.0
+A4020-63DDCCA024DF-03,60,94,88,287,333,166,A4020 (The Vale) 1.5-2.0 km of stretch 24,A,False,1.0
+A13-51D3FD6FA07A-03,47,45,30,111,147,167,A13 (Commercial Road) 1.4-1.8 km of stretch 60,A,False,2.0
+A13-13639AF725BB-00,64,65,79,101,87,168,A13 (East India Dock Road) 0.0-0.5 km of stretch 11,A,False,4.0
+A10-C0F82C62C7C4-03,28,120,144,20,37,169,A10 (Shoreditch High Street) 1.5-2.0 km of stretch 187,A,False,6.0
+A215-2C00A324A7E3-06,186,201,367,199,161,170,A215 (Camberwell Road) 3.0-3.5 km of stretch 5,A,False,3.0
+A5-92878A35AF73-00,68,63,87,90,135,171,A5 (Edgware Road) 0.0-0.5 km of stretch 329,A,False,3.0
+A10-3C60FEB87E7B-04,104,81,41,83,89,172,A10 (High Road) 1.9-2.4 km of stretch 59,A,False,5.0
+A215-2C00A324A7E3-04,243,424,324,556,435,173,A215 (Denmark Hill) 2.0-2.5 km of stretch 5,A,False,5.0
+A315-72F73DB05136-01,179,202,178,290,138,174,A315 (Hammersmith Road) 0.5-0.9 km of stretch 12,A,False,9.0
+A104-B9D31B8FC3EE-00,539,512,447,375,442,175,A104 (Dalston Lane) 0.0-0.5 km of stretch 20,A,False,5.0
+A3036-3D57698A3789-07,81,37,69,235,198,176,A3036 (Lavender Hill) 3.4-3.9 km of stretch 5,A,False,5.0
+B2066-4F2D340D8499-00,228,309,490,437,181,177,B2066 (North Street) 0.0-0.6 km of stretch 3,B,False,7.0
+A308-ECC6EBEB734F-00,136,62,46,205,51,178,A308 (Fulham Road) 0.0-0.5 km of stretch 120,A,False,6.0
+A1208-CE780191E1A5-01,225,66,83,151,120,179,A1208 (Hackney Road) 0.5-1.1 km of stretch 2,A,False,5.0
+A107-84916C35C148-01,322,131,91,161,98,180,A107 (Cambridge Heath Road) 0.5-0.9 km of stretch 11,A,False,4.0
+A219-F0ABD41DE861-01,319,261,314,217,269,181,A219 (Shepherd's Bush Road) 0.5-0.9 km of stretch 64,A,False,11.0
+A23-23B0A5840334-06,4,13,4,36,36,182,A23 (Brixton Hill) 3.1-3.6 km of stretch 37,A,False,8.0
+A104-B9D31B8FC3EE-01,441,594,286,553,307,183,A104 (Balls Pond Road) 0.5-1.0 km of stretch 20,A,False,4.0
+A11-1DD0F4579DAC-00,8,71,134,220,293,184,A11 (Whitechapel Road) 0.0-0.4 km of stretch 25,A,False,5.0
+A217-06F158B0DCC1-10,155,157,129,265,319,185,A217 (London Road) 5.0-5.6 km of stretch 2,A,False,7.0
+A4020-63DDCCA024DF-06,237,105,308,291,755,186,A4020 (High Street) 3.0-3.5 km of stretch 24,A,False,4.0
+A219-4E6B0DE96A0C-00,773,533,287,146,141,187,A219 (Wood Lane) 0.0-0.5 km of stretch 23,A,False,6.0
+A24-46DD009FA18E-04,87,20,56,48,133,188,A24 (Upper Tooting Road) 2.1-2.6 km of stretch 49,A,False,6.0
+A117-7C843A42C9A5-01,542,400,207,425,274,189,A117 (High Street North) 0.5-1.0 km of stretch 9,A,False,10.0
+A406-33E67ECC0915-01,811,430,152,108,210,190,A406 (North Circular Road) 0.5-1.0 km of stretch 55,A,False,5.0
+A13-51D3FD6FA07A-00,106,64,197,157,66,191,A13 (Commercial Road) 0.0-0.5 km of stretch 60,A,False,5.0
+A400-A3A5D3C65833-01,266,136,142,447,302,192,A400 (Kentish Town Road) 0.5-0.9 km of stretch 10,A,False,4.0
+A315-5CCC777A4098-00,412,322,693,109,95,193,A315 (Kensington High Street) 0.0-0.6 km of stretch 8,A,False,7.0
+A3220-1C669DED6DD0-00,593,332,391,406,497,194,A3220 (Cheyne Walk) 0.0-0.5 km of stretch 3,A,False,7.0
+A38-656DF80BD7B8-02,370,383,340,249,214,197,A38 (Gloucester Road) 1.0-1.6 km of stretch 392,A,False,4.12
+A23-32B78AFA0C57-00,152,10,15,75,134,198,A23 (Streatham High Road) 0.0-0.5 km of stretch 55,A,False,2.0
+A219-66EFA7929BE3-04,712,381,282,389,175,199,A219 (Fulham Palace Road) 2.0-2.5 km of stretch 32,A,False,7.0
+A200-A7DFF07DC7F8-01,992,549,975,899,735,200,A200 (Jamaica Road) 0.5-0.9 km of stretch 15,A,False,8.0
+A219-66EFA7929BE3-00,875,206,74,307,294,201,A219 (Putney Bridge Approach) 0.0-0.5 km of stretch 32,A,False,6.0
+B4127-A2F98C470819-00,695,325,449,271,470,202,B4127 (Holloway Head) 0.0-0.7 km of stretch 4,B,False,8.0
+A21-EBA6F0013523-01,132,217,382,361,287,203,A21 (Lewisham High Street) 0.5-1.0 km of stretch 129,A,False,7.0
+A3211-E4EF129B04EE-00,216,124,627,455,272,205,A3211 (Victoria Embankment) 0.0-0.6 km of stretch 6,A,False,6.0
+A1-0399B631A243-03,226,160,263,38,69,206,A1 (Holloway Road) 1.6-2.1 km of stretch 11,A,False,3.0
+A1010-7060F6C22850-10,793,513,411,387,462,207,A1010 (Hertford Road) 4.9-5.4 km of stretch 5,A,False,4.0
+A10-C0F82C62C7C4-05,330,434,203,519,416,209,A10 (Kingsland Road) 2.4-2.9 km of stretch 187,A,False,4.0
+A304-359592B5AF21-02,514,561,778,399,50,210,A304 (Fulham Road) 1.0-1.5 km of stretch 0,A,False,7.0
+A217-06F158B0DCC1-08,105,46,48,116,45,211,A217 (Mitcham Road) 4.0-4.5 km of stretch 2,A,False,4.0
+A217-6DA38FB1D351-01,375,177,139,197,245,212,A217 (Wandsworth Bridge Road) 0.5-1.0 km of stretch 34,A,False,4.0
+A2-55D9CD95C54D-02,339,361,355,513,559,213,A2 (Blackheath Road) 1.0-1.5 km of stretch 99,A,False,5.0
+A200-A7DFF07DC7F8-02,674,297,792,280,257,214,A200 (Jamaica Road) 0.9-1.4 km of stretch 15,A,False,8.0
+A3214-C47D2729E459-01,372,475,776,448,289,215,A3214 (Buckingham Palace Road) 0.6-1.1 km of stretch 5,A,False,7.0
+A4201-0FD518FE4816-02,3,67,104,440,22,217,A4201 (Regent Street) 0.9-1.3 km of stretch 0,A,False,8.0
+A205-501CC5DD4955-00,452,321,333,62,165,219,A205 (Poynders Road) 0.0-0.7 km of stretch 19,A,False,8.0
+A105-21E26DD6BC6A-02,311,226,399,288,369,220,A105 (High Road) 1.0-1.6 km of stretch 1,A,False,6.0
+A501-FF8774CD07C8-01,164,164,122,137,99,222,A501 (City Road) 0.6-1.2 km of stretch 46,A,False,2.0
+A5-92878A35AF73-06,207,174,481,320,146,223,A5 (Kilburn High Road) 3.0-3.5 km of stretch 329,A,False,8.0
+A501-1978721D750E-00,92,183,81,150,177,224,A501 (Euston Road) 0.0-0.5 km of stretch 4,A,False,2.0
+A3217-954953CD5164-02,602,783,625,385,237,225,A3217 (King's Road) 1.1-1.6 km of stretch 1,A,False,4.0
+A3-579D27C88E8C-04,79,29,14,74,190,226,A3 (Kennington Park Road) 2.1-2.6 km of stretch 131,A,False,6.0
+A107-A463545B91E4-00,797,643,800,479,278,227,A107 (Dalston Lane) 0.0-0.6 km of stretch 18,A,False,3.0
+A3-75A9DC128B4E-01,292,84,19,8,39,229,A3 (Battersea Rise) 0.6-1.1 km of stretch 171,A,False,7.0
+A23-23B0A5840334-11,55,9,32,31,15,231,A23 (Streatham High Road) 5.6-6.2 km of stretch 37,A,False,6.0
+A10-C0F82C62C7C4-07,165,284,188,127,229,232,A10 (Kingsland Road) 3.4-3.9 km of stretch 187,A,False,5.0
+A3-579D27C88E8C-01,40,167,68,289,297,233,A3 (Clapham Road) 0.5-1.1 km of stretch 131,A,False,5.0
+A3-75A9DC128B4E-00,414,168,24,12,28,234,A3 (Clapham Common North Side) 0.0-0.6 km of stretch 171,A,False,7.0
+A4020-6638C775F6A6-01,253,363,238,400,242,235,A4020 (Uxbridge Road) 0.5-1.1 km of stretch 27,A,False,6.0
+A402-6CE86FA53099-01,478,393,482,511,432,237,A402 (Holland Park Avenue) 0.5-0.9 km of stretch 3,A,False,3.0
+A41-435E4BBC4E3D-00,645,639,812,796,182,241,A41 (Stratford Road) 0.0-0.4 km of stretch 141,A,False,8.0
+A104-B9D31B8FC3EE-04,723,687,446,420,420,242,A104 (Essex Road) 1.9-2.4 km of stretch 20,A,False,4.0
+A105-C2DFD41B76F5-01,80,139,181,79,106,243,A105 (Green Lanes) 0.5-1.0 km of stretch 26,A,False,6.0
+A4200-127F367E500D-00,584,715,516,429,117,244,A4200 (Southampton Row) 0.0-0.5 km of stretch 0,A,False,4.0
+A3217-954953CD5164-00,615,459,412,191,244,246,A3217 (King's Road) 0.0-0.5 km of stretch 1,A,False,4.0
+A406-E765B4B05BC6-00,915,895,365,204,296,247,A406 (North Circular Road) 0.0-0.6 km of stretch 192,A,False,2.0
+A13-7E15D1680F22-00,608,117,220,229,679,248,A13 (East India Dock Road) 0.0-0.6 km of stretch 89,A,False,6.0
+A21-EBA6F0013523-00,158,228,298,357,266,249,A21 (Lewisham High Street) 0.0-0.5 km of stretch 129,A,False,3.0
+A1203-4B223787A963-05,154,181,149,206,384,250,A1203 (The Highway) 2.4-2.9 km of stretch 3,A,False,4.0
+A1205-BB5FC49D3A07-04,647,352,519,469,724,251,A1205 (Grove Road) 2.0-2.5 km of stretch 4,A,False,6.0
+A124-9BF3C902C6A2-07,143,76,72,183,271,253,A124 (Barking Road) 3.4-3.9 km of stretch 26,A,False,4.0
+A1209-60FC558AAC91-01,135,221,170,156,94,255,A1209 (Bethnal Green Road) 0.5-1.1 km of stretch 0,A,False,5.0
+A20-4F12DA9DBC7B-03,356,185,224,326,639,256,A20 (Loampit Vale) 1.3-1.8 km of stretch 48,A,False,6.0
+A4207-5075B9A8DC89-02,351,216,630,263,105,257,A4207 (Great Western Road) 0.9-1.3 km of stretch 0,A,False,7.0
+A107-84916C35C148-03,290,396,690,306,445,258,A107 (Cambridge Heath Road) 1.4-1.8 km of stretch 11,A,False,6.0
+A10-C0F82C62C7C4-00,214,235,345,315,348,259,A10 (Gracechurch Street) 0.0-0.5 km of stretch 187,A,False,6.0
+A308-ECC6EBEB734F-01,324,372,485,232,168,261,A308 (Fulham Road) 0.5-1.0 km of stretch 120,A,False,6.0
+A60-9399A2961ABE-00,325,334,777,343,337,263,A60 (Mansfield Road) 0.0-0.6 km of stretch 56,A,False,7.0
+A1203-4B223787A963-06,176,250,213,371,471,264,A1203 (East Smithfield) 2.9-3.4 km of stretch 3,A,False,4.0
+A3205-44DF56775634-01,688,149,301,322,908,265,A3205 (Battersea Park Road) 0.6-1.1 km of stretch 11,A,False,4.0
+A501-E53F64D3AAAE-02,48,32,75,153,41,266,A501 (Marylebone Road) 0.8-1.3 km of stretch 41,A,False,6.0
+A1209-60FC558AAC91-02,256,421,463,490,172,267,A1209 (Bethnal Green Road) 1.1-1.6 km of stretch 0,A,False,5.0
+A501-E53F64D3AAAE-00,120,170,160,285,121,268,A501 (Marylebone Road) 0.0-0.4 km of stretch 41,A,False,1.0
+A215-8811D2E09889-01,355,418,751,173,155,270,A215 (Norwood Road) 0.4-0.8 km of stretch 14,A,False,6.0
+A23-23B0A5840334-05,126,56,71,53,73,273,A23 (Brixton Hill) 2.6-3.1 km of stretch 37,A,False,5.0
+A5201-A51A213A9854-02,70,237,183,225,149,275,A5201 (Clerkenwell Road) 1.0-1.6 km of stretch 4,A,False,6.0
+A3-94B3DABF3212-03,157,25,34,60,68,276,A3 (Long Road) 1.5-2.0 km of stretch 212,A,False,4.0
+A203-20345AFF0CD8-01,492,147,16,87,52,278,A203 (South Lambeth Road) 0.6-1.2 km of stretch 2,A,False,5.0
+A105-C2DFD41B76F5-03,218,312,405,252,250,279,A105 (Green Lanes) 1.5-2.0 km of stretch 26,A,False,1.0
+A20-4F12DA9DBC7B-02,604,326,209,256,356,281,A20 (Loampit Hill) 0.9-1.3 km of stretch 48,A,False,9.0
+A107-C9AE412E6C62-00,184,162,269,240,268,283,A107 (Upper Clapton Road) 0.0-0.5 km of stretch 22,A,False,5.0
+A1203-4B223787A963-04,245,826,609,572,541,284,A1203 (The Highway) 2.0-2.4 km of stretch 3,A,False,5.0
+A1205-BB5FC49D3A07-01,923,529,730,606,539,285,A1205 (Burdett Road) 0.5-1.0 km of stretch 4,A,False,6.0
+A124-9BF3C902C6A2-02,468,180,302,394,711,287,A124 (Barking Road) 1.0-1.5 km of stretch 26,A,False,4.0
+A3-94B3DABF3212-01,95,28,35,17,64,288,A3 (Clapham Road) 0.5-1.0 km of stretch 212,A,False,6.0
+A21-EBA6F0013523-02,185,242,210,282,451,289,A21 (Rushey Green) 1.0-1.6 km of stretch 129,A,False,9.0
+A3-579D27C88E8C-03,117,248,119,329,96,290,A3 (Kennington Park Road) 1.6-2.1 km of stretch 131,A,False,7.0
+A38-656DF80BD7B8-03,410,503,603,159,220,291,A38 (Gloucester Road) 1.6-2.1 km of stretch 392,A,False,5.15
+A23-EB88CBB98172-00,166,100,326,323,597,292,A23 (Kennington Road) 0.0-0.5 km of stretch 231,A,False,5.0
+A2-55D9CD95C54D-01,153,87,184,117,196,293,A2 (Deptford Bridge) 0.5-1.0 km of stretch 99,A,False,5.0
+A315-72F73DB05136-00,177,227,179,143,153,294,A315 (Kensington High Street) 0.0-0.5 km of stretch 12,A,False,5.0
+B450-115AEBF16FF1-02,203,391,189,259,309,295,B450 (Ladbroke Grove) 0.9-1.4 km of stretch 1,B,False,5.0
+A104-B9D31B8FC3EE-05,425,438,354,304,279,296,A104 (Essex Road) 2.4-2.9 km of stretch 20,A,False,6.0
+A219-0EDB7DE63C92-03,665,420,113,203,241,299,A219 (Wood Lane) 1.6-2.1 km of stretch 6,A,False,2.0
+A201-F54D39944295-01,162,142,639,95,131,300,A201 (Blackfriars Road) 0.5-0.9 km of stretch 18,A,False,7.0
+A402-8AD74DF025A2-00,161,140,194,134,357,302,A402 (Goldhawk Road) 0.0-0.5 km of stretch 7,A,False,6.0
+A1202-0ECE14CCF4F7-00,49,107,84,136,163,305,A1202 (Commercial Street) 0.0-0.5 km of stretch 1,A,False,8.0
+A501-E53F64D3AAAE-01,90,146,401,112,264,306,A501 (Marylebone Road) 0.4-0.8 km of stretch 41,A,False,7.0
+A38-656DF80BD7B8-00,255,337,284,141,249,307,A38 (Stokes Croft) 0.0-0.5 km of stretch 392,A,False,4.2
+A1209-60FC558AAC91-00,30,172,124,133,104,310,A1209 (Bethnal Green Road) 0.0-0.5 km of stretch 0,A,False,2.0
+A11-6BF30DE56EC7-00,903,751,318,207,140,311,A11 (Bow Road) 0.0-0.4 km of stretch 92,A,False,5.0
+A4020-6638C775F6A6-02,287,156,374,623,441,312,A4020 (Broadway) 1.1-1.6 km of stretch 27,A,False,5.0
+A302-383921993ADB-00,270,476,923,492,253,314,A302 (Victoria Street) 0.0-0.4 km of stretch 4,A,False,6.0
+A3216-028029045640-00,808,729,651,779,842,315,A3216 (Sloane Street) 0.0-0.5 km of stretch 0,A,False,5.0
+A503-8B82612C4AC0-01,116,93,26,165,164,317,A503 (Seven Sisters Road) 0.5-1.1 km of stretch 9,A,False,6.0
+A3-579D27C88E8C-00,118,48,90,77,254,318,A3 (Clapham Road) 0.0-0.5 km of stretch 131,A,False,2.0
+A402-6CE86FA53099-00,659,543,616,373,461,319,A402 (Holland Park Avenue) 0.0-0.5 km of stretch 3,A,False,5.0
+A10-C0F82C62C7C4-04,34,96,80,132,110,320,A10 (Kingsland Road) 2.0-2.4 km of stretch 187,A,False,3.0
+A3218-54AED6C41356-04,521,426,216,497,439,322,A3218 (Old Brompton Road) 1.9-2.4 km of stretch 1,A,False,6.0
+A107-A9CDDE7079EA-01,240,266,243,170,160,323,A107 (Mare Street) 0.6-1.2 km of stretch 19,A,False,1.0
+A202-7D50CAF0FBE4-01,380,409,244,175,603,325,A202 (Kennington Oval) 0.5-1.0 km of stretch 7,A,False,6.0
+A205-E6383C04C9DA-07,293,152,315,487,355,327,A205 (London Road) 3.6-4.1 km of stretch 50,A,False,6.0
+A501-472003C7D4BE-00,443,456,523,319,618,329,A501 (Pentonville Road) 0.0-0.3 km of stretch 12,A,False,7.0
+A501-9DF738820B2D-00,29,163,171,335,188,331,A501 (City Road) 0.0-0.5 km of stretch 30,A,False,3.0
+A503-2BFFC6B63AB7-03,19,74,99,27,112,333,A503 (Camden Road) 1.4-1.9 km of stretch 3,A,False,3.0
+A3220-CD4D24631FD8-00,272,224,47,57,88,334,A3220 (Battersea Bridge Road) 0.0-0.5 km of stretch 47,A,False,6.0
+A10-1B729B2C01ED-03,200,92,112,255,195,335,A10 (High Road) 1.6-2.2 km of stretch 30,A,False,3.0
+A107-C9AE412E6C62-01,206,192,120,234,239,336,A107 (Upper Clapton Road) 0.5-1.0 km of stretch 22,A,False,5.0
+A406-2A57D3F0CB27-02,749,928,861,788,322,337,A406 (Gunnersbury Avenue) 0.9-1.4 km of stretch 47,A,False,6.0
+A58-455762A36C3D-02,374,402,360,761,571,338,A58 (Roundhay Road) 1.0-1.6 km of stretch 53,A,False,5.0
+A4020-63DDCCA024DF-01,73,59,121,179,236,340,A4020 (Uxbridge Road) 0.5-1.0 km of stretch 24,A,False,0.0
+A402-6CE86FA53099-02,377,346,146,268,231,342,A402 (Notting Hill Gate) 0.9-1.4 km of stretch 3,A,False,2.0
+A3205-ED78309B6767-00,899,280,241,491,771,343,A3205 (Battersea Park Road) 0.0-0.5 km of stretch 17,A,False,3.0
+A1010-3D8BF48D1DEE-02,246,262,1000,363,300,346,A1010 (High Road) 1.0-1.4 km of stretch 1,A,False,3.0
+A1-0399B631A243-00,189,90,147,99,218,347,A1 (Holloway Road) 0.0-0.5 km of stretch 11,A,False,2.0
+A20-A922303F01A4-00,283,194,335,293,150,348,A20 (Lee High Road) 0.0-0.5 km of stretch 118,A,False,4.0
+A501-E77B85F662E1-00,147,101,477,542,440,350,A501 (Marylebone Road) 0.0-0.3 km of stretch 42,A,False,3.0
+A3212-CE6572BFF396-05,554,303,76,155,281,351,A3212 (Grosvenor Road) 2.5-3.1 km of stretch 3,A,False,3.0
+A201-DD68A7F79D36-01,46,116,221,194,74,354,A201 (New Kent Road) 0.5-1.0 km of stretch 15,A,False,5.0
+A23-23B0A5840334-00,150,271,264,45,70,359,A23 (Brixton Road) 0.0-0.5 km of stretch 37,A,False,5.0
+A2217-6B6917B3069F-01,401,273,436,376,448,360,A2217 (Acre Lane) 0.5-0.9 km of stretch 6,A,False,7.0
+A304-359592B5AF21-01,371,376,240,456,207,362,A304 (Fulham Road) 0.5-1.0 km of stretch 0,A,False,4.0
+A402-8AD74DF025A2-02,348,310,622,417,430,364,A402 (Goldhawk Road) 1.0-1.5 km of stretch 7,A,False,5.0
+A23-9479D1D7CC3D-06,199,88,82,316,212,365,A23 (London Road) 2.9-3.3 km of stretch 146,A,False,3.0
+A124-9BF3C902C6A2-05,197,58,118,120,234,367,A124 (Barking Road) 2.4-2.9 km of stretch 26,A,False,2.0
+A107-84916C35C148-02,262,423,655,717,540,368,A107 (Cambridge Heath Road) 0.9-1.4 km of stretch 11,A,False,3.0
+A402-6CE86FA53099-04,621,465,272,445,453,370,A402 (Bayswater Road) 1.9-2.3 km of stretch 3,A,False,3.0
+A104-C5A5510F0B32-04,211,158,159,506,390,371,A104 (Lea Bridge Road) 1.9-2.4 km of stretch 22,A,False,6.0
+A206-881E3AEB8FE3-02,260,468,342,352,324,372,A206 (Trafalgar Road) 1.0-1.5 km of stretch 55,A,False,7.0
+A200-DED34EE31297-03,459,330,309,774,363,377,A200 (Evelyn Street) 1.6-2.1 km of stretch 20,A,False,5.0
+A20-4F12DA9DBC7B-00,223,499,259,428,379,378,A20 (Lewisham Way) 0.0-0.4 km of stretch 48,A,False,4.0
+A420-2E6009940398-00,364,869,644,405,340,379,A420 (Lawrence Hill) 0.0-0.5 km of stretch 28,A,False,4.17
+A3205-D8AAED24DE91-03,173,244,303,397,362,380,A3205 (Battersea Park Road) 1.5-2.0 km of stretch 16,A,False,6.0
+A1202-0ECE14CCF4F7-01,53,129,161,167,154,381,A1202 (Commercial Street) 0.5-0.9 km of stretch 1,A,False,2.0
+A205-E6383C04C9DA-01,259,296,231,680,194,383,A205 (Thurlow Park Road) 0.5-1.0 km of stretch 50,A,False,7.0
+A406-326080789CB3-02,503,267,380,359,629,387,A406 (Bowes Road) 0.9-1.4 km of stretch 53,A,False,4.0
+A270-979265266890-01,341,275,239,104,223,388,A270 (Lewes Road) 0.5-1.1 km of stretch 11,A,False,4.0
+A312-0B7E25424BB4-01,400,282,424,536,380,390,A312 (Mandeville Road) 0.5-0.9 km of stretch 9,A,False,7.0
+A1010-58FA80F64333-01,202,121,223,311,290,394,A1010 (Fore Street) 0.6-1.1 km of stretch 2,A,False,3.0
+A23-7318A254EF70-02,238,508,628,102,186,395,A23 (Kennington Road) 0.9-1.4 km of stretch 113,A,False,5.0
+A1-C309EB6CBDCE-01,316,472,689,164,395,399,A1 (Upper Street) 0.4-0.8 km of stretch 658,A,False,5.0
+A24-46DD009FA18E-05,194,270,36,22,113,400,A24 (Balham High Road) 2.6-3.1 km of stretch 49,A,False,1.0
+A308-0625197283A9-01,493,333,273,346,550,401,A308 (New King's Road) 0.5-1.0 km of stretch 3,A,False,4.0
+A2217-32D46CB6B7F8-00,586,705,337,305,277,403,A2217 (Coldharbour Lane) 0.0-0.5 km of stretch 4,A,False,4.0
+A3218-54AED6C41356-03,720,437,361,139,221,404,A3218 (Lillie Road) 1.4-1.9 km of stretch 1,A,False,6.0
+A4-8C7506BDB22D-00,115,256,128,577,405,405,A4 (Brompton Road) 0.0-0.5 km of stretch 217,A,False,2.0
+A610-43B8C0252D54-03,469,489,546,379,252,406,A610 (Alfreton Road) 1.5-2.0 km of stretch 24,A,False,4.0
+A23-23B0A5840334-01,551,368,232,149,318,407,A23 (Brixton Road) 0.5-1.0 km of stretch 37,A,False,3.0
+A3220-BB0381292A87-00,156,145,530,408,301,409,A3220 (Earl's Court Road) 0.0-0.7 km of stretch 40,A,False,3.0
+A3204-D4E148755FE0-00,263,252,141,49,71,410,A3204 (Kennington Lane) 0.0-0.7 km of stretch 4,A,False,3.0
+A201-F54D39944295-00,310,365,459,188,459,411,A201 (Blackfriars Road) 0.0-0.5 km of stretch 18,A,False,5.0
+A1208-CE780191E1A5-02,85,341,364,303,159,412,A1208 (Hackney Road) 1.1-1.6 km of stretch 2,A,False,4.0
+A205-5F03CD4B0FB7-05,656,703,661,851,643,413,A205 (Upper Richmond Road) 2.5-2.9 km of stretch 22,A,False,6.0
+A23-9479D1D7CC3D-05,446,79,219,332,404,414,A23 (London Road) 2.4-2.9 km of stretch 146,A,False,7.0
+A219-66EFA7929BE3-02,566,295,204,525,401,415,A219 (Fulham Palace Road) 1.0-1.5 km of stretch 32,A,False,6.0
+A203-F57BA8BD85D4-00,349,306,265,374,310,417,A203 (Stockwell Road) 0.0-0.4 km of stretch 11,A,False,2.0
+A1010-3D8BF48D1DEE-00,298,204,262,284,225,419,A1010 (High Road) 0.0-0.5 km of stretch 1,A,False,4.0
+A3211-C3BF48FA788C-01,277,714,906,333,506,420,A3211 (Upper Thames Street) 0.6-1.1 km of stretch 4,A,False,4.0
+A107-84916C35C148-00,399,301,359,409,492,421,A107 (Mare Street) 0.0-0.5 km of stretch 11,A,False,5.0
+A502-CCF8C515EA27-09,428,535,234,562,350,422,A502 (Chalk Farm Road) 4.6-5.1 km of stretch 7,A,False,4.0
+A124-9BF3C902C6A2-06,123,86,311,575,421,424,A124 (Barking Road) 2.9-3.4 km of stretch 26,A,False,4.0
+A404-394C871ECB75-00,859,431,268,528,560,431,A404 (Craven Park) 0.0-0.5 km of stretch 27,A,False,3.0
+A202-57643AC9CCD6-00,234,83,252,168,570,432,A202 (Queen's Road) 0.0-0.5 km of stretch 5,A,False,3.0
+B317-B206182A3567-02,541,253,131,213,312,434,B317 (North End Road) 0.8-1.3 km of stretch 1,B,False,5.0
+A1202-97C29383CDB2-00,386,708,822,418,426,438,A1202 (Leman Street) 0.0-0.5 km of stretch 6,A,False,2.0
+A404-460F19CD1C9E-00,393,414,317,430,447,439,A404 (High Road) 0.0-0.5 km of stretch 34,A,False,5.0
+A2-FC13206659F5-00,333,358,288,362,514,442,A2 (Old Kent Road) 0.0-0.5 km of stretch 299,A,False,3.0
+A1006-3570F4F4907D-03,732,556,795,435,530,445,A1006 (Markhouse Road) 1.6-2.1 km of stretch 0,A,False,5.0
+A1200-D81E56BD5E8C-03,511,560,600,644,609,447,A1200 (New North Road) 1.6-2.2 km of stretch 5,A,False,6.0
+A1205-BB5FC49D3A07-02,308,213,334,466,407,449,A1205 (Burdett Road) 1.0-1.5 km of stretch 4,A,False,3.0
+A2047-FB6BCB548D43-02,496,466,409,585,665,450,A2047 (Kingston Road) 1.0-1.5 km of stretch 18,A,False,1.84
+A24-46DD009FA18E-10,96,89,95,51,86,453,A24 (Clapham Common South Side) 5.2-5.7 km of stretch 49,A,False,3.0
+A165-FC006D087FB5-03,685,606,683,365,512,455,A165 (Holderness Road) 1.6-2.1 km of stretch 80,A,False,4.0
+A23-23B0A5840334-07,138,111,57,115,193,456,A23 (Brixton Hill) 3.6-4.1 km of stretch 37,A,False,6.0
+A503-04949CC316A6-03,517,840,787,637,394,457,A503 (Forest Road) 1.6-2.1 km of stretch 0,A,False,2.0
+A205-92D359C644B3-00,778,897,445,632,591,460,A205 (Woolwich New Road) 0.0-0.7 km of stretch 34,A,False,5.0
+A219-F0ABD41DE861-02,711,747,682,609,535,462,A219 (Shepherd's Bush Green) 0.9-1.4 km of stretch 64,A,False,1.0
+A1079-704F194167F9-03,163,279,583,817,733,464,A1079 (Beverley Road) 1.4-1.9 km of stretch 30,A,False,7.0
+A3036-3D57698A3789-02,708,612,555,223,381,465,A3036 (Wandsworth Road) 1.0-1.5 km of stretch 5,A,False,3.0
+A104-EEB8167B59C4-01,594,610,743,656,528,468,A104 (Dalston Lane) 0.4-0.8 km of stretch 25,A,False,6.0
+A205-5F03CD4B0FB7-10,483,355,190,212,326,471,A205 (Upper Richmond Road) 4.9-5.4 km of stretch 22,A,False,3.0
+A38-656DF80BD7B8-04,454,551,455,460,480,472,A38 (Gloucester Road) 2.1-2.6 km of stretch 392,A,False,4.9
+A401-DEAE34EED815-00,107,95,245,334,341,476,A401 (Theobald's Road) 0.0-0.6 km of stretch 3,A,False,3.0
+A205-E6383C04C9DA-09,258,356,305,301,248,477,A205 (Stanstead Road) 4.6-5.1 km of stretch 50,A,False,4.0
+A3211-9D074DCD8117-02,140,403,440,607,927,479,A3211 (Victoria Embankment) 0.8-1.3 km of stretch 3,A,False,6.0
+A3200-191168BB7246-03,289,452,484,449,494,482,A3200 (Southwark Street) 1.3-1.8 km of stretch 0,A,False,3.0
+A4-DBDE6F341AD4-07,230,171,255,473,298,483,A4 (Cromwell Road) 3.3-3.8 km of stretch 354,A,False,4.0
+A407-E3F5C5793E95-00,971,495,313,515,352,484,A407 (High Road) 0.0-0.5 km of stretch 4,A,False,2.0
+A23-9F85A813D6CC-05,447,559,327,550,311,485,A23 (Purley Way) 2.5-3.0 km of stretch 160,A,False,4.0
+A41-F7323EC772FE-01,385,329,187,209,267,488,A41 (Baker Street) 0.5-0.9 km of stretch 475,A,False,1.0
+A503-92BFCCA4F284-03,338,179,166,244,275,492,A503 (Seven Sisters Road) 1.6-2.2 km of stretch 11,A,False,2.0
+A24-46DD009FA18E-00,144,12,89,281,532,494,A24 (High Street Collier's Wood) 0.0-0.5 km of stretch 49,A,False,2.0
+A13-13639AF725BB-01,571,283,246,257,256,495,A13 (East India Dock Road) 0.5-1.0 km of stretch 11,A,False,5.0
+A118-895ECC399ADB-00,429,272,296,299,576,496,A118 (Romford Road) 0.0-0.5 km of stretch 41,A,False,0.0
+U-BC5F885B9962-00,944,672,686,349,291,498,U (London Road) 0.0-0.6 km of stretch 194,U,False,3.0
+A203-F57BA8BD85D4-01,611,645,353,628,489,499,A203 (Stockwell Road) 0.4-0.8 km of stretch 11,A,False,4.0
+A107-23B16BFF775A-01,210,288,565,568,484,501,A107 (Lower Clapton Road) 0.4-0.8 km of stretch 5,A,False,2.0
+A503-92BFCCA4F284-01,122,153,116,92,235,502,A503 (Seven Sisters Road) 0.5-1.1 km of stretch 11,A,False,2.0
+A23-7318A254EF70-01,315,178,541,496,567,506,A23 (Kennington Road) 0.5-0.9 km of stretch 113,A,False,5.0
+A118-895ECC399ADB-03,920,807,429,484,412,507,A118 (Romford Road) 1.5-2.0 km of stretch 41,A,False,5.0
+A112-A0E318C3CE85-04,307,317,368,517,649,511,A112 (Prince Regent Lane) 2.0-2.5 km of stretch 16,A,False,2.0
+A1202-FCDE29234684-00,16,91,65,66,143,512,A1202 (Great Eastern Street) 0.0-0.3 km of stretch 12,A,False,4.0
+B108-75FE514CE90A-02,419,746,271,140,116,513,B108 (New Road) 1.1-1.6 km of stretch 0,B,False,2.0
+A105-21E26DD6BC6A-00,422,385,506,482,705,515,A105 (Green Lanes) 0.0-0.5 km of stretch 1,A,False,7.0
+A402-8AD74DF025A2-01,254,525,278,380,393,516,A402 (Goldhawk Road) 0.5-1.0 km of stretch 7,A,False,3.0
+A118-895ECC399ADB-06,914,944,669,336,641,518,A118 (Romford Road) 3.1-3.6 km of stretch 41,A,False,3.0
+A23-23B0A5840334-08,630,219,306,123,303,520,A23 (Streatham Hill) 4.1-4.6 km of stretch 37,A,False,4.0
+A200-DED34EE31297-04,869,531,837,369,329,521,A200 (Evelyn Street) 2.1-2.6 km of stretch 20,A,False,5.0
+A202-7D50CAF0FBE4-02,337,669,366,261,614,523,A202 (Camberwell New Road) 1.0-1.6 km of stretch 7,A,False,2.0
+A103-2413C98314D6-01,784,872,581,931,663,525,A103 (Hornsey Road) 0.5-1.0 km of stretch 4,A,False,5.0
+A165-FC006D087FB5-02,212,648,593,486,513,526,A165 (Holderness Road) 1.1-1.6 km of stretch 80,A,False,3.0
+A503-2BFFC6B63AB7-02,149,207,236,277,415,528,A503 (Camden Road) 1.0-1.4 km of stretch 3,A,False,3.0
+A4201-0FD518FE4816-03,313,577,745,719,251,530,A4201 (Regent Street) 1.3-1.8 km of stretch 0,A,False,3.0
+A10-C0F82C62C7C4-06,167,240,413,147,211,531,A10 (Kingsland Road) 2.9-3.4 km of stretch 187,A,False,3.0
+A118-895ECC399ADB-02,436,236,174,231,383,532,A118 (Romford Road) 1.0-1.5 km of stretch 41,A,False,3.0
+A3220-E4C99434E43A-00,486,839,261,295,320,535,A3220 (Warwick Road) 0.0-0.6 km of stretch 53,A,False,3.0
+A3-DB233965AC9C-01,432,419,297,353,200,538,A3 (Wandsworth High Street) 0.4-0.9 km of stretch 313,A,False,8.0
+A20-4F12DA9DBC7B-01,219,151,217,224,364,539,A20 (Lewisham Way) 0.4-0.9 km of stretch 48,A,False,2.0
+A3036-3D57698A3789-03,472,350,321,230,276,544,A3036 (Wandsworth Road) 1.5-2.0 km of stretch 5,A,False,4.0
+A503-8B82612C4AC0-00,261,416,155,273,327,548,A503 (Seven Sisters Road) 0.0-0.5 km of stretch 9,A,False,1.0
+A315-8686B9C474AC-02,391,562,275,356,429,550,A315 (Chiswick High Road) 1.1-1.6 km of stretch 16,A,False,3.0
+A123-80157B2D8D9B-03,715,327,842,865,807,557,A123 (Cranbrook Road) 1.6-2.1 km of stretch 8,A,False,2.0
+A4020-9BCFE1245C9D-00,420,695,852,459,305,559,A4020 (The Mall) 0.0-0.6 km of stretch 41,A,False,5.0
+A504-DEDC176CA0CE-01,556,571,410,158,129,563,A504 (West Green Road) 0.5-1.0 km of stretch 29,A,False,1.0
+A206-881E3AEB8FE3-01,328,200,293,272,408,567,A206 (Trafalgar Road) 0.5-1.0 km of stretch 55,A,False,4.0
+A3205-D8AAED24DE91-01,437,448,375,503,382,575,A3205 (Battersea Park Road) 0.5-1.0 km of stretch 16,A,False,4.0
+A117-7C843A42C9A5-02,963,879,687,881,917,576,A117 (High Street North) 1.0-1.4 km of stretch 9,A,False,4.0
+A1010-3D8BF48D1DEE-01,172,188,253,266,270,577,A1010 (High Road) 0.5-1.0 km of stretch 1,A,False,4.0
+A1203-4B223787A963-02,626,876,483,639,476,578,A1203 (The Highway) 1.0-1.5 km of stretch 3,A,False,3.0
+A10-1B729B2C01ED-01,389,397,205,44,167,583,A10 (Stamford Hill) 0.5-1.1 km of stretch 30,A,False,5.0
+A41-B235B4638870-05,907,666,473,475,443,588,A41 (Soho Road) 2.5-3.0 km of stretch 340,A,False,3.0
+A201-14606265C0F6-02,134,316,691,317,156,590,A201 (Farringdon Road) 1.1-1.7 km of stretch 1,A,False,3.03
+A165-FC006D087FB5-01,911,770,281,403,557,592,A165 (Holderness Road) 0.5-1.1 km of stretch 80,A,False,2.0
+A107-C9AE412E6C62-02,381,555,339,472,642,594,A107 (Clapton Common) 1.0-1.6 km of stretch 22,A,False,3.0
+A109-236BD33D6974-02,633,519,608,443,525,599,A109 (Lordship Lane) 0.9-1.3 km of stretch 2,A,False,2.0
+A1000-F6F30086D216-09,892,939,598,586,449,604,A1000 (High Road) 4.4-4.9 km of stretch 88,A,False,3.0
+A4020-9BCFE1245C9D-02,421,182,228,410,633,610,A4020 (Uxbridge Road) 1.1-1.7 km of stretch 41,A,False,3.0
+A3-9150A180A73F-11,251,311,250,314,331,612,A3 (West Hill) 5.5-6.0 km of stretch 208,A,False,5.0
+A24-46DD009FA18E-09,131,308,78,67,187,613,A24 (Clapham Common South Side) 4.7-5.2 km of stretch 49,A,False,7.0
+A404-394C871ECB75-06,838,809,878,850,660,615,A404 (High Road) 2.8-3.3 km of stretch 27,A,False,4.0
+A107-C9AE412E6C62-03,644,345,712,198,258,617,A107 (Clapton Common) 1.6-2.1 km of stretch 22,A,False,4.0
+A123-641626E14226-00,637,143,163,450,397,618,A123 (Ilford Lane) 0.0-0.5 km of stretch 4,A,False,3.0
+A217-06F158B0DCC1-03,285,331,283,527,814,619,A217 (Garratt Lane) 1.5-2.0 km of stretch 2,A,False,4.0
+A118-895ECC399ADB-05,323,196,200,218,375,621,A118 (Romford Road) 2.6-3.1 km of stretch 41,A,False,2.0
+B108-75FE514CE90A-01,510,835,678,545,308,625,B108 (Vallance Road) 0.5-1.1 km of stretch 0,B,False,2.0
+A118-895ECC399ADB-08,714,580,328,227,460,627,A118 (Romford Road) 4.1-4.6 km of stretch 41,A,False,2.0
+A503-92BFCCA4F284-00,229,257,148,61,185,628,A503 (Seven Sisters Road) 0.0-0.5 km of stretch 11,A,False,1.0
+A205-7D80E053EE75-00,738,441,222,192,130,630,A205 (Streatham Place) 0.0-0.6 km of stretch 29,A,False,3.0
+A504-DEDC176CA0CE-04,565,722,421,318,246,637,A504 (Broad Lane) 1.9-2.4 km of stretch 29,A,False,5.0
+A5-92878A35AF73-04,146,175,289,360,522,638,A5 (Maida Vale) 2.0-2.5 km of stretch 329,A,False,3.0
+A112-D6012CCB3E1E-01,557,231,657,709,664,639,A112 (Hoe Street) 0.5-1.0 km of stretch 17,A,False,0.0
+A124-9BF3C902C6A2-00,280,115,254,339,410,641,A124 (Barking Road) 0.0-0.5 km of stretch 26,A,False,1.0
+A23-9479D1D7CC3D-01,257,72,135,243,173,642,A23 (Streatham High Road) 0.5-1.0 km of stretch 146,A,False,2.0
+A205-E6383C04C9DA-08,617,652,291,260,232,643,A205 (Waldram Park Road) 4.1-4.6 km of stretch 50,A,False,4.0
+A3205-D8AAED24DE91-02,485,429,378,412,288,646,A3205 (Battersea Park Road) 1.0-1.5 km of stretch 16,A,False,4.0
+A4209-0329415C18A6-00,241,491,847,535,682,647,A4209 (Sussex Gardens) 0.0-0.7 km of stretch 0,A,False,4.0
+A1201-A3DAD24B1F3A-03,794,432,772,427,628,650,A1201 (Blackstock Road) 1.6-2.1 km of stretch 6,A,False,2.0
+A217-06F158B0DCC1-12,505,492,331,522,519,652,A217 (London Road) 6.1-6.6 km of stretch 2,A,False,2.0
+A503-FC98A0991095-01,213,625,476,652,463,654,A503 (Tollington Road) 0.6-1.1 km of stretch 22,A,False,2.0
+B221-ADFDD09885A5-00,832,700,614,312,637,656,B221 (Bedford Road) 0.0-0.5 km of stretch 2,B,False,2.0
+A3205-D8AAED24DE91-00,489,482,377,402,595,661,A3205 (Battersea Park Road) 0.0-0.5 km of stretch 16,A,False,0.0
+B266-1B8E53D5EE71-02,567,205,343,464,409,673,B266 (High Street) 1.1-1.7 km of stretch 2,B,False,2.0
+A420-E2391535E1CB-00,336,544,734,897,737,674,A420 (The Plain) 0.0-0.1 km of stretch 110,A,False,4.35
+A214-38FD7BAD46D0-02,553,591,617,573,428,675,A214 (Tooting Bec Road) 0.9-1.4 km of stretch 7,A,False,3.0
+A41-F7323EC772FE-03,605,812,804,279,259,676,A41 (Park Road) 1.4-1.8 km of stretch 475,A,False,2.0
+A457-B390F638DD27-03,935,870,372,763,579,682,A457 (Dudley Road) 1.6-2.1 km of stretch 31,A,False,4.0
+A205-5F03CD4B0FB7-02,833,446,586,755,569,687,A205 (Upper Richmond Road West) 1.0-1.5 km of stretch 22,A,False,3.0
+A205-BDF25366B633-00,931,620,434,377,458,690,A205 (Cavendish Road) 0.0-0.5 km of stretch 42,A,False,4.0
+A304-359592B5AF21-00,760,801,487,238,292,697,A304 (Fulham Road) 0.0-0.5 km of stretch 0,A,False,3.0
+A217-06F158B0DCC1-09,458,126,346,258,900,698,A217 (Mitcham Road) 4.5-5.0 km of stretch 2,A,False,4.0
+A214-9B81F6069595-00,927,841,489,331,563,703,A214 (Trinity Road) 0.0-0.5 km of stretch 23,A,False,3.0
+B317-B206182A3567-01,761,622,685,297,715,704,B317 (North End Road) 0.4-0.8 km of stretch 1,B,False,5.0
+A117-A1BAC9B1545F-01,691,449,277,354,651,705,A117 (High Street South) 0.5-1.0 km of stretch 15,A,False,2.0
+A3212-CE6572BFF396-03,460,323,168,930,837,708,A3212 (Grosvenor Road) 1.5-2.0 km of stretch 3,A,False,3.0
+A205-5F03CD4B0FB7-06,405,351,524,754,716,711,A205 (Upper Richmond Road) 2.9-3.4 km of stretch 22,A,False,4.0
+A205-E6383C04C9DA-00,596,651,597,756,549,712,A205 (Thurlow Park Road) 0.0-0.5 km of stretch 50,A,False,3.0
+A112-A0E318C3CE85-09,523,521,664,532,852,713,A112 (West Ham Lane) 4.4-4.9 km of stretch 16,A,False,3.0
+A5-92878A35AF73-03,264,379,180,193,166,724,A5 (Maida Vale) 1.5-2.0 km of stretch 329,A,False,1.0
+A270-979265266890-00,774,699,694,300,503,725,A270 (Lewes Road) 0.0-0.5 km of stretch 11,A,False,3.0
+A41-04C1FB027AF6-03,248,215,154,330,325,726,A41 (Finchley Road) 1.4-1.9 km of stretch 14,A,False,5.0
+B167-6BCB0C1D62B5-02,275,313,601,783,963,734,B167 (Green Street) 1.0-1.5 km of stretch 1,B,False,1.0
+A10-C0F82C62C7C4-02,309,713,521,309,444,738,A10 (Bishopsgate) 1.0-1.5 km of stretch 187,A,False,6.0
+A202-5C70E517D432-02,650,450,527,565,906,741,A202 1.0-1.4 km of stretch 6,A,False,3.0
+A23-9479D1D7CC3D-00,409,274,109,73,208,746,A23 (Streatham High Road) 0.0-0.5 km of stretch 146,A,False,1.0
+A10-C0F82C62C7C4-10,141,44,107,145,304,751,A10 (Stoke Newington Road) 4.9-5.4 km of stretch 187,A,False,3.0
+A400-A3A5D3C65833-00,694,505,279,707,531,753,A400 (Kentish Town Road) 0.0-0.5 km of stretch 10,A,False,1.0
+A5-4247715CBDBB-04,682,927,575,991,392,754,A5 (Edgware Road High Street) 2.0-2.5 km of stretch 146,A,False,6.0
+A3212-CE6572BFF396-06,500,349,176,195,417,756,A3212 (Millbank) 3.1-3.6 km of stretch 3,A,False,4.0
+A3036-3D57698A3789-04,776,664,280,181,205,760,A3036 (Wandsworth Road) 2.0-2.5 km of stretch 5,A,False,3.0
+A4020-63DDCCA024DF-02,704,197,423,239,515,762,A4020 (Uxbridge Road) 1.0-1.5 km of stretch 24,A,False,2.0
+A259-D95D82A43188-00,577,435,260,499,746,764,A259 (High Street) 0.0-0.7 km of stretch 229,A,False,2.0
+A60-0777A48D5A8F-03,614,370,439,920,878,766,A60 (Mansfield Road) 1.4-1.9 km of stretch 2,A,False,2.0
+A1200-D81E56BD5E8C-01,378,526,744,662,775,769,A1200 (New North Road) 0.5-1.1 km of stretch 5,A,False,3.0
+A5-92878A35AF73-09,528,209,233,328,323,771,A5 (Shoot-Up Hill) 4.5-5.0 km of stretch 329,A,False,2.0
+A4044-D62755719D1C-00,242,590,491,474,283,779,A4044 (Bond Street) 0.0-0.3 km of stretch 13,A,False,5.1
+A217-06F158B0DCC1-00,631,461,404,657,739,783,A217 (Garratt Lane) 0.0-0.5 km of stretch 2,A,False,3.0
+A235-A5B8E09383D9-00,527,324,341,859,824,785,A235 (London Road) 0.0-0.4 km of stretch 3,A,False,3.0
+A214-38FD7BAD46D0-01,653,285,62,236,501,789,A214 (Tooting Bec Road) 0.5-0.9 km of stretch 7,A,False,2.0
+A124-7D959C81B646-00,196,132,127,276,398,790,A124 (Barking Road) 0.0-0.5 km of stretch 23,A,False,5.0
+A4020-63DDCCA024DF-04,669,929,634,689,845,793,A4020 (The Vale) 2.0-2.5 km of stretch 24,A,False,2.0
+A4020-6638C775F6A6-00,244,208,756,296,366,800,A4020 (Uxbridge Road) 0.0-0.5 km of stretch 27,A,False,3.0
+A105-C2DFD41B76F5-00,312,657,425,478,425,801,A105 (Green Lanes) 0.0-0.5 km of stretch 26,A,False,3.0
+A112-D6012CCB3E1E-00,620,315,329,248,328,803,A112 (Hoe Street) 0.0-0.5 km of stretch 17,A,False,5.0
+A215-8448AC1B024E-03,678,902,515,868,648,804,A215 (Portland Road) 1.4-1.9 km of stretch 13,A,False,3.0
+A503-2BFFC6B63AB7-00,335,389,393,382,396,805,A503 (Camden Road) 0.0-0.5 km of stretch 3,A,False,3.0
+A23-9479D1D7CC3D-02,477,371,358,599,645,806,A23 (London Road) 1.0-1.4 km of stretch 146,A,False,2.0
+A5-92878A35AF73-11,538,892,385,325,482,813,A5 (Cricklewood Broadway) 5.5-6.0 km of stretch 329,A,False,1.0
+A3216-B935D77A8D8E-02,663,996,697,554,483,824,A3216 (Queenstown Road) 0.9-1.3 km of stretch 6,A,False,2.0
+A5-92878A35AF73-10,513,269,443,432,832,825,A5 (Shoot-Up Hill) 5.0-5.5 km of stretch 329,A,False,2.0
+A5-92878A35AF73-08,762,462,202,187,262,826,A5 (Kilburn High Road) 4.0-4.5 km of stretch 329,A,False,2.0
+A4088-559E09F02B14-02,770,771,577,524,424,830,A4088 (Blackbird Hill) 1.0-1.5 km of stretch 14,A,False,3.0
+A3218-54AED6C41356-07,306,540,585,465,370,831,A3218 (Thurloe Place) 3.3-3.8 km of stretch 1,A,False,8.0
+N-C3FFD907D353-03,494,922,660,546,877,833,N (South Carriage Drive) 1.5-2.1 km of stretch 0,N,False,6.0
+A205-E6383C04C9DA-11,657,373,779,790,871,849,A205 (Stanstead Road) 5.6-6.1 km of stretch 50,A,False,2.0
+A3036-3D57698A3789-06,320,339,237,310,575,858,A3036 (Lavender Hill) 2.9-3.4 km of stretch 5,A,False,3.0
+A2047-FB6BCB548D43-00,502,724,295,270,361,869,A2047 (Fratton Road) 0.0-0.5 km of stretch 18,A,False,2.76
+A104-B9D31B8FC3EE-03,491,566,529,521,608,870,A104 (Essex Road) 1.4-1.9 km of stretch 20,A,False,5.0
+A503-92BFCCA4F284-02,671,377,227,298,372,878,A503 (Seven Sisters Road) 1.1-1.6 km of stretch 11,A,False,4.0
+A3-94B3DABF3212-04,379,290,348,172,564,891,A3 (Long Road) 2.0-2.4 km of stretch 212,A,False,4.0
+A404-394C871ECB75-03,480,504,495,390,387,893,A404 (Harrow Road) 1.4-1.9 km of stretch 27,A,False,3.0
+A4020-5B8E2E613DDE-03,937,948,875,864,687,899,A4020 (Uxbridge Road the Broadway) 1.4-1.9 km of stretch 20,A,False,1.0
+A41-04C1FB027AF6-04,331,203,251,407,562,915,A41 (Finchley Road) 1.9-2.4 km of stretch 14,A,False,3.0
+A1010-7060F6C22850-04,768,971,658,911,833,920,A1010 (Hertford Road High Street) 2.0-2.5 km of stretch 5,A,False,2.0
+A41-04C1FB027AF6-00,651,380,285,701,581,932,A41 (Finchley Road) 0.0-0.5 km of stretch 14,A,False,3.0
+A10-1D0A5EE85884-03,220,218,274,534,602,943,A10 (Great Cambridge Road) 1.6-2.1 km of stretch 31,A,False,1.0
+B2066-6921E94F6C45-01,474,658,765,583,857,944,B2066 (Western Road) 0.4-0.9 km of stretch 5,B,False,5.0
+A118-33FA9A157280-00,884,399,388,219,485,963,A118 (High Street) 0.0-0.5 km of stretch 19,A,False,3.0
+A5-92878A35AF73-13,882,817,746,750,718,968,A5 (Edgware Road) 6.5-7.0 km of stretch 329,A,False,0.0
+A112-D6012CCB3E1E-02,880,440,369,856,883,969,A112 (High Road Leyton) 1.0-1.5 km of stretch 17,A,False,3.0
+A219-B64A5D84CA5B-01,925,520,528,414,556,971,A219 (Putney Hill) 0.4-0.9 km of stretch 48,A,False,5.0
+A124-9BF3C902C6A2-03,99,68,320,587,910,975,A124 (Barking Road) 1.5-1.9 km of stretch 26,A,False,3.0

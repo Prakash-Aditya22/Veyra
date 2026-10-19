@@ -1,0 +1,17 @@
+{
+  "roles": {
+    "2019": "development",
+    "2020": "development",
+    "2021": "development",
+    "2022": "exploratory",
+    "2023": "exploratory",
+    "2025": "forecast"
+  },
+  "lgbm_params": {
+    "num_leaves": 31,
+    "min_child_samples": 1000,
+    "n_estimators": 800
+  },
+  "features": "history+road+context (45, as v2)",
+  "n_boot": 200
+}

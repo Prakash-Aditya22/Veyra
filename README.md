@@ -17,7 +17,7 @@ Road accidents cluster around specific locations due to factors like poor visibi
 ## Tech Stack
 
 - **Backend:** Java, Spring Boot (REST API)
-- **ML/Data:** Python (pandas, scikit-learn, geopy) — offline pipeline for clustering and risk scoring
+- **ML/Data:** Python (pandas, scikit-learn, LightGBM, pyproj) — offline pipeline: UK STATS19 + OS Open Roads + DfT traffic counts → expected serious-casualty forecasts per ~500 m road segment (see `ml/README.md`)
 - **Database:** PostgreSQL + PostGIS
 - **Frontend:** React, Leaflet.js (OpenStreetMap)
 - **Charts:** Chart.js / Recharts
@@ -28,7 +28,7 @@ Road accidents cluster around specific locations due to factors like poor visibi
 Accident Dataset (CSV)
         |
         v
-Python: cleaning, EDA, DBSCAN clustering, severity model
+Python: STATS19 cleaning, road-segment forecasts, severity model
         |
         v
 Processed blackspot + risk data --> PostgreSQL/PostGIS
@@ -43,10 +43,10 @@ Processed blackspot + risk data --> PostgreSQL/PostGIS
 ## Project Structure
 
 ```
-/ml            - Python scripts/notebooks for data cleaning, clustering, model training
+/ml            - Python ML pipeline, tests, reports (start at ml/README.md)
 /backend       - Spring Boot application (REST API)
 /frontend      - React application
-/data          - Raw and processed accident datasets
+/data          - Segment scores the backend loads (data/v2/ is current; see data/v2/README.md)
 README.md
 ```
 
@@ -66,13 +66,13 @@ README.md
 git clone <repo-url>
 cd <repo-name>
 
-# ML pipeline
-cd ml
-pip install -r requirements.txt
-python preprocess.py
+# ML pipeline (outputs are already committed in data/v2/; this regenerates them)
+python -m venv .venv
+.venv/Scripts/python -m pip install -r ml/requirements.txt
+.venv/Scripts/python ml/pipeline.py --help        # step order and timings: ml/README.md
 
 # Backend
-cd ../backend
+cd backend
 ./mvnw spring-boot:run
 
 # Frontend

@@ -1,0 +1,194 @@
+{
+  "2019": {
+    "hist_adj_ksi": {},
+    "hist_ksi_cas": {},
+    "hist_collisions": {},
+    "hist_ksi_collisions": {},
+    "poisson_glm": {
+      "alpha": 0.0,
+      "converged": true,
+      "n_coef": 53,
+      "overdispersion": {
+        "alpha_ct": 0.5401970838705362,
+        "se": 0.05611259087648294,
+        "t": 9.627020877714193
+      }
+    },
+    "nb_glm": {
+      "alpha": 0.6010357734170473,
+      "converged": true,
+      "n_coef": 53
+    },
+    "eb": {
+      "k": 0.6456188005895713,
+      "alpha": 0.8950360200095827,
+      "spf_coef": {
+        "intercept": -4.3667,
+        "log_length": 1.3011,
+        "cls_M": 0.2498,
+        "cls_A": 0.843,
+        "cls_B": 0.5238,
+        "cls_C": 0.5262,
+        "cls_U": 0.4628,
+        "fw_collapsed_dual": -0.0131,
+        "fw_dual": -0.0261,
+        "fw_roundabout": -0.0173,
+        "fw_slip": -0.0741,
+        "share_roundabout": -0.0109,
+        "n_junctions": 0.1168,
+        "junctions_per_km": 0.3306,
+        "primary_route": 0.0528,
+        "trunk_road": 0.025,
+        "net_km_1km": -0.0141,
+        "net_km_3km": 0.6176
+      }
+    },
+    "lgbm": {
+      "gain_share": {
+        "h_speed_median": 0.265,
+        "h_n_coll": 0.2079,
+        "h_n_cas": 0.1162,
+        "stroke_adj_ksi_other": 0.1092,
+        "log_length": 0.0673,
+        "cls_A": 0.031,
+        "nb_coll_3km": 0.0294,
+        "n_junctions": 0.0268,
+        "nb_adj_ksi_3km": 0.0224,
+        "h_share_single_vehicle": 0.0216,
+        "cls_N": 0.0119,
+        "cls_U": 0.0113,
+        "net_km_3km": 0.0079,
+        "h_years_with_crash": 0.0073,
+        "h_coll_per_km": 0.007
+      }
+    }
+  },
+  "2020": {
+    "hist_adj_ksi": {},
+    "hist_ksi_cas": {},
+    "hist_collisions": {},
+    "hist_ksi_collisions": {},
+    "poisson_glm": {
+      "alpha": 0.0,
+      "converged": true,
+      "n_coef": 53,
+      "overdispersion": {
+        "alpha_ct": 0.6417520010414447,
+        "se": 0.07421303145199387,
+        "t": 8.647430087215536
+      }
+    },
+    "nb_glm": {
+      "alpha": 0.706930470805119,
+      "converged": true,
+      "n_coef": 53
+    },
+    "eb": {
+      "k": 0.5793793732130809,
+      "alpha": 0.9452786940437458,
+      "spf_coef": {
+        "intercept": -4.4395,
+        "log_length": 1.3048,
+        "cls_M": 0.2458,
+        "cls_A": 0.8323,
+        "cls_B": 0.5197,
+        "cls_C": 0.5215,
+        "cls_U": 0.4479,
+        "fw_collapsed_dual": -0.0107,
+        "fw_dual": -0.0228,
+        "fw_roundabout": -0.0136,
+        "fw_slip": -0.0671,
+        "share_roundabout": -0.0048,
+        "n_junctions": 0.1168,
+        "junctions_per_km": 0.3264,
+        "primary_route": 0.0517,
+        "trunk_road": 0.0187,
+        "net_km_1km": -0.017,
+        "net_km_3km": 0.6194
+      }
+    },
+    "lgbm": {
+      "gain_share": {
+        "h_speed_median": 0.2756,
+        "h_n_coll": 0.2157,
+        "stroke_adj_ksi_other": 0.1046,
+        "h_n_cas": 0.092,
+        "log_length": 0.0795,
+        "nb_coll_3km": 0.0351,
+        "cls_A": 0.0332,
+        "n_junctions": 0.0302,
+        "nb_adj_ksi_3km": 0.0198,
+        "cls_N": 0.0129,
+        "cls_U": 0.0119,
+        "h_years_with_crash": 0.0112,
+        "h_coll_per_km": 0.0103,
+        "net_km_3km": 0.0082,
+        "stroke_pieces": 0.0078
+      }
+    }
+  },
+  "2021": {
+    "hist_adj_ksi": {},
+    "hist_ksi_cas": {},
+    "hist_collisions": {},
+    "hist_ksi_collisions": {},
+    "poisson_glm": {
+      "alpha": 0.0,
+      "converged": true,
+      "n_coef": 53,
+      "overdispersion": {
+        "alpha_ct": 0.6891177433580705,
+        "se": 0.06668272628109367,
+        "t": 10.33427668288742
+      }
+    },
+    "nb_glm": {
+      "alpha": 0.8035869339661609,
+      "converged": true,
+      "n_coef": 53
+    },
+    "eb": {
+      "k": 0.5512137394350207,
+      "alpha": 1.0539708950657802,
+      "spf_coef": {
+        "intercept": -4.4872,
+        "log_length": 1.3281,
+        "cls_M": 0.2401,
+        "cls_A": 0.8195,
+        "cls_B": 0.5144,
+        "cls_C": 0.5157,
+        "cls_U": 0.4361,
+        "fw_collapsed_dual": -0.0082,
+        "fw_dual": -0.0254,
+        "fw_roundabout": -0.0128,
+        "fw_slip": -0.0634,
+        "share_roundabout": -0.0039,
+        "n_junctions": 0.1116,
+        "junctions_per_km": 0.348,
+        "primary_route": 0.0539,
+        "trunk_road": 0.0156,
+        "net_km_1km": -0.0274,
+        "net_km_3km": 0.6266
+      }
+    },
+    "lgbm": {
+      "gain_share": {
+        "h_speed_median": 0.2863,
+        "h_n_coll": 0.2047,
+        "stroke_adj_ksi_other": 0.1007,
+        "h_n_cas": 0.0894,
+        "log_length": 0.0836,
+        "nb_coll_3km": 0.0363,
+        "cls_A": 0.032,
+        "n_junctions": 0.0301,
+        "nb_adj_ksi_3km": 0.0267,
+        "cls_N": 0.013,
+        "cls_U": 0.0122,
+        "net_km_3km": 0.0089,
+        "stroke_pieces": 0.0084,
+        "h_coll_per_km": 0.0074,
+        "h_years_with_crash": 0.007
+      }
+    }
+  }
+}

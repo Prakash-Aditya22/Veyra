@@ -1,4 +1,7 @@
 """
+[v1 -- SUPERSEDED by `ml/pipeline.py severity` (v2). Audited defects: threshold tuned on
+ in-sample predictions (D10); random split only (D12). See ml/reports/preliminary_audit.md.]
+
 CAN THE SEVERITY MODEL ACTUALLY PREDICT? -- deployable vs explanatory.
 
 The 236-feature model scores well, but many of those features are only known
@@ -28,8 +31,10 @@ from sklearn.metrics import (roc_auc_score, average_precision_score, f1_score,
                              classification_report, precision_score, recall_score)
 from lightgbm import LGBMClassifier
 import joblib
+import os
 
 RS = 42
+os.makedirs("severity_outputs", exist_ok=True)   # was only created by severity_final.py
 YEARS = [2022, 2023]
 
 print("loading ...")

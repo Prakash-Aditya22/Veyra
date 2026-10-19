@@ -1,0 +1,311 @@
+{
+  "v1_target_2022_2023|adj_ksi_cas": {
+    "national_total": 57898.82843,
+    "by_bucket": {
+      "access_road": 0.0196,
+      "no_coords": 0.0002,
+      "no_road": 0.0016,
+      "scored": 0.9785
+    },
+    "scored_by_os_class": {
+      "A": 0.4494,
+      "B": 0.1385,
+      "C": 0.1106,
+      "M": 0.0307,
+      "N": 0.0128,
+      "U": 0.2365
+    },
+    "by_stats19_class_share_scored": {
+      "A": 0.9976,
+      "A(M)": 0.9939,
+      "B": 0.9966,
+      "C": 0.9959,
+      "M": 0.9973,
+      "U": 0.9429
+    },
+    "stats19_class_share_of_national": {
+      "A": 0.4502,
+      "A(M)": 0.0028,
+      "B": 0.1392,
+      "C": 0.0349,
+      "M": 0.0281,
+      "U": 0.3449
+    }
+  },
+  "v1_target_2022_2023|n_ksi_cas": {
+    "national_total": 55185.0,
+    "by_bucket": {
+      "access_road": 0.0194,
+      "no_coords": 0.0002,
+      "no_road": 0.0015,
+      "scored": 0.979
+    },
+    "scored_by_os_class": {
+      "A": 0.451,
+      "B": 0.1381,
+      "C": 0.1095,
+      "M": 0.0312,
+      "N": 0.0128,
+      "U": 0.2364
+    },
+    "by_stats19_class_share_scored": {
+      "A": 0.9979,
+      "A(M)": 0.9937,
+      "B": 0.9969,
+      "C": 0.9957,
+      "M": 0.9975,
+      "U": 0.9436
+    },
+    "stats19_class_share_of_national": {
+      "A": 0.4516,
+      "A(M)": 0.0029,
+      "B": 0.1388,
+      "C": 0.034,
+      "M": 0.0285,
+      "U": 0.3441
+    }
+  },
+  "v1_target_2022_2023|is_ksi_collision": {
+    "national_total": 49895.0,
+    "by_bucket": {
+      "access_road": 0.02,
+      "no_coords": 0.0002,
+      "no_road": 0.0015,
+      "scored": 0.9783
+    },
+    "scored_by_os_class": {
+      "A": 0.4431,
+      "B": 0.1375,
+      "C": 0.1086,
+      "M": 0.0295,
+      "N": 0.0134,
+      "U": 0.2462
+    },
+    "by_stats19_class_share_scored": {
+      "A": 0.9978,
+      "A(M)": 0.9927,
+      "B": 0.9971,
+      "C": 0.9954,
+      "M": 0.997,
+      "U": 0.9433
+    },
+    "stats19_class_share_of_national": {
+      "A": 0.4437,
+      "A(M)": 0.0027,
+      "B": 0.1383,
+      "C": 0.0349,
+      "M": 0.0269,
+      "U": 0.3535
+    }
+  },
+  "holdout_target_2024_2025|adj_ksi_cas": {
+    "national_total": 58794.35252,
+    "by_bucket": {
+      "access_road": 0.0216,
+      "no_coords": 0.0,
+      "no_road": 0.0013,
+      "scored": 0.9771
+    },
+    "scored_by_os_class": {
+      "A": 0.4393,
+      "B": 0.1419,
+      "C": 0.1105,
+      "M": 0.0307,
+      "N": 0.0133,
+      "U": 0.2414
+    },
+    "by_stats19_class_share_scored": {
+      "A": 0.9978,
+      "A(M)": 0.9989,
+      "B": 0.9985,
+      "C": 0.9953,
+      "M": 0.9988,
+      "U": 0.9387,
+      "missing": 0.7132
+    },
+    "stats19_class_share_of_national": {
+      "A": 0.44,
+      "A(M)": 0.0026,
+      "B": 0.1414,
+      "C": 0.0367,
+      "M": 0.0283,
+      "U": 0.3511,
+      "missing": 0.0
+    }
+  },
+  "holdout_target_2024_2025|n_ksi_cas": {
+    "national_total": 56938.0,
+    "by_bucket": {
+      "access_road": 0.0216,
+      "no_coords": 0.0,
+      "no_road": 0.0012,
+      "scored": 0.9772
+    },
+    "scored_by_os_class": {
+      "A": 0.4395,
+      "B": 0.1418,
+      "C": 0.1098,
+      "M": 0.0311,
+      "N": 0.0133,
+      "U": 0.2417
+    },
+    "by_stats19_class_share_scored": {
+      "A": 0.9979,
+      "A(M)": 1.0,
+      "B": 0.9986,
+      "C": 0.9951,
+      "M": 0.9988,
+      "U": 0.9389,
+      "missing": NaN
+    },
+    "stats19_class_share_of_national": {
+      "A": 0.4402,
+      "A(M)": 0.0026,
+      "B": 0.1412,
+      "C": 0.0359,
+      "M": 0.0287,
+      "U": 0.3515,
+      "missing": 0.0
+    }
+  },
+  "holdout_target_2024_2025|is_ksi_collision": {
+    "national_total": 51713.0,
+    "by_bucket": {
+      "access_road": 0.0227,
+      "no_coords": 0.0,
+      "no_road": 0.0012,
+      "scored": 0.9761
+    },
+    "scored_by_os_class": {
+      "A": 0.4323,
+      "B": 0.1398,
+      "C": 0.1098,
+      "M": 0.0288,
+      "N": 0.0137,
+      "U": 0.2516
+    },
+    "by_stats19_class_share_scored": {
+      "A": 0.9979,
+      "A(M)": 1.0,
+      "B": 0.9985,
+      "C": 0.9947,
+      "M": 0.9986,
+      "U": 0.9377,
+      "missing": NaN
+    },
+    "stats19_class_share_of_national": {
+      "A": 0.4329,
+      "A(M)": 0.0022,
+      "B": 0.1393,
+      "C": 0.0368,
+      "M": 0.0267,
+      "U": 0.362,
+      "missing": 0.0
+    }
+  },
+  "forecast_history_2023_2025|adj_ksi_cas": {
+    "national_total": 87767.4462,
+    "by_bucket": {
+      "access_road": 0.0212,
+      "no_coords": 0.0001,
+      "no_road": 0.0015,
+      "scored": 0.9773
+    },
+    "scored_by_os_class": {
+      "A": 0.4422,
+      "B": 0.1407,
+      "C": 0.1102,
+      "M": 0.0306,
+      "N": 0.0129,
+      "U": 0.2405
+    },
+    "by_stats19_class_share_scored": {
+      "A": 0.9978,
+      "A(M)": 0.9992,
+      "B": 0.998,
+      "C": 0.9958,
+      "M": 0.9987,
+      "U": 0.9392,
+      "missing": 0.7132
+    },
+    "stats19_class_share_of_national": {
+      "A": 0.4429,
+      "A(M)": 0.0025,
+      "B": 0.1407,
+      "C": 0.0358,
+      "M": 0.0282,
+      "U": 0.3499,
+      "missing": 0.0
+    }
+  },
+  "forecast_history_2023_2025|n_ksi_cas": {
+    "national_total": 84592.0,
+    "by_bucket": {
+      "access_road": 0.0212,
+      "no_coords": 0.0001,
+      "no_road": 0.0013,
+      "scored": 0.9774
+    },
+    "scored_by_os_class": {
+      "A": 0.4428,
+      "B": 0.1406,
+      "C": 0.1094,
+      "M": 0.0311,
+      "N": 0.0129,
+      "U": 0.2406
+    },
+    "by_stats19_class_share_scored": {
+      "A": 0.9979,
+      "A(M)": 1.0,
+      "B": 0.9981,
+      "C": 0.9956,
+      "M": 0.9988,
+      "U": 0.9394,
+      "missing": NaN
+    },
+    "stats19_class_share_of_national": {
+      "A": 0.4434,
+      "A(M)": 0.0025,
+      "B": 0.1405,
+      "C": 0.035,
+      "M": 0.0286,
+      "U": 0.35,
+      "missing": 0.0
+    }
+  },
+  "forecast_history_2023_2025|is_ksi_collision": {
+    "national_total": 76673.0,
+    "by_bucket": {
+      "access_road": 0.0221,
+      "no_coords": 0.0001,
+      "no_road": 0.0013,
+      "scored": 0.9765
+    },
+    "scored_by_os_class": {
+      "A": 0.4351,
+      "B": 0.1391,
+      "C": 0.1093,
+      "M": 0.0289,
+      "N": 0.0135,
+      "U": 0.2506
+    },
+    "by_stats19_class_share_scored": {
+      "A": 0.9978,
+      "A(M)": 1.0,
+      "B": 0.9982,
+      "C": 0.9953,
+      "M": 0.9985,
+      "U": 0.9386,
+      "missing": NaN
+    },
+    "stats19_class_share_of_national": {
+      "A": 0.4357,
+      "A(M)": 0.0023,
+      "B": 0.139,
+      "C": 0.0359,
+      "M": 0.0267,
+      "U": 0.3603,
+      "missing": 0.0
+    }
+  }
+}

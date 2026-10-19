@@ -1,0 +1,12 @@
+{
+  "n_segments_with_aadf_in_sample": 14587,
+  "spearman_logAADF_vs_log_forecast": 0.09238407486087973,
+  "spearman_logAADF_vs_rate_eb": -0.5972846933761794,
+  "spearman_logAADF_vs_shap_history": 0.19235276461492234,
+  "spearman_logAADF_vs_shap_road": -0.1692723391727252,
+  "spearman_logAADF_vs_shap_context": 0.028302139740371376,
+  "spearman_logAADF_vs_shap_exposure_proxy": 0.05660081388010461,
+  "spearman_rate_eb_vs_shap_exposure_proxy_len250": 0.039387551261992684,
+  "spearman_logAADF_vs_shap_risk_character": 0.0843663833131459,
+  "spearman_rate_eb_vs_shap_risk_character_len250": 0.0907838728305691
+}

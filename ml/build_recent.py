@@ -1,4 +1,9 @@
 """
+[v1 -- reads local files from stats19_raw/; it does NOT download them (the README used
+ to say it did) and does not check for truncated files. v2 downloads and validates with
+ ml/blackspot/download.py and builds its own table (ml/pipeline.py data). This script is
+ still the source of stats19_recent.csv, which v2 reuses for 2015-2020.]
+
 Build a RECENT STATS19 dataset (2015-2023) for blackspot detection.
 
 WHY RECENT DATA IS FINE HERE

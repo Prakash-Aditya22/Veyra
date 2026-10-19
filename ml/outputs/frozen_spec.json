@@ -1,0 +1,33 @@
+{
+  "selected_model": "lgbm",
+  "best_by_deviance": "lgbm",
+  "dev_fold_mean_deviance": {
+    "eb": 0.142386,
+    "lgbm": 0.13314,
+    "nb_glm": 0.136506,
+    "poisson_glm": 0.136579
+  },
+  "paired_deviance_diff_vs_best": {
+    "eb": 0.00914,
+    "nb_glm": 0.003336,
+    "poisson_glm": 0.003417
+  },
+  "paired_diff_se": {
+    "eb": 0.001101,
+    "nb_glm": 0.000282,
+    "poisson_glm": 0.000251
+  },
+  "lgbm_params": {
+    "num_leaves": 31,
+    "min_child_samples": 1000,
+    "n_estimators": 800
+  },
+  "primary_target": "adj_ksi_cas",
+  "dev_cutoffs": [
+    2019,
+    2020,
+    2021
+  ],
+  "rule": "lowest mean dev-fold Poisson deviance (population all); the simplest model whose paired block-bootstrap deviance difference from the best is <= 1 SE wins",
+  "sha256": "b9487674e4f1da7951f787ef122b7f8caea033cebdfc34e26649de35562ad378"
+}

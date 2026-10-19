@@ -1,0 +1,9 @@
+params,val_deviance
+"{""num_leaves"": 31, ""min_child_samples"": 200, ""n_estimators"": 300}",0.13219569815864546
+"{""num_leaves"": 31, ""min_child_samples"": 200, ""n_estimators"": 800}",0.13208953832609208
+"{""num_leaves"": 31, ""min_child_samples"": 1000, ""n_estimators"": 300}",0.13205357166758475
+"{""num_leaves"": 31, ""min_child_samples"": 1000, ""n_estimators"": 800}",0.13204089563871318
+"{""num_leaves"": 127, ""min_child_samples"": 200, ""n_estimators"": 300}",0.13245783978088152
+"{""num_leaves"": 127, ""min_child_samples"": 200, ""n_estimators"": 800}",0.13318011788602596
+"{""num_leaves"": 127, ""min_child_samples"": 1000, ""n_estimators"": 300}",0.13219840178386172
+"{""num_leaves"": 127, ""min_child_samples"": 1000, ""n_estimators"": 800}",0.13315257748871334

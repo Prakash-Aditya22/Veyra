@@ -1,0 +1,213 @@
+{
+  "what": "production model re-scored with each top-1,000 segment's largest 2023-25 collision (by adjusted KSI) removed from its OWN history features; road and context features (including crashes on nearby roads and elsewhere on the stretch) are unchanged; no refit",
+  "score_units": "expected DfT severity-adjusted KSI casualties on the segment, 2026-2027 total (two years)",
+  "rank_direction": "rank 1 = highest forecast; a smaller rank number means higher priority",
+  "production_model_reproduced_max_abs_diff": 0.0,
+  "phase2_result_reproduced_max_abs_diff": 0.0,
+  "top_n": 1000,
+  "share_forecast_rose": 0.212,
+  "share_forecast_fell": 0.785,
+  "share_forecast_unchanged": 0.003,
+  "median_rank_change_simultaneous": -1.0,
+  "median_rank_change_one_at_a_time": 47.0,
+  "share_leaving_top1000_simultaneous": 0.114,
+  "share_leaving_top1000_one_at_a_time": 0.163,
+  "largest_collision_adj_ksi_median_rose": 1.0,
+  "largest_collision_adj_ksi_median_fell": 1.0,
+  "family_change_rose_vs_fell": [
+    {
+      "family": "all-casualty count",
+      "mean_change_log_rose": 0.0017,
+      "mean_change_log_fell": -0.0117,
+      "share_of_rising_segments_where_family_raised_forecast": 0.5802
+    },
+    {
+      "family": "collision counts",
+      "mean_change_log_rose": -0.0056,
+      "mean_change_log_fell": -0.0799,
+      "share_of_rising_segments_where_family_raised_forecast": 0.4245
+    },
+    {
+      "family": "crash circumstances",
+      "mean_change_log_rose": 0.0066,
+      "mean_change_log_fell": -0.0009,
+      "share_of_rising_segments_where_family_raised_forecast": 0.6274
+    },
+    {
+      "family": "road and context (values unchanged)",
+      "mean_change_log_rose": 0.0389,
+      "mean_change_log_fell": 0.0316,
+      "share_of_rising_segments_where_family_raised_forecast": 0.9198
+    },
+    {
+      "family": "serious/fatal counts",
+      "mean_change_log_rose": -0.0001,
+      "mean_change_log_fell": -0.0472,
+      "share_of_rising_segments_where_family_raised_forecast": 0.5802
+    },
+    {
+      "family": "serious/fatal share",
+      "mean_change_log_rose": 0.0061,
+      "mean_change_log_fell": 0.0006,
+      "share_of_rising_segments_where_family_raised_forecast": 0.7453
+    }
+  ],
+  "model_surface_probes_top1000": {
+    "add_5_adjusted_ksi_casualties": {
+      "inputs_changed": [
+        "h_adj_ksi_cas",
+        "h_adj_ksi_per_km"
+      ],
+      "share_up": 0.868,
+      "share_down": 0.085
+    },
+    "lower_ksi_share_by_0.1": {
+      "inputs_changed": [
+        "h_ksi_share"
+      ],
+      "share_up": 0.63,
+      "share_down": 0.259
+    },
+    "one_fewer_collision_count_only": {
+      "inputs_changed": [
+        "h_n_coll",
+        "h_coll_per_km"
+      ],
+      "share_up": 0.059,
+      "share_down_or_unchanged": 0.941
+    }
+  },
+  "single_event_segments_in_top1000": [
+    {
+      "segment_id": "A57-842C4722100B-00",
+      "location": "A57 (Water Street) 0.0-0.5 km of stretch 178",
+      "rank": 10,
+      "forecast": 6.430572401247575,
+      "forecast_without_largest_collision": 7.821866926318955,
+      "rank_without_largest_collision_simultaneous": 2,
+      "rank_without_largest_collision_one_at_a_time": 2,
+      "log_change": 0.19585970874572672,
+      "shap_change_by_family": {
+        "all-casualty count": -0.2171,
+        "collision counts": -0.0835,
+        "crash circumstances": 0.077,
+        "road and context (values unchanged)": 0.4988,
+        "serious/fatal counts": -0.1086,
+        "serious/fatal share": 0.0292
+      },
+      "collisions_2023_25": [
+        {
+          "collision_year": 2025,
+          "n_cas": 142,
+          "n_ksi_cas": 27,
+          "adj_ksi_cas": 43.81856,
+          "n_fatal_cas": 0,
+          "collision_severity": 2
+        },
+        {
+          "collision_year": 2025,
+          "n_cas": 1,
+          "n_ksi_cas": 1,
+          "adj_ksi_cas": 1.0,
+          "n_fatal_cas": 0,
+          "collision_severity": 2
+        },
+        {
+          "collision_year": 2023,
+          "n_cas": 1,
+          "n_ksi_cas": 0,
+          "adj_ksi_cas": 0.19263,
+          "n_fatal_cas": 0,
+          "collision_severity": 3
+        },
+        {
+          "collision_year": 2024,
+          "n_cas": 1,
+          "n_ksi_cas": 0,
+          "adj_ksi_cas": 0.14431,
+          "n_fatal_cas": 0,
+          "collision_severity": 3
+        },
+        {
+          "collision_year": 2025,
+          "n_cas": 1,
+          "n_ksi_cas": 0,
+          "adj_ksi_cas": 0.1322,
+          "n_fatal_cas": 0,
+          "collision_severity": 3
+        },
+        {
+          "collision_year": 2024,
+          "n_cas": 1,
+          "n_ksi_cas": 0,
+          "adj_ksi_cas": 0.10441,
+          "n_fatal_cas": 0,
+          "collision_severity": 3
+        },
+        {
+          "collision_year": 2023,
+          "n_cas": 1,
+          "n_ksi_cas": 0,
+          "adj_ksi_cas": 0.07578,
+          "n_fatal_cas": 0,
+          "collision_severity": 3
+        }
+      ],
+      "single_family_substitutions": {
+        "collision counts": {
+          "before_with_only_this_family_changed": 6.759513569102072,
+          "after_with_only_this_family_restored": 7.280778715040842
+        },
+        "all-casualty count": {
+          "before_with_only_this_family_changed": 5.875997952920343,
+          "after_with_only_this_family_restored": 7.6043402309460815
+        },
+        "serious/fatal counts": {
+          "before_with_only_this_family_changed": 6.786904969889855,
+          "after_with_only_this_family_restored": 6.559107329940835
+        },
+        "serious/fatal share": {
+          "before_with_only_this_family_changed": 6.757793507611902,
+          "after_with_only_this_family_restored": 7.263106543690408
+        },
+        "crash circumstances": {
+          "before_with_only_this_family_changed": 6.217316903746857,
+          "after_with_only_this_family_restored": 7.600371739601946
+        }
+      },
+      "stability": {
+        "rank": 10,
+        "rank_median": 10.5,
+        "rank_p05": 1.0,
+        "rank_p95": 687.0,
+        "rank_iqr": 535.0,
+        "freq_top100": 0.6,
+        "freq_top1000": 1.0,
+        "freq_top5pct": 1.0,
+        "freq_top10pct": 1.0,
+        "freq_top20pct": 1.0,
+        "seed_rank_p05": 1.0,
+        "seed_rank_p95": 7.8,
+        "stability_class": "robust top-1000",
+        "window_rank_min": 1,
+        "window_rank_max": 390,
+        "rank_without_largest_collision": 2.0
+      }
+    }
+  ],
+  "largest_split_threshold": {
+    "h_n_cas": 62.50000000000001,
+    "h_adj_ksi_cas": 6.060265064239503,
+    "h_n_ksi_cas": 11.500000000000002,
+    "h_last_adj_ksi_cas": 4.061110019683839,
+    "h_adj_ksi_per_km": 20.106200218200687,
+    "h_n_coll": 41.50000000000001
+  },
+  "training_feature_window": "2021-2023",
+  "training_window_assigned_collisions": {
+    "n": 304292,
+    "max_casualties_in_one_collision": 70,
+    "collisions_with_20_or_more_casualties": 1,
+    "max_adjusted_ksi_in_one_collision": 27.16941
+  }
+}

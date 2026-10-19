@@ -1,0 +1,181 @@
+population,feature,label,group,kind,mean_abs_shap,mean_shap,rank_in_population
+"all segments (uniform random sample of 200,000)",h_n_coll,"Collisions on this segment, last 3 years",history,exposure_proxy,0.144763,-0.014623,7.0
+"all segments (uniform random sample of 200,000)",h_adj_ksi_cas,"Serious/fatal casualties here (adjusted), last 3 years",history,exposure_proxy,0.00076,0.000251,37.0
+"all segments (uniform random sample of 200,000)",h_n_ksi_cas,"Serious/fatal casualties here (as reported), last 3 years",history,exposure_proxy,0.000163,-8.1e-05,41.0
+"all segments (uniform random sample of 200,000)",h_n_fatal_cas,"Fatal casualties here, last 3 years",history,exposure_proxy,0.000177,2.2e-05,40.0
+"all segments (uniform random sample of 200,000)",h_n_cas,"All casualties here, last 3 years",history,exposure_proxy,0.057946,-0.000173,12.0
+"all segments (uniform random sample of 200,000)",h_is_ksi_collision,"Serious/fatal collisions here, last 3 years",history,exposure_proxy,0.000113,3.5e-05,43.0
+"all segments (uniform random sample of 200,000)",h_is_fatal_collision,"Fatal collisions here, last 3 years",history,exposure_proxy,3.9e-05,1e-06,44.0
+"all segments (uniform random sample of 200,000)",h_last_n_coll,Collisions here in the most recent year,history,exposure_proxy,0.001098,0.000428,35.0
+"all segments (uniform random sample of 200,000)",h_last_adj_ksi_cas,Serious/fatal casualties here in the most recent year,history,exposure_proxy,0.001467,0.000201,33.0
+"all segments (uniform random sample of 200,000)",h_years_with_crash,Years (of 3) with at least one collision here,history,exposure_proxy,0.013053,-0.001781,20.0
+"all segments (uniform random sample of 200,000)",h_share_junction,Share of recent collisions at junctions,history,risk_character,0.008318,-2.5e-05,22.0
+"all segments (uniform random sample of 200,000)",h_share_dark,Share of recent collisions in darkness,history,risk_character,0.002543,0.00044,29.0
+"all segments (uniform random sample of 200,000)",h_share_urban,Share of recent collisions in urban areas,history,risk_character,0.003744,-0.00036,25.0
+"all segments (uniform random sample of 200,000)",h_share_wet,Share of recent collisions on wet or icy roads,history,risk_character,0.008225,1.3e-05,23.0
+"all segments (uniform random sample of 200,000)",h_speed_median,Typical speed limit at recent collisions,history,risk_character,0.014791,0.001709,19.0
+"all segments (uniform random sample of 200,000)",h_share_single_vehicle,Share of recent collisions involving one vehicle,history,risk_character,0.002302,0.000556,31.0
+"all segments (uniform random sample of 200,000)",h_ksi_share,Share of recent collisions that were serious/fatal,history,risk_character,0.001217,0.000387,34.0
+"all segments (uniform random sample of 200,000)",h_adj_ksi_per_km,"Serious/fatal casualties per km, last 3 years",history,exposure_proxy,0.002425,0.000453,30.0
+"all segments (uniform random sample of 200,000)",h_coll_per_km,"Collisions per km, last 3 years",history,exposure_proxy,0.004947,0.002266,24.0
+"all segments (uniform random sample of 200,000)",log_length,Segment length,road,exposure_proxy,0.608172,-0.005395,1.0
+"all segments (uniform random sample of 200,000)",cls_M,Road class: motorway,road,risk_character,0.003743,0.00013,26.0
+"all segments (uniform random sample of 200,000)",cls_A,Road class: A road,road,risk_character,0.116175,0.015016,9.0
+"all segments (uniform random sample of 200,000)",cls_B,Road class: B road,road,risk_character,0.033759,0.002633,15.0
+"all segments (uniform random sample of 200,000)",cls_C,Road class: C road,road,risk_character,0.027219,0.007248,18.0
+"all segments (uniform random sample of 200,000)",cls_U,Road class: unclassified,road,risk_character,0.221773,-0.008141,5.0
+"all segments (uniform random sample of 200,000)",cls_N,Road class: not classified,road,risk_character,0.285089,-0.038282,3.0
+"all segments (uniform random sample of 200,000)",fw_collapsed_dual,Dual carriageway (drawn as one line),road,risk_character,0.001823,0.000233,32.0
+"all segments (uniform random sample of 200,000)",fw_dual,Dual carriageway (drawn per carriageway),road,risk_character,0.001058,-8.3e-05,36.0
+"all segments (uniform random sample of 200,000)",fw_roundabout,Roundabout,road,risk_character,0.000156,3e-05,42.0
+"all segments (uniform random sample of 200,000)",fw_slip,Slip road,road,risk_character,0.000232,9.9e-05,38.0
+"all segments (uniform random sample of 200,000)",fw_single,Single carriageway,road,risk_character,0.027899,0.005308,17.0
+"all segments (uniform random sample of 200,000)",share_roundabout,Share of segment that is roundabout,road,risk_character,0.000215,4.5e-05,39.0
+"all segments (uniform random sample of 200,000)",share_slip,Share of segment that is slip road,road,risk_character,0.00358,0.000723,27.0
+"all segments (uniform random sample of 200,000)",n_junctions,Junctions on the segment,road,risk_character,0.275045,0.010372,4.0
+"all segments (uniform random sample of 200,000)",junctions_per_km,Junctions per km,road,risk_character,0.041827,0.006914,14.0
+"all segments (uniform random sample of 200,000)",primary_route,Primary route,road,risk_character,0.010912,-0.000401,21.0
+"all segments (uniform random sample of 200,000)",trunk_road,Trunk road,road,risk_character,0.003267,0.000876,28.0
+"all segments (uniform random sample of 200,000)",tunnel,Tunnel,road,risk_character,0.0,0.0,45.0
+"all segments (uniform random sample of 200,000)",named,Road has a street name,road,risk_character,0.086781,-0.000331,10.0
+"all segments (uniform random sample of 200,000)",stroke_pieces,Length of the whole junction-to-junction stretch (in ~500 m pieces),road,exposure_proxy,0.06172,0.005505,11.0
+"all segments (uniform random sample of 200,000)",net_km_1km,"Road network density, 1 km square (urbanity proxy)",context,exposure_proxy,0.031599,0.00323,16.0
+"all segments (uniform random sample of 200,000)",net_km_3km,"Road network density, 3x3 km (urbanity proxy)",context,exposure_proxy,0.04994,0.008178,13.0
+"all segments (uniform random sample of 200,000)",nb_adj_ksi_3km,"Serious/fatal casualties on nearby roads (3x3 km), last 3 years",context,exposure_proxy,0.202413,-0.014601,6.0
+"all segments (uniform random sample of 200,000)",nb_coll_3km,"Collisions on nearby roads (3x3 km), last 3 years",context,exposure_proxy,0.34004,0.038909,2.0
+"all segments (uniform random sample of 200,000)",stroke_adj_ksi_other,"Serious/fatal casualties elsewhere on the same stretch, last 3 years",context,exposure_proxy,0.143031,-0.014291,8.0
+"top 5% by forecast (all 91,377)",h_n_coll,"Collisions on this segment, last 3 years",history,exposure_proxy,0.652903,0.626859,2.0
+"top 5% by forecast (all 91,377)",h_adj_ksi_cas,"Serious/fatal casualties here (adjusted), last 3 years",history,exposure_proxy,0.005836,0.002112,35.0
+"top 5% by forecast (all 91,377)",h_n_ksi_cas,"Serious/fatal casualties here (as reported), last 3 years",history,exposure_proxy,0.00236,-0.001875,37.0
+"top 5% by forecast (all 91,377)",h_n_fatal_cas,"Fatal casualties here, last 3 years",history,exposure_proxy,0.001048,-0.000586,40.0
+"top 5% by forecast (all 91,377)",h_n_cas,"All casualties here, last 3 years",history,exposure_proxy,0.29884,0.289277,6.0
+"top 5% by forecast (all 91,377)",h_is_ksi_collision,"Serious/fatal collisions here, last 3 years",history,exposure_proxy,0.00136,0.001166,39.0
+"top 5% by forecast (all 91,377)",h_is_fatal_collision,"Fatal collisions here, last 3 years",history,exposure_proxy,0.000307,-9e-05,43.0
+"top 5% by forecast (all 91,377)",h_last_n_coll,Collisions here in the most recent year,history,exposure_proxy,0.009149,0.008325,33.0
+"top 5% by forecast (all 91,377)",h_last_adj_ksi_cas,Serious/fatal casualties here in the most recent year,history,exposure_proxy,0.009632,0.008411,32.0
+"top 5% by forecast (all 91,377)",h_years_with_crash,Years (of 3) with at least one collision here,history,exposure_proxy,0.058669,0.056478,15.0
+"top 5% by forecast (all 91,377)",h_share_junction,Share of recent collisions at junctions,history,risk_character,0.04839,0.01593,17.0
+"top 5% by forecast (all 91,377)",h_share_dark,Share of recent collisions in darkness,history,risk_character,0.016816,0.001412,25.0
+"top 5% by forecast (all 91,377)",h_share_urban,Share of recent collisions in urban areas,history,risk_character,0.014656,0.010998,27.0
+"top 5% by forecast (all 91,377)",h_share_wet,Share of recent collisions on wet or icy roads,history,risk_character,0.026174,0.025401,24.0
+"top 5% by forecast (all 91,377)",h_speed_median,Typical speed limit at recent collisions,history,risk_character,0.071719,0.069477,13.0
+"top 5% by forecast (all 91,377)",h_share_single_vehicle,Share of recent collisions involving one vehicle,history,risk_character,0.014044,-0.000861,28.0
+"top 5% by forecast (all 91,377)",h_ksi_share,Share of recent collisions that were serious/fatal,history,risk_character,0.0072,-0.001634,34.0
+"top 5% by forecast (all 91,377)",h_adj_ksi_per_km,"Serious/fatal casualties per km, last 3 years",history,exposure_proxy,0.01542,0.011167,26.0
+"top 5% by forecast (all 91,377)",h_coll_per_km,"Collisions per km, last 3 years",history,exposure_proxy,0.028724,0.025592,21.0
+"top 5% by forecast (all 91,377)",log_length,Segment length,road,exposure_proxy,0.669591,0.645228,1.0
+"top 5% by forecast (all 91,377)",cls_M,Road class: motorway,road,risk_character,0.012926,0.010066,29.0
+"top 5% by forecast (all 91,377)",cls_A,Road class: A road,road,risk_character,0.412746,0.359449,4.0
+"top 5% by forecast (all 91,377)",cls_B,Road class: B road,road,risk_character,0.072821,0.05511,12.0
+"top 5% by forecast (all 91,377)",cls_C,Road class: C road,road,risk_character,0.039781,0.039687,20.0
+"top 5% by forecast (all 91,377)",cls_U,Road class: unclassified,road,risk_character,0.22288,0.181011,8.0
+"top 5% by forecast (all 91,377)",cls_N,Road class: not classified,road,risk_character,0.143909,0.142403,10.0
+"top 5% by forecast (all 91,377)",fw_collapsed_dual,Dual carriageway (drawn as one line),road,risk_character,0.00973,0.007997,31.0
+"top 5% by forecast (all 91,377)",fw_dual,Dual carriageway (drawn per carriageway),road,risk_character,0.001705,-0.000244,38.0
+"top 5% by forecast (all 91,377)",fw_roundabout,Roundabout,road,risk_character,0.000245,2.9e-05,44.0
+"top 5% by forecast (all 91,377)",fw_slip,Slip road,road,risk_character,0.000343,0.000206,41.0
+"top 5% by forecast (all 91,377)",fw_single,Single carriageway,road,risk_character,0.047779,0.042923,19.0
+"top 5% by forecast (all 91,377)",share_roundabout,Share of segment that is roundabout,road,risk_character,0.000315,8e-06,42.0
+"top 5% by forecast (all 91,377)",share_slip,Share of segment that is slip road,road,risk_character,0.005576,0.00277,36.0
+"top 5% by forecast (all 91,377)",n_junctions,Junctions on the segment,road,risk_character,0.263668,0.18027,7.0
+"top 5% by forecast (all 91,377)",junctions_per_km,Junctions per km,road,risk_character,0.028316,0.009223,23.0
+"top 5% by forecast (all 91,377)",primary_route,Primary route,road,risk_character,0.04803,0.035792,18.0
+"top 5% by forecast (all 91,377)",trunk_road,Trunk road,road,risk_character,0.012273,0.010539,30.0
+"top 5% by forecast (all 91,377)",tunnel,Tunnel,road,risk_character,0.0,0.0,45.0
+"top 5% by forecast (all 91,377)",named,Road has a street name,road,risk_character,0.061472,0.016239,14.0
+"top 5% by forecast (all 91,377)",stroke_pieces,Length of the whole junction-to-junction stretch (in ~500 m pieces),road,exposure_proxy,0.098123,0.089174,11.0
+"top 5% by forecast (all 91,377)",net_km_1km,"Road network density, 1 km square (urbanity proxy)",context,exposure_proxy,0.02872,0.010455,22.0
+"top 5% by forecast (all 91,377)",net_km_3km,"Road network density, 3x3 km (urbanity proxy)",context,exposure_proxy,0.056853,0.001763,16.0
+"top 5% by forecast (all 91,377)",nb_adj_ksi_3km,"Serious/fatal casualties on nearby roads (3x3 km), last 3 years",context,exposure_proxy,0.211752,0.087468,9.0
+"top 5% by forecast (all 91,377)",nb_coll_3km,"Collisions on nearby roads (3x3 km), last 3 years",context,exposure_proxy,0.304666,0.252787,5.0
+"top 5% by forecast (all 91,377)",stroke_adj_ksi_other,"Serious/fatal casualties elsewhere on the same stretch, last 3 years",context,exposure_proxy,0.49365,0.44364,3.0
+segments with >= 1 collision 2023-25 (in the sample),h_n_coll,"Collisions on this segment, last 3 years",history,exposure_proxy,0.729685,0.729685,1.0
+segments with >= 1 collision 2023-25 (in the sample),h_adj_ksi_cas,"Serious/fatal casualties here (adjusted), last 3 years",history,exposure_proxy,0.00653,0.002728,36.0
+segments with >= 1 collision 2023-25 (in the sample),h_n_ksi_cas,"Serious/fatal casualties here (as reported), last 3 years",history,exposure_proxy,0.001561,-0.001168,38.0
+segments with >= 1 collision 2023-25 (in the sample),h_n_fatal_cas,"Fatal casualties here, last 3 years",history,exposure_proxy,0.001046,-0.000685,39.0
+segments with >= 1 collision 2023-25 (in the sample),h_n_cas,"All casualties here, last 3 years",history,exposure_proxy,0.324066,0.324066,3.0
+segments with >= 1 collision 2023-25 (in the sample),h_is_ksi_collision,"Serious/fatal collisions here, last 3 years",history,exposure_proxy,0.000914,0.00074,40.0
+segments with >= 1 collision 2023-25 (in the sample),h_is_fatal_collision,"Fatal collisions here, last 3 years",history,exposure_proxy,0.000273,-0.000121,44.0
+segments with >= 1 collision 2023-25 (in the sample),h_last_n_coll,Collisions here in the most recent year,history,exposure_proxy,0.009272,0.007793,30.0
+segments with >= 1 collision 2023-25 (in the sample),h_last_adj_ksi_cas,Serious/fatal casualties here in the most recent year,history,exposure_proxy,0.010374,0.008321,29.0
+segments with >= 1 collision 2023-25 (in the sample),h_years_with_crash,Years (of 3) with at least one collision here,history,exposure_proxy,0.063206,0.063206,14.0
+segments with >= 1 collision 2023-25 (in the sample),h_share_junction,Share of recent collisions at junctions,history,risk_character,0.064571,0.027823,13.0
+segments with >= 1 collision 2023-25 (in the sample),h_share_dark,Share of recent collisions in darkness,history,risk_character,0.022804,0.002103,25.0
+segments with >= 1 collision 2023-25 (in the sample),h_share_urban,Share of recent collisions in urban areas,history,risk_character,0.020224,0.017579,26.0
+segments with >= 1 collision 2023-25 (in the sample),h_share_wet,Share of recent collisions on wet or icy roads,history,risk_character,0.046193,0.046091,19.0
+segments with >= 1 collision 2023-25 (in the sample),h_speed_median,Typical speed limit at recent collisions,history,risk_character,0.093092,0.091951,11.0
+segments with >= 1 collision 2023-25 (in the sample),h_share_single_vehicle,Share of recent collisions involving one vehicle,history,risk_character,0.019025,0.006003,27.0
+segments with >= 1 collision 2023-25 (in the sample),h_ksi_share,Share of recent collisions that were serious/fatal,history,risk_character,0.008583,-8.5e-05,31.0
+segments with >= 1 collision 2023-25 (in the sample),h_adj_ksi_per_km,"Serious/fatal casualties per km, last 3 years",history,exposure_proxy,0.018672,0.013433,28.0
+segments with >= 1 collision 2023-25 (in the sample),h_coll_per_km,"Collisions per km, last 3 years",history,exposure_proxy,0.039964,0.036889,20.0
+segments with >= 1 collision 2023-25 (in the sample),log_length,Segment length,road,exposure_proxy,0.58233,0.41324,2.0
+segments with >= 1 collision 2023-25 (in the sample),cls_M,Road class: motorway,road,risk_character,0.008431,0.005501,32.0
+segments with >= 1 collision 2023-25 (in the sample),cls_A,Road class: A road,road,risk_character,0.265974,0.178089,6.0
+segments with >= 1 collision 2023-25 (in the sample),cls_B,Road class: B road,road,risk_character,0.053996,0.029099,17.0
+segments with >= 1 collision 2023-25 (in the sample),cls_C,Road class: C road,road,risk_character,0.026974,0.025747,22.0
+segments with >= 1 collision 2023-25 (in the sample),cls_U,Road class: unclassified,road,risk_character,0.223918,0.080089,9.0
+segments with >= 1 collision 2023-25 (in the sample),cls_N,Road class: not classified,road,risk_character,0.148245,0.114751,10.0
+segments with >= 1 collision 2023-25 (in the sample),fw_collapsed_dual,Dual carriageway (drawn as one line),road,risk_character,0.007496,0.003772,33.0
+segments with >= 1 collision 2023-25 (in the sample),fw_dual,Dual carriageway (drawn per carriageway),road,risk_character,0.002622,-0.00123,37.0
+segments with >= 1 collision 2023-25 (in the sample),fw_roundabout,Roundabout,road,risk_character,0.000439,-4.2e-05,42.0
+segments with >= 1 collision 2023-25 (in the sample),fw_slip,Slip road,road,risk_character,0.000412,5e-05,43.0
+segments with >= 1 collision 2023-25 (in the sample),fw_single,Single carriageway,road,risk_character,0.047639,0.038263,18.0
+segments with >= 1 collision 2023-25 (in the sample),share_roundabout,Share of segment that is roundabout,road,risk_character,0.000491,-0.000101,41.0
+segments with >= 1 collision 2023-25 (in the sample),share_slip,Share of segment that is slip road,road,risk_character,0.006536,-0.000166,35.0
+segments with >= 1 collision 2023-25 (in the sample),n_junctions,Junctions on the segment,road,risk_character,0.262279,0.166175,7.0
+segments with >= 1 collision 2023-25 (in the sample),junctions_per_km,Junctions per km,road,risk_character,0.025969,0.010146,23.0
+segments with >= 1 collision 2023-25 (in the sample),primary_route,Primary route,road,risk_character,0.024309,0.0133,24.0
+segments with >= 1 collision 2023-25 (in the sample),trunk_road,Trunk road,road,risk_character,0.007282,0.00559,34.0
+segments with >= 1 collision 2023-25 (in the sample),tunnel,Tunnel,road,risk_character,0.0,0.0,45.0
+segments with >= 1 collision 2023-25 (in the sample),named,Road has a street name,road,risk_character,0.060864,0.01812,15.0
+segments with >= 1 collision 2023-25 (in the sample),stroke_pieces,Length of the whole junction-to-junction stretch (in ~500 m pieces),road,exposure_proxy,0.068168,0.046654,12.0
+segments with >= 1 collision 2023-25 (in the sample),net_km_1km,"Road network density, 1 km square (urbanity proxy)",context,exposure_proxy,0.028056,0.007758,21.0
+segments with >= 1 collision 2023-25 (in the sample),net_km_3km,"Road network density, 3x3 km (urbanity proxy)",context,exposure_proxy,0.054872,-0.00645,16.0
+segments with >= 1 collision 2023-25 (in the sample),nb_adj_ksi_3km,"Serious/fatal casualties on nearby roads (3x3 km), last 3 years",context,exposure_proxy,0.22502,0.082385,8.0
+segments with >= 1 collision 2023-25 (in the sample),nb_coll_3km,"Collisions on nearby roads (3x3 km), last 3 years",context,exposure_proxy,0.311144,0.201749,4.0
+segments with >= 1 collision 2023-25 (in the sample),stroke_adj_ksi_other,"Serious/fatal casualties elsewhere on the same stretch, last 3 years",context,exposure_proxy,0.275971,0.145328,5.0
+segments with no collision 2023-25 (in the sample),h_n_coll,"Collisions on this segment, last 3 years",history,exposure_proxy,0.087489,-0.087489,10.0
+segments with no collision 2023-25 (in the sample),h_adj_ksi_cas,"Serious/fatal casualties here (adjusted), last 3 years",history,exposure_proxy,0.000195,9e-06,38.0
+segments with no collision 2023-25 (in the sample),h_n_ksi_cas,"Serious/fatal casualties here (as reported), last 3 years",history,exposure_proxy,2.6e-05,2.6e-05,43.0
+segments with no collision 2023-25 (in the sample),h_n_fatal_cas,"Fatal casualties here, last 3 years",history,exposure_proxy,9.2e-05,9.1e-05,41.0
+segments with no collision 2023-25 (in the sample),h_n_cas,"All casualties here, last 3 years",history,exposure_proxy,0.031914,-0.031914,15.0
+segments with no collision 2023-25 (in the sample),h_is_ksi_collision,"Serious/fatal collisions here, last 3 years",history,exposure_proxy,3.5e-05,-3.4e-05,42.0
+segments with no collision 2023-25 (in the sample),h_is_fatal_collision,"Fatal collisions here, last 3 years",history,exposure_proxy,1.6e-05,1.3e-05,44.0
+segments with no collision 2023-25 (in the sample),h_last_n_coll,Collisions here in the most recent year,history,exposure_proxy,0.000297,-0.000293,36.0
+segments with no collision 2023-25 (in the sample),h_last_adj_ksi_cas,Serious/fatal casualties here in the most recent year,history,exposure_proxy,0.000595,-0.000594,33.0
+segments with no collision 2023-25 (in the sample),h_years_with_crash,Years (of 3) with at least one collision here,history,exposure_proxy,0.008143,-0.008143,20.0
+segments with no collision 2023-25 (in the sample),h_share_junction,Share of recent collisions at junctions,history,risk_character,0.002811,-0.002751,26.0
+segments with no collision 2023-25 (in the sample),h_share_dark,Share of recent collisions in darkness,history,risk_character,0.000559,0.000278,34.0
+segments with no collision 2023-25 (in the sample),h_share_urban,Share of recent collisions in urban areas,history,risk_character,0.002131,-0.002116,27.0
+segments with no collision 2023-25 (in the sample),h_share_wet,Share of recent collisions on wet or icy roads,history,risk_character,0.004508,-0.004498,22.0
+segments with no collision 2023-25 (in the sample),h_speed_median,Typical speed limit at recent collisions,history,risk_character,0.007125,-0.007125,21.0
+segments with no collision 2023-25 (in the sample),h_share_single_vehicle,Share of recent collisions involving one vehicle,history,risk_character,0.000665,2.3e-05,32.0
+segments with no collision 2023-25 (in the sample),h_ksi_share,Share of recent collisions that were serious/fatal,history,risk_character,0.000495,0.000433,35.0
+segments with no collision 2023-25 (in the sample),h_adj_ksi_per_km,"Serious/fatal casualties per km, last 3 years",history,exposure_proxy,0.000834,-0.000818,31.0
+segments with no collision 2023-25 (in the sample),h_coll_per_km,"Collisions per km, last 3 years",history,exposure_proxy,0.001519,-0.001124,28.0
+segments with no collision 2023-25 (in the sample),log_length,Segment length,road,exposure_proxy,0.610704,-0.046379,1.0
+segments with no collision 2023-25 (in the sample),cls_M,Road class: motorway,road,risk_character,0.003284,-0.000396,24.0
+segments with no collision 2023-25 (in the sample),cls_A,Road class: A road,road,risk_character,0.10151,-0.00095,8.0
+segments with no collision 2023-25 (in the sample),cls_B,Road class: B road,road,risk_character,0.031777,4.1e-05,16.0
+segments with no collision 2023-25 (in the sample),cls_C,Road class: C road,road,risk_character,0.027243,0.005437,17.0
+segments with no collision 2023-25 (in the sample),cls_U,Road class: unclassified,road,risk_character,0.221564,-0.016778,5.0
+segments with no collision 2023-25 (in the sample),cls_N,Road class: not classified,road,risk_character,0.298486,-0.053264,3.0
+segments with no collision 2023-25 (in the sample),fw_collapsed_dual,Dual carriageway (drawn as one line),road,risk_character,0.001268,-0.000113,29.0
+segments with no collision 2023-25 (in the sample),fw_dual,Dual carriageway (drawn per carriageway),road,risk_character,0.000905,2.9e-05,30.0
+segments with no collision 2023-25 (in the sample),fw_roundabout,Roundabout,road,risk_character,0.000128,3.7e-05,40.0
+segments with no collision 2023-25 (in the sample),fw_slip,Slip road,road,risk_character,0.000214,0.000104,37.0
+segments with no collision 2023-25 (in the sample),fw_single,Single carriageway,road,risk_character,0.025967,0.002081,18.0
+segments with no collision 2023-25 (in the sample),share_roundabout,Share of segment that is roundabout,road,risk_character,0.000188,5.9e-05,39.0
+segments with no collision 2023-25 (in the sample),share_slip,Share of segment that is slip road,road,risk_character,0.003291,0.00081,23.0
+segments with no collision 2023-25 (in the sample),n_junctions,Junctions on the segment,road,risk_character,0.276294,-0.004882,4.0
+segments with no collision 2023-25 (in the sample),junctions_per_km,Junctions per km,road,risk_character,0.04338,0.006597,13.0
+segments with no collision 2023-25 (in the sample),primary_route,Primary route,road,risk_character,0.0096,-0.001743,19.0
+segments with no collision 2023-25 (in the sample),trunk_road,Trunk road,road,risk_character,0.002873,0.000415,25.0
+segments with no collision 2023-25 (in the sample),tunnel,Tunnel,road,risk_character,0.0,0.0,45.0
+segments with no collision 2023-25 (in the sample),named,Road has a street name,road,risk_character,0.089318,-0.002137,9.0
+segments with no collision 2023-25 (in the sample),stroke_pieces,Length of the whole junction-to-junction stretch (in ~500 m pieces),road,exposure_proxy,0.061089,0.001476,11.0
+segments with no collision 2023-25 (in the sample),net_km_1km,"Road network density, 1 km square (urbanity proxy)",context,exposure_proxy,0.031945,0.002787,14.0
+segments with no collision 2023-25 (in the sample),net_km_3km,"Road network density, 3x3 km (urbanity proxy)",context,exposure_proxy,0.049458,0.00961,12.0
+segments with no collision 2023-25 (in the sample),nb_adj_ksi_3km,"Serious/fatal casualties on nearby roads (3x3 km), last 3 years",context,exposure_proxy,0.200199,-0.024097,6.0
+segments with no collision 2023-25 (in the sample),nb_coll_3km,"Collisions on nearby roads (3x3 km), last 3 years",context,exposure_proxy,0.34287,0.022967,2.0
+segments with no collision 2023-25 (in the sample),stroke_adj_ksi_other,"Serious/fatal casualties elsewhere on the same stretch, last 3 years",context,exposure_proxy,0.130021,-0.029918,7.0

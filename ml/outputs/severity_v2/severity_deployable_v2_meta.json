@@ -1,0 +1,54 @@
+{
+  "features": [
+    "road_type",
+    "speed_limit",
+    "junction_detail",
+    "junction_control",
+    "first_road_class",
+    "second_road_class",
+    "urban_or_rural_area",
+    "light_conditions",
+    "weather_conditions",
+    "road_surface_conditions",
+    "carriageway_hazards",
+    "pedestrian_crossing",
+    "trunk_road_flag",
+    "hour",
+    "day_of_week",
+    "month"
+  ],
+  "categorical": [
+    "carriageway_hazards",
+    "day_of_week",
+    "first_road_class",
+    "junction_control",
+    "junction_detail",
+    "light_conditions",
+    "pedestrian_crossing",
+    "road_surface_conditions",
+    "road_type",
+    "second_road_class",
+    "trunk_road_flag",
+    "urban_or_rural_area",
+    "weather_conditions"
+  ],
+  "train_years": [
+    2022,
+    2023
+  ],
+  "label": "KSI collision, injury-based records only",
+  "params": {
+    "objective": "binary",
+    "n_estimators": 400,
+    "learning_rate": 0.05,
+    "num_leaves": 63,
+    "min_child_samples": 100,
+    "subsample": 0.8,
+    "subsample_freq": 1,
+    "colsample_bytree": 0.8,
+    "reg_lambda": 1.0,
+    "random_state": 42,
+    "n_jobs": -1,
+    "verbose": -1
+  }
+}

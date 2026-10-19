@@ -1,258 +1,202 @@
-# ML — Blackspot Detection
+# ML: road blackspot ranking for Great Britain (v2)
 
-Everything the backend and frontend need, plus a working demo.
+v2 replaces the v1 pipeline after an audit found that v1's headline results
+leaked future information (`reports/preliminary_audit.md`). v1 files are
+untouched (`data/road_segments_*`, `models/`, `shap/`, `demo/blackspot_map.html`,
+`README_v1.md`). v2 writes beside them.
 
-**Run from this directory.** All scripts use paths relative to `ml/`.
+**What it produces**
+
+| Deliverable | File(s) |
+|---|---|
+| Expected KSI casualties per ~500 m segment, 2026–27, for 1.83 M GB road segments | `../data/v2/road_segments_ranked_v2.csv` (top 50k + all well-observed), `ml/outputs/road_segments_v2_full.parquet` (all, regenerable) |
+| Segment geometry (real OS Open Roads centrelines) | `../data/v2/road_segments_top5000_v2.geojson` |
+| Excess-over-similar-roads (Empirical Bayes) and exposure-adjusted rate (M/A roads) | columns in the files above |
+| Deployable severity model + SHAP | `outputs/severity_v2/` |
+| Evidence | `reports/*.md`, `reports/*.csv` |
+| Map demo (double-click) | `demo/blackspot_map_v2_r2.html` (configurable basemap; the original `demo/blackspot_map_v2.html` is kept unchanged, see "Demo maps: basemap") |
+
+## Results (headline)
+
+**Primary result: final holdout.** The model specification was frozen on
+2015–2023 data (spec `b9487674e4f1`), then used once to forecast **2024–25**
+from 2021–23 history. Score = expected DfT severity-adjusted KSI casualties
+per segment over two years. Selected model: LightGBM (Poisson loss) on crash
+history, OS road attributes and network context. Capture = share of the
+population's 2024–25 KSI in its top-ranked segments. CIs are 50 km block
+bootstrap.
+
+| Population (share of national KSI) | Top 10% / 20% of segments: **model** | Crash counts | Empirical Bayes | Past KSI counts |
+|---|---|---|---|---|
+| All scored segments, 1.83 M (97.7%) | **70.8 / 85.8** | 58.8 / 63.4 | 67.4 / 83.1 | 41.8 / 48.2 |
+| Numbered roads M/A/B (61.2%) | **41.6 / 57.7** | 39.3 / 53.4 | 36.7 / 53.9 | 31.1 / 47.3 |
+| Segments with ≥ 1 crash in 2021–23 (56.9%) | **39.4 / 56.2** | 36.9 / 51.2 | 33.5 / 50.5 | 27.8 / 38.0 |
+
+- Nationally the model captures **+12.4 points more** future KSI in its top 10% than ranking by past crash count [95% CI 8.1, 16.4]. Most of that comes from ranking road with **no** recent crash (91% of segments, which a count cannot separate).
+- Where crash history exists, the gain is **+2.3 to +2.5 points** (numbered roads [1.4, 3.7]; segments with history [1.9, 3.6]). That is consistent across five time folds and every road class, but modest. **Crash history remains the dominant signal.**
+- The result holds for **future periods** (five rolling origins, 2020–21 to 2024–25 targets) and for **unseen regions**: models refitted without a region lose ≤ 0.4 points.
+- Ranking by past **KSI** count is the weakest method (it is noisier than all-crash counts). Its top 500 recorded only 50% of their past KSI in the next period (regression to the mean). The model's own top 500 delivered 91% of their forecast.
+- Total calibration on the holdout: Σforecast / Σobserved = 1.01. In earlier folds COVID moved it between 0.77 and 1.15 without changing the ranking.
+- **Traffic exposure (AADF)** exists for M/A roads only (42.8% of national KSI). It slightly improves count accuracy, does not change the top of the ranking, and changes the *interpretation*: the top-100 by burden and by KSI per vehicle-km share 4% of segments.
+- **Severity model** (deployable: road, environment, time only): ROC-AUC **0.581** [0.572, 0.591] on untouched 2025 data. That is weak. v1's model scored 0.626 on 2025, not the 0.658 it reported.
+
+Full evidence: `reports/final_audit.md` (PASS/FAIL per requirement),
+`reports/robustness.md`, `reports/summary_tables.md`,
+`reports/model_comparison.csv`, `reports/coverage_analysis.md`.
+
+## Phase 2 research (no production change)
+
+The production model and files above are unchanged. Summary and status table: `reports/phase2_summary.md`.
+
+| Question | Report | Rerun |
+|---|---|---|
+| Does more history help? (predictors from all years since 2015 beat 3 years by +0.5 to +1.1 points of top-10% capture on the dev folds; more training periods: no clear gain; COVID exclusion fixes calibration, not ranking) | `reports/historical_window_analysis.md` | `.venv/Scripts/python ml/experiments/historical_windows.py` (~3 h), then `summarise_windows.py` |
+| What does the production model learn? (TreeSHAP of the verified production model; factors are attributions, not causes) | `reports/blackspot_model_explainability.md` | `.venv/Scripts/python ml/experiments/explain_blackspot.py` (~25 min) |
+| How stable is the ranking? (stable as tiers, not positions; rank 100 ≈ rank 110) | `reports/ranking_stability.md` | `.venv/Scripts/python ml/experiments/ranking_stability.py --boot 20 --seeds 5` (~35 min) |
+| Map with an explanation and stability panel | `demo/blackspot_map_v2_explained_r2.html` (original: `demo/blackspot_map_v2_explained.html`) | `.venv/Scripts/python ml/demo/make_v2_map_explained.py` |
+| What would the ranking have been at earlier cutoffs? Retrospective backtests for 2020–21 … 2024–25, not untouched tests: the spec was chosen on targets to 2023, the 2024–25 holdout was already examined, and the 2026 network is used throughout. Research only; not in the release, contract or frontend | `reports/historical_rankings.md` (data: `outputs/history/`) | `.venv/Scripts/python ml/experiments/historical_rankings.py` (~15 min) |
+
+Optional, additive backend files: `../data/v2/extensions/` (explanations, stability; keyed by `segment_id`).
+
+## Phase 3: integration contract and reporting audit (no production change)
+
+Summary and checklist: `reports/phase3_summary.md`. Audit findings: `reports/phase3_initial_audit.md`.
+
+| What | Where | Command |
+|---|---|---|
+| ML → backend contract: every field's type, units and empty-value rule; score semantics; CRS; IDs; versioning | `../data/v2/INTEGRATION_CONTRACT.md` (+ `integration_schema_v2.json`, `release_manifest_v2.json`) | `.venv/Scripts/python ml/audit/release_manifest.py` |
+| Validate a release (real or fixture) | `blackspot/contract.py` | `.venv/Scripts/python ml/audit/validate_contract.py [dir]` |
+| 13-segment integration fixture (real records) | `tests/fixtures/integration/` | `.venv/Scripts/python ml/audit/make_integration_fixtures.py` |
+| Why Water Street's forecast rises without the parade collision; one-at-a-time vs simultaneous ranks | `reports/single_event_sensitivity.md` | `.venv/Scripts/python ml/experiments/single_event_case.py` (~3 min, no fitting) |
+| Contract tests | `tests/test_integration_contract.py` | `.venv/Scripts/python -m pytest ml/tests/test_integration_contract.py` |
+
+The Phase 2 reports were corrected in place (each carries a dated "Phase 3 corrections" note); no
+result table changed. Backend rule of thumb: load `road_segments_ranked_v2.csv`, key
+`segment_id`, **order by `rank`** (the CSV score is rounded), and treat everything under `ml/` as
+research.
+
+## Phase 4: Great Britain frontend demo (no production change)
+
+The React frontend (branch `frontend-v1`) now has a GB version that shows the real v2 forecast.
+It lives on the local branch **`frontend-uk-demo`**, checked out as a separate git worktree at
+`.worktrees/frontend-uk`, which `.git/info/exclude` hides from this tree. It is not committed and
+not pushed.
+
+Status and checklist: `reports/phase4_integration_status.md`. Audit of the old fixture:
+`reports/phase4_frontend_audit.md`.
 
 ```bash
-pip install -r requirements.txt
-python build_recent.py         # downloads STATS19 -> stats19_recent.csv (581MB, gitignored), ~30 min
-python road_segments.py        # 500m road segments + blackspot scores
-python severity_final.py       # severity models + SHAP
-python severity_deployable.py  # deployable vs explanatory severity
+# 1. build the demo bundle from data/v2 (the national top 1,000 + 6 fixture reference cases, ~3 MB)
+.venv/Scripts/python ml/demo/make_frontend_demo_data.py --out .worktrees/frontend-uk/frontend/public/data/demo-v2
+# 2. check every value against the release
+.venv/Scripts/python ml/audit/validate_frontend_demo.py .worktrees/frontend-uk/frontend/public/data/demo-v2
+# 3. run the frontend (no backend needed)
+cd .worktrees/frontend-uk/frontend && npm ci && npm run dev      # http://localhost:5173
+npm test && npm run build
 ```
 
-Only the first needs internet. Outputs the backend consumes are committed to
-`../data/`.
+- **The demo is a top-ranked subset, not the national map.** Every screen says how many of the 1,827,550 scored segments are loaded.
+- **Scores:** the forecast is shown with its units (expected KSI casualties, 2026–27 combined), ranks are shown with their refit range, and tiers are rank bands. There is no 0–100 score.
+- **Missing data:** missing rates, explanations and stability read "Not available" with the reason.
+- **Backend:** the backend is not connected. Proposed endpoints and the decisions needed are in `frontend/BACKEND_INTEGRATION.md` on the frontend branch.
+- **ML-side test:** `tests/test_frontend_demo.py` builds the bundle in a temporary folder and checks that the validator catches tampering.
+- **Phase 5 (product polish):** the frontend is branded **Veyra, Great Britain Road Safety Intelligence**. Rank groups are labelled with exact ranks (1–100, 101–1,000, 1,001–18,275, 18,276–1,827,550; top-1% cutoff = floor(N/100)) and validated on both sides. The pass also added accessibility improvements and a separate tile-provider configuration. See `reports/phase5_product_readiness.md`.
 
-**Data:** UK STATS19 (DfT), Open Government Licence v3.0.
-1,049,378 collisions, 2015–2023. Segments built from 2019–2021 crashes,
-validated against 2022–2023 crashes the model never saw.
+## Demo maps: basemap
 
-```
-ml/demo/blackspot_map.html       ← open this first, it explains the whole thing
-data/road_segments_ranked.csv    45,014 segments — load into PostGIS
-data/road_segments_top500.json   serve directly while the DB is set up
-ml/models/                       severity models + metrics
-ml/shap/                         global + 11 per-level SHAP tables
-ml/reports/                      full console output — numbers not in the CSVs
-ml/reference/                    DfT casualty valuation tables (RAS4001)
-ml/*.py                          the pipeline, reproducible from scratch
-ml/archive/                      superseded experiments (keep for the report)
-```
+**Pages:**
+- `demo/blackspot_map_v2_r2.html` and `demo/blackspot_map_v2_explained_r2.html` replace the original standalone maps for viewing.
+- They embed byte-identical data: the same segments, IDs, ranks, forecasts and explanations. `tests/test_demo_maps.py` checks this.
+- The originals are kept unchanged as backups. `blackspot_map_v2.html` is a protected artefact. `--legacy` on either generator rebuilds them byte for byte.
 
----
+**Why the originals break (observed 2026-10-17, Chrome 155):**
+- They hard-code OpenStreetMap's volunteer tile servers (`tile.openstreetmap.org`).
+- Opened by double-click (`file://`), Chrome sends no Referer. Every tile came back as OSM's "403 Access blocked: App is not following the tile usage policy" image.
+- Served over http, the same browser on the same machine sent a Referer and got real tiles.
+- OSM sends the block image with HTTP 200, so Leaflet draws it as a normal tile.
 
-## Start here — `ml/demo/blackspot_map.html`
+**What the r2 pages do instead:**
+- **Default:** OpenFreeMap (vector tiles via MapLibre GL). It needs no key, permits commercial use and works from `file://`.
+- **Switching, without touching code or regenerating:**
+  - add `?basemap=openfreemap-positron|carto-positron|osm|none` to the page address;
+  - or copy `demo/basemap.config.example.js` to `demo/basemap.config.js` (gitignored) and set `provider`, your own `cartoKey`, or a `custom` provider with its attribution;
+  - keys are never embedded in the HTML. The generators' `--basemap` and `--tile-*` options only change the build default.
+- **No blocked requests:** a provider is never requested when the page knows the request breaks its terms (CARTO without a key, OSM from `file://`).
+- **Tile checks:** raster tiles are accepted only as 2xx responses with an image type. OSM's "Access blocked" tile arrives as HTTP 200, so it is also recognised by its yellow and black edge stripe and rejected.
+- **Fallback:** if the basemap fails, it is removed. The page shows a neutral background and a message, and keeps the road segments, styling, controls, legend and data attribution.
+- **Provider terms:** each provider's terms, as checked on 2026-10-17, are in `demo/basemap.py`.
 
-Double-click it. No install, no server. Real OpenStreetMap tiles, pick any of
-60 roads, every 500 m coloured by risk, click a block for its numbers.
-
----
-
-## How a segment is scored
-
-The score is a model output, and it means one specific thing:
-
-> **Expected killed-or-seriously-injured casualties on that 500 m over 2 years.**
-
-A block scoring 2.4 is predicted to produce roughly two to three KSI
-casualties in two years.
-
-**18 inputs**, all from 2019–2021 crashes on that segment:
-
-| Group | Features |
-|---|---|
-| Crash history | `n_crashes`, `n_ksi`, `n_fatal`, `crashes_per_year`, `ksi_rate`, `n_years` |
-| Road | `speed_max`, `speed_mean`, `mode_road_type`, `mode_junction_detail`, `pct_junction` |
-| Context | `mode_urban_or_rural_area`, `mode_light_conditions`, `pct_night` |
-| Crash shape | `n_veh_mean`, `n_cas_mean` |
-| Location | `lat`, `lon` |
-
-**Target:** KSI count on that segment in 2022–2023.
-**Model:** LightGBM, Poisson objective — the target is a count whose variance
-grows with its mean, so squared error would treat a 0-vs-2 miss the same as
-20-vs-22.
-
-**Colour bands** come from the real score distribution (median 0.25, p90 0.83,
-p99 2.04), so black means top ~1% of British road, not merely "worst on this
-road":
-
-```
-< 0.45   low        light orange
-< 0.85   moderate   orange
-< 1.45   high       red
-< 2.20   severe     dark red
-  2.20+  critical   black
+```bash
+.venv/Scripts/python ml/demo/make_v2_map.py                     # -> demo/blackspot_map_v2_r2.html
+.venv/Scripts/python ml/demo/make_v2_map_explained.py           # -> demo/blackspot_map_v2_explained_r2.html
+copy ml\demo\basemap.config.example.js ml\demo\basemap.config.js    # then set provider / cartoKey / custom
 ```
 
----
+## Run it
 
-## Does it work?
+From the repository root (paths are anchored on the code, so the working
+directory does not matter):
 
-Held-out segments, predicting 2022–23 KSI:
-
-| Targeted | Share of future KSI captured |
-|---|---|
-| Top 1% | 8.0% |
-| Top 5% | 23.0% |
-| Top 10% | 34.9% |
-| **Top 20%** | **50.4%** |
-
-Survey a fifth of segments, cover half of future serious casualties.
-
-**Say this in the report:** ranking by raw past crash count alone captures
-49.35%. The model adds about one point. Crash history dominates — which is
-exactly why it is the standard blackspot criterion in practice. The model
-refines it rather than replacing it. Claiming otherwise invites an examiner
-to check.
-
----
-
-## `data/road_segments_ranked.csv`
-
-45,014 rows, one per 500 m of road that carried at least one crash in
-2019–2021. (The chainage produced 55,056 possible 500 m bins across 1,027
-roads; the 10,042 with no crashes in the build window are not scored.)
-
-| Column | Meaning |
-|---|---|
-| `rank` | 1 = highest risk, pre-sorted |
-| `segment_id` | primary key, e.g. `A23_run3_km0.5` |
-| `location` | human-readable, e.g. `A23 km 0.5-1.0 (seg 3)` |
-| `road_id` | `A23`, `M25`, `B1234` … |
-| `km_from`, `km_to` | distance along that stretch |
-| `lat`, `lon` | centroid — **use for the map pin** |
-| `blackspot_score` | **rank by this** |
-| `n_crashes`, `n_ksi`, `n_fatal` | 2019–2021 counts |
-| `ksi_rate` | `n_ksi / n_crashes` |
-| `speed_max`, `pct_night`, `pct_junction` | segment character |
-| `future_ksi`, `future_fatal` | actual 2022–23 outcome — **validation only** |
-
-```sql
-CREATE TABLE road_segment (
-  segment_id      TEXT PRIMARY KEY,
-  road_id         TEXT NOT NULL,
-  run             INTEGER NOT NULL,
-  location        TEXT NOT NULL,
-  km_from         DOUBLE PRECISION,
-  geom            GEOGRAPHY(POINT,4326) NOT NULL,
-  blackspot_score DOUBLE PRECISION NOT NULL,
-  rank            INTEGER NOT NULL,
-  n_crashes INTEGER, n_ksi INTEGER, n_fatal INTEGER,
-  ksi_rate DOUBLE PRECISION, speed_max DOUBLE PRECISION, pct_night DOUBLE PRECISION
-);
-CREATE INDEX idx_seg_geom  ON road_segment USING GIST (geom);
-CREATE INDEX idx_seg_score ON road_segment (blackspot_score DESC);
-CREATE INDEX idx_seg_road  ON road_segment (road_id, run, km_from);
+```bash
+python -m venv .venv
+.venv/Scripts/python -m pip install -r ml/requirements.txt          # exact pins; bin/ on Linux/macOS
+.venv/Scripts/python ml/blackspot/download.py stats19 aadf os_open_roads guide   # ~1.6 GB, validated, once
+.venv/Scripts/python ml/pipeline.py data        # canonical collisions 2015-2025         ~1 min
+.venv/Scripts/python ml/pipeline.py network     # OS Open Roads -> 2.7 M segments          ~13 min
+.venv/Scripts/python ml/pipeline.py snap        # collisions -> segments                   ~1 min
+.venv/Scripts/python ml/pipeline.py coverage    # national KSI coverage                    ~1 min
+.venv/Scripts/python ml/pipeline.py develop     # dev folds 2019-21, tuning, ablations; FREEZES the spec   ~2 h
+.venv/Scripts/python ml/pipeline.py holdout     # final holdout 2024-25 (refuses without frozen spec) ~1 h
+.venv/Scripts/python ml/pipeline.py forecast    # 2026-27 forecast + backend files        ~10 min
+.venv/Scripts/python ml/pipeline.py severity    # deployable severity model               ~5 min
+.venv/Scripts/python ml/demo/make_v2_map.py
+.venv/Scripts/python ml/audit/robustness.py
+.venv/Scripts/python ml/audit/network_determinism.py
+.venv/Scripts/python ml/audit/final_audit.py
+.venv/Scripts/python -m pytest ml/tests
 ```
 
-⚠️ **Do not serve `future_ksi` / `future_fatal`.** They are the actual
-2022–23 outcome, included to prove the model works. Serving them is showing
-the answer.
+`stats19_recent.csv` (the v1 extract, 2015–2023) must be at the repository root.
+v2 reuses it for 2015–2020 and verifies it against the current DfT release for
+2021–23 (identical).
 
-⚠️ **`run` matters for drawing a road.** A road number can cover several
-geographically separate stretches (crashes tagged `A503` appear 543 km apart,
-though the A503 is a 10 km London road). To draw one continuous line:
-
-```sql
-SELECT lat, lon, blackspot_score FROM road_segment
-WHERE road_id = 'A23' AND run = 2 ORDER BY km_from;
-```
-
-`run` is currently embedded in `segment_id` — parse it out, or ask and I will
-add it as its own column.
-
-Suggested endpoints:
-```
-GET /segments?minScore=&road=&bbox=&limit=
-GET /segments/{segment_id}
-GET /roads/{road_id}/runs/{run}/segments     ordered polyline for the map
-GET /stats/summary
-```
-
----
-
-## Severity models — read before putting this in the UI
-
-`ml/models/severity_deployable_model.joblib` is **the one to use in the service.**
-
-| | Deployable (24 feat.) | Explanatory (236 feat.) |
-|---|---|---|
-| ROC-AUC | **0.658** | 0.765 |
-| PR-AUC | 0.362 (1.53× no-skill) | 0.510 (2.15×) |
-| F1 | 0.394 | 0.495 |
-
-The explanatory model only scores better because it uses information recorded
-*after* the crash — casualty ages, first point of impact, whether a pedestrian
-was struck. A live service has none of that. The deployable model is the
-honest one, and at ROC-AUC 0.658 it is a **weak predictor**.
-
-**Do not label anything "predicted severity."** Two better options, both
-already in the data:
-
-1. Show the segment's *historical* severity mix — `n_ksi`, `ksi_rate`.
-   Factual, no model, more useful to a user than a weak prediction.
-2. Keep the severity model where it genuinely contributes: as an input to
-   `blackspot_score`, where SHAP ranked it #7 and #10.
-
-Three-class model: macro-F1 0.475, Fatal average precision 0.184 against a
-0.0149 base rate — **12.4× better than chance**. Quote the AP lift for Fatal,
-not the F1 (0.139), which looks like failure but is just what a 1.5% class
-does to a threshold metric.
-
----
-
-## SHAP — the "why is this dangerous" panel
-
-`ml/shap/subcategory_ranking.csv` ranks factors by **between-level spread** — how
-much the prediction moves when the level changes — not by mean |SHAP|, which
-rewards a feature that shifts every prediction equally while distinguishing
-nothing.
-
-`ml/shap/per_level/*.csv` gives every level of every categorical with `n`,
-`mean_shap`, `std_shap` and a `low_sample` flag.
-
-Solid enough to show a user:
+## Layout
 
 ```
-speed_limit       50/60/70 mph  +0.183     30 mph  -0.063    20 mph  -0.079
-light_conditions  Dark, no lighting +0.124  →  Dark, unlit +0.083
-                  →  Dark, lit +0.051       →  Daylight  -0.027
-urban_or_rural    Rural +0.068               Urban  -0.031
+ml/pipeline.py                 entry point (steps above)
+ml/blackspot/
+  config.py                    paths, periods, constants
+  download.py                  validated downloads + raw/manifest.json (URL, bytes, SHA-256)
+  stats19.py                   schema normalisation, casualty -> collision aggregation, BNG
+  codes.py                     official DfT 2024-format code labels
+  network.py                   OS Open Roads -> strokes -> ~500 m segments (no crash input)
+  snap.py                      collision -> one segment (distance + road-coding penalty)
+  features.py                  folds, history-only features, targets
+  models.py                    Poisson / NB2 GLM, Empirical Bayes, LightGBM
+  aadf.py                      DfT AADF exposure for M/A roads
+  experiment.py                fold runner, same-population evaluation, block bootstrap
+  evaluation.py                tie-aware capture, deviance, calibration, weighted bootstrap
+  coverage.py                  national KSI coverage buckets
+  severity.py                  deployable severity model, OOF thresholds, SHAP
+  outputs.py                   forecast + backend files (v1 columns preserved)
+  contract.py                  ML -> backend contract: field specs, validators (Phase 3)
+  steps.py                     the pipeline steps
+ml/tests/                      pytest: aggregation, leakage, geometry, snapping, metrics, schema
+ml/audit/                      v1 audit, robustness, network determinism, final audit
+ml/reports/                    every report and evidence table
+ml/raw/, ml/interim/           downloads and intermediates (gitignored, regenerable)
+ml/archive/                    superseded experiments, reclassified in archive/README.md
 ```
 
-Positive pushes toward serious. Speed limit is monotonic; lighting is
-perfectly ordered, worst unlit. Both match physical intuition, which is why
-they are safe to present.
+## Read before using the numbers
 
-⚠️ `police_force` ranks second by spread but is administrative — it reflects
-recording differences between forces, not real risk. **Do not show it as a cause.**
-
----
-
-## Known limitations
-
-State these in the report; an examiner will look for them.
-
-1. **Chainage is derived from crash positions, not a surveyed centreline.**
-   "A23 km 0.5" is distance from one end of that stretch, not an official
-   milepost. Within ~1% on clean roads (A3: 93.5 km measured vs 92 actual).
-2. **Road numbers are not geographically unique in this data** — see the
-   `run` note above. Median 1 stretch per road, worst case 42.
-3. **No exposure normalisation.** Segments rank by expected casualties, not
-   casualties per vehicle-km, so busy roads outrank quiet dangerous ones.
-   DfT publishes AADT counts if you want to fix this.
-4. **Injury collisions only.** STATS19 never records damage-only crashes.
-5. **Severity labels drifted** 14.3% → 22.5% "serious" across 2015–2023 as
-   forces adopted injury-based reporting. Severity models use 2022–23 only.
-6. **COVID:** 2020–21 traffic fell ~22%. Locations valid, counts dip.
-7. **86% of all segments rest on fewer than 6 crashes** and their scores are
-   noisy. The map demo filters to ≥6; the UI should too, or grey them out.
-
----
-
-## Reproducing
-
-`stats19_recent.csv` (581 MB) is not included — `build_recent.py`
-regenerates it from DfT in about 30 minutes. 
-
-**Not included, and why:** `severity_3class_model.joblib` (24 MB). Its
-metrics are in `ml/models/severity_metrics.json`, and `severity_final.py`
-regenerates it. The deployable and KSI models — the two you would actually
-serve — are both here.
-
-`ml/archive/` holds superseded experiments: the hierarchical cascade, the
-SVM/neural-net comparison, the 2×2 ablation, the evaluation-protocol
-experiment. Not needed to run anything — kept because "what we tried and why
-we rejected it" is worth marks.
+1. **Burden, not risk.** `blackspot_score` is expected casualties. Busy urban A roads dominate the top. Use `eb_excess_ksi_history` (worse than similar roads) or `ksi_per_100m_vkm_eb` (M/A only) for "dangerous per vehicle". For rates, ignore segments shorter than ~250 m: their denominators are tiny.
+2. **Crash history dominates.** Where it exists, the model refines a crash-count ranking by ~2–5 points of capture. It does not replace it.
+3. **Coverage is 97.7% of national KSI**, not 100%. Private/service access roads (2.2%) are not scored and 0.13% of KSI cannot be placed on a road. Capture figures are within the named population, never national performance unless the population is `all`.
+4. **Segments are ~500 m on M/A/B/C roads** (92–97% of their length in 333–750 m pieces). Many unclassified streets are shorter because the street is. Length is in every model.
+5. **2026 network, 2015–25 crashes.** Roads built during the period have short histories. < 0.5% of crashes fail to match the network.
+6. **Severity adjustment is DfT's model.** The primary target is DfT-adjusted KSI. Rankings barely change with reported KSI or KSI collisions (top-500 overlap 92–96%), but totals and trends must use the adjusted series.
+7. **Single events.** 104 segments' histories are dominated by one mass-casualty collision (e.g. the May 2025 Liverpool parade incident). They are flagged (`single_event_flag`) and are not road-design blackspots.
+8. **Level shocks.** A pandemic-scale change shifts every forecast's level (COVID moved calibration ±25%) while leaving the ranking intact.
+9. **Severity model is weak** and is not an input to the blackspot score. Never present "predicted severity". SHAP values are associations, and `police_force` is administrative.
+10. **Exposure only on M/A roads**, via the nearest same-number DfT count point. Estimated (not counted) AADF is used where DfT provides it.

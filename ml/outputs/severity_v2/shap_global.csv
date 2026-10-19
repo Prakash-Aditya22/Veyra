@@ -1,0 +1,17 @@
+feature,mean_abs_shap
+speed_limit,0.1104
+road_type,0.103515
+second_road_class,0.100367
+junction_control,0.09171
+trunk_road_flag,0.080788
+hour,0.077681
+pedestrian_crossing,0.069864
+light_conditions,0.067931
+day_of_week,0.066248
+junction_detail,0.065011
+month,0.056
+urban_or_rural_area,0.040821
+first_road_class,0.03781
+weather_conditions,0.030463
+carriageway_hazards,0.028596
+road_surface_conditions,0.024317

@@ -1,0 +1,875 @@
+[
+  {
+    "case": "rank_1",
+    "segment_id": "B5339-8AD45E53257A-00",
+    "rank": 1,
+    "location": "B5339 (Hanover Street) 0.0-0.6 km of stretch 0",
+    "forecast_ksi_2026_27": 9.300415075074614,
+    "base_value_log": -5.049065113067627,
+    "base_value_count": 0.006415328476577997,
+    "single_event_flag": false,
+    "top_contributions": [
+      {
+        "feature": "h_n_coll",
+        "label": "Collisions on this segment, last 3 years",
+        "value": 32.0,
+        "display": "32",
+        "shap_log": 2.592169761657715,
+        "factor": 13.358725547790527
+      },
+      {
+        "feature": "h_n_cas",
+        "label": "All casualties here, last 3 years",
+        "value": 36.0,
+        "display": "36",
+        "shap_log": 0.8694557547569275,
+        "factor": 2.3856122493743896
+      },
+      {
+        "feature": "log_length",
+        "label": "Segment length",
+        "value": 6.434959411621094,
+        "display": "623 m",
+        "shap_log": 0.7136974334716797,
+        "factor": 2.0415256023406982
+      },
+      {
+        "feature": "nb_adj_ksi_3km",
+        "label": "Serious/fatal casualties on nearby roads (3x3 km), last 3 years",
+        "value": 180.16189575195312,
+        "display": "180.2",
+        "shap_log": 0.6909298300743103,
+        "factor": 1.995570182800293
+      },
+      {
+        "feature": "n_junctions",
+        "label": "Junctions on the segment",
+        "value": 13.0,
+        "display": "13",
+        "shap_log": 0.5073181390762329,
+        "factor": 1.660831093788147
+      },
+      {
+        "feature": "nb_coll_3km",
+        "label": "Collisions on nearby roads (3x3 km), last 3 years",
+        "value": 457.0,
+        "display": "457",
+        "shap_log": 0.3657788336277008,
+        "factor": 1.4416362047195435
+      },
+      {
+        "feature": "cls_B",
+        "label": "Road class: B road",
+        "value": 1.0,
+        "display": "yes",
+        "shap_log": 0.27363207936286926,
+        "factor": 1.3147310018539429
+      },
+      {
+        "feature": "cls_U",
+        "label": "Road class: unclassified",
+        "value": 0.0,
+        "display": "no",
+        "shap_log": 0.1670086830854416,
+        "factor": 1.1817646026611328
+      },
+      {
+        "feature": "h_share_single_vehicle",
+        "label": "Share of recent collisions involving one vehicle",
+        "value": 0.84375,
+        "display": "84%",
+        "shap_log": 0.15563347935676575,
+        "factor": 1.1683979034423828
+      },
+      {
+        "feature": "h_years_with_crash",
+        "label": "Years (of 3) with at least one collision here",
+        "value": 3.0,
+        "display": "3",
+        "shap_log": 0.12457038462162018,
+        "factor": 1.1326618194580078
+      }
+    ],
+    "group_factors": {
+      "history": 75.47503662109375,
+      "road": 6.5849690437316895,
+      "context": 2.9169342517852783
+    }
+  },
+  {
+    "case": "rank_10",
+    "segment_id": "A57-842C4722100B-00",
+    "rank": 10,
+    "location": "A57 (Water Street) 0.0-0.5 km of stretch 178",
+    "forecast_ksi_2026_27": 6.430572401247575,
+    "base_value_log": -5.049065113067627,
+    "base_value_count": 0.006415328476577997,
+    "single_event_flag": true,
+    "top_contributions": [
+      {
+        "feature": "h_n_coll",
+        "label": "Collisions on this segment, last 3 years",
+        "value": 7.0,
+        "display": "7",
+        "shap_log": 1.3097286224365234,
+        "factor": 3.7051680088043213
+      },
+      {
+        "feature": "n_junctions",
+        "label": "Junctions on the segment",
+        "value": 16.0,
+        "display": "16",
+        "shap_log": 0.896258533000946,
+        "factor": 2.4504177570343018
+      },
+      {
+        "feature": "h_n_cas",
+        "label": "All casualties here, last 3 years",
+        "value": 148.0,
+        "display": "148",
+        "shap_log": 0.776097297668457,
+        "factor": 2.1729753017425537
+      },
+      {
+        "feature": "nb_adj_ksi_3km",
+        "label": "Serious/fatal casualties on nearby roads (3x3 km), last 3 years",
+        "value": 143.0330047607422,
+        "display": "143.0",
+        "shap_log": 0.7519088387489319,
+        "factor": 2.121044874191284
+      },
+      {
+        "feature": "stroke_adj_ksi_other",
+        "label": "Serious/fatal casualties elsewhere on the same stretch, last 3 years",
+        "value": 4.119180202484131,
+        "display": "4.1",
+        "shap_log": 0.5754281878471375,
+        "factor": 1.7778915166854858
+      },
+      {
+        "feature": "log_length",
+        "label": "Segment length",
+        "value": 6.124796390533447,
+        "display": "457 m",
+        "shap_log": 0.5447534918785095,
+        "factor": 1.724183201789856
+      },
+      {
+        "feature": "cls_A",
+        "label": "Road class: A road",
+        "value": 1.0,
+        "display": "yes",
+        "shap_log": 0.5323780179023743,
+        "factor": 1.702977180480957
+      },
+      {
+        "feature": "nb_coll_3km",
+        "label": "Collisions on nearby roads (3x3 km), last 3 years",
+        "value": 482.0,
+        "display": "482",
+        "shap_log": 0.33793312311172485,
+        "factor": 1.4020466804504395
+      },
+      {
+        "feature": "cls_U",
+        "label": "Road class: unclassified",
+        "value": 0.0,
+        "display": "no",
+        "shap_log": 0.17186734080314636,
+        "factor": 1.1875202655792236
+      },
+      {
+        "feature": "net_km_1km",
+        "label": "Road network density, 1 km square (urbanity proxy)",
+        "value": 21.878496170043945,
+        "display": "21.9 km of road",
+        "shap_log": 0.1255752593278885,
+        "factor": 1.1338005065917969
+      }
+    ],
+    "group_factors": {
+      "history": 12.842206954956055,
+      "road": 13.745418548583984,
+      "context": 5.678494930267334
+    }
+  },
+  {
+    "case": "rank_100",
+    "segment_id": "A24-46DD009FA18E-01",
+    "rank": 100,
+    "location": "A24 (Tooting High Street) 0.5-1.0 km of stretch 49",
+    "forecast_ksi_2026_27": 3.885451321864131,
+    "base_value_log": -5.049065113067627,
+    "base_value_count": 0.006415328476577997,
+    "single_event_flag": false,
+    "top_contributions": [
+      {
+        "feature": "h_n_coll",
+        "label": "Collisions on this segment, last 3 years",
+        "value": 32.0,
+        "display": "32",
+        "shap_log": 2.364443063735962,
+        "factor": 10.63811206817627
+      },
+      {
+        "feature": "stroke_adj_ksi_other",
+        "label": "Serious/fatal casualties elsewhere on the same stretch, last 3 years",
+        "value": 50.0,
+        "display": "50",
+        "shap_log": 0.7310401201248169,
+        "factor": 2.077239990234375
+      },
+      {
+        "feature": "h_n_cas",
+        "label": "All casualties here, last 3 years",
+        "value": 35.0,
+        "display": "35",
+        "shap_log": 0.685793399810791,
+        "factor": 1.9853463172912598
+      },
+      {
+        "feature": "cls_A",
+        "label": "Road class: A road",
+        "value": 1.0,
+        "display": "yes",
+        "shap_log": 0.5074507594108582,
+        "factor": 1.6610513925552368
+      },
+      {
+        "feature": "log_length",
+        "label": "Segment length",
+        "value": 6.248080730438232,
+        "display": "517 m",
+        "shap_log": 0.5040341019630432,
+        "factor": 1.6553857326507568
+      },
+      {
+        "feature": "nb_adj_ksi_3km",
+        "label": "Serious/fatal casualties on nearby roads (3x3 km), last 3 years",
+        "value": 109.0,
+        "display": "109",
+        "shap_log": 0.37710800766944885,
+        "factor": 1.458061695098877
+      },
+      {
+        "feature": "n_junctions",
+        "label": "Junctions on the segment",
+        "value": 7.0,
+        "display": "7",
+        "shap_log": 0.2889901101589203,
+        "factor": 1.3350785970687866
+      },
+      {
+        "feature": "nb_coll_3km",
+        "label": "Collisions on nearby roads (3x3 km), last 3 years",
+        "value": 768.0,
+        "display": "768",
+        "shap_log": 0.1784462332725525,
+        "factor": 1.1953586339950562
+      },
+      {
+        "feature": "h_adj_ksi_per_km",
+        "label": "Serious/fatal casualties per km, last 3 years",
+        "value": 13.539137840270996,
+        "display": "13.54 per km",
+        "shap_log": 0.12989433109760284,
+        "factor": 1.1387079954147339
+      },
+      {
+        "feature": "h_coll_per_km",
+        "label": "Collisions per km, last 3 years",
+        "value": 61.8931999206543,
+        "display": "61.89 per km",
+        "shap_log": 0.1223025768995285,
+        "factor": 1.1300960779190063
+      }
+    ],
+    "group_factors": {
+      "history": 31.41635513305664,
+      "road": 5.736749649047852,
+      "context": 3.3604772090911865
+    }
+  },
+  {
+    "case": "rank_1000",
+    "segment_id": "A6200-25D3A70089E4-02",
+    "rank": 1000,
+    "location": "A6200 (Derby Road) 1.1-1.6 km of stretch 2",
+    "forecast_ksi_2026_27": 1.7155574038162924,
+    "base_value_log": -5.049065113067627,
+    "base_value_count": 0.006415328476577997,
+    "single_event_flag": false,
+    "top_contributions": [
+      {
+        "feature": "h_n_coll",
+        "label": "Collisions on this segment, last 3 years",
+        "value": 11.0,
+        "display": "11",
+        "shap_log": 1.5800174474716187,
+        "factor": 4.855040550231934
+      },
+      {
+        "feature": "h_n_cas",
+        "label": "All casualties here, last 3 years",
+        "value": 12.0,
+        "display": "12",
+        "shap_log": 0.6194794774055481,
+        "factor": 1.8579607009887695
+      },
+      {
+        "feature": "log_length",
+        "label": "Segment length",
+        "value": 6.307332515716553,
+        "display": "549 m",
+        "shap_log": 0.5399494767189026,
+        "factor": 1.715920329093933
+      },
+      {
+        "feature": "nb_adj_ksi_3km",
+        "label": "Serious/fatal casualties on nearby roads (3x3 km), last 3 years",
+        "value": 109.0,
+        "display": "109",
+        "shap_log": 0.52896648645401,
+        "factor": 1.6971774101257324
+      },
+      {
+        "feature": "cls_A",
+        "label": "Road class: A road",
+        "value": 1.0,
+        "display": "yes",
+        "shap_log": 0.5044165849685669,
+        "factor": 1.6560190916061401
+      },
+      {
+        "feature": "n_junctions",
+        "label": "Junctions on the segment",
+        "value": 14.0,
+        "display": "14",
+        "shap_log": 0.43132102489471436,
+        "factor": 1.5392897129058838
+      },
+      {
+        "feature": "stroke_adj_ksi_other",
+        "label": "Serious/fatal casualties elsewhere on the same stretch, last 3 years",
+        "value": 2.0,
+        "display": "2",
+        "shap_log": 0.3873738646507263,
+        "factor": 1.4731069803237915
+      },
+      {
+        "feature": "nb_coll_3km",
+        "label": "Collisions on nearby roads (3x3 km), last 3 years",
+        "value": 472.0,
+        "display": "472",
+        "shap_log": 0.30865201354026794,
+        "factor": 1.361588478088379
+      },
+      {
+        "feature": "cls_U",
+        "label": "Road class: unclassified",
+        "value": 0.0,
+        "display": "no",
+        "shap_log": 0.13858431577682495,
+        "factor": 1.148646593093872
+      },
+      {
+        "feature": "cls_N",
+        "label": "Road class: not classified",
+        "value": 0.0,
+        "display": "no",
+        "shap_log": 0.09324140846729279,
+        "factor": 1.0977267026901245
+      }
+    ],
+    "group_factors": {
+      "history": 12.457895278930664,
+      "road": 6.664350986480713,
+      "context": 3.220949649810791
+    }
+  },
+  {
+    "case": "rank_10000",
+    "segment_id": "A6-E9F1678D35EB-09",
+    "rank": 10000,
+    "location": "A6 (Preston Road) 4.6-5.1 km of stretch 546",
+    "forecast_ksi_2026_27": 0.5637996422858487,
+    "base_value_log": -5.049065113067627,
+    "base_value_count": 0.006415328476577997,
+    "single_event_flag": false,
+    "top_contributions": [
+      {
+        "feature": "h_n_coll",
+        "label": "Collisions on this segment, last 3 years",
+        "value": 4.0,
+        "display": "4",
+        "shap_log": 1.0594850778579712,
+        "factor": 2.88488507270813
+      },
+      {
+        "feature": "stroke_adj_ksi_other",
+        "label": "Serious/fatal casualties elsewhere on the same stretch, last 3 years",
+        "value": 10.0,
+        "display": "10",
+        "shap_log": 0.7022562026977539,
+        "factor": 2.018301248550415
+      },
+      {
+        "feature": "log_length",
+        "label": "Segment length",
+        "value": 6.226847171783447,
+        "display": "506 m",
+        "shap_log": 0.5737735629081726,
+        "factor": 1.7749524116516113
+      },
+      {
+        "feature": "cls_A",
+        "label": "Road class: A road",
+        "value": 1.0,
+        "display": "yes",
+        "shap_log": 0.5232309699058533,
+        "factor": 1.6874709129333496
+      },
+      {
+        "feature": "h_n_cas",
+        "label": "All casualties here, last 3 years",
+        "value": 5.0,
+        "display": "5",
+        "shap_log": 0.44091904163360596,
+        "factor": 1.5541348457336426
+      },
+      {
+        "feature": "nb_coll_3km",
+        "label": "Collisions on nearby roads (3x3 km), last 3 years",
+        "value": 121.0,
+        "display": "121",
+        "shap_log": 0.374475359916687,
+        "factor": 1.454228162765503
+      },
+      {
+        "feature": "nb_adj_ksi_3km",
+        "label": "Serious/fatal casualties on nearby roads (3x3 km), last 3 years",
+        "value": 40.0,
+        "display": "40",
+        "shap_log": 0.23437513411045074,
+        "factor": 1.2641186714172363
+      },
+      {
+        "feature": "stroke_pieces",
+        "label": "Length of the whole junction-to-junction stretch (in ~500 m pieces)",
+        "value": 11.0,
+        "display": "11 x ~500 m",
+        "shap_log": 0.1214405745267868,
+        "factor": 1.129122257232666
+      },
+      {
+        "feature": "cls_U",
+        "label": "Road class: unclassified",
+        "value": 0.0,
+        "display": "no",
+        "shap_log": 0.11503714323043823,
+        "factor": 1.1219151020050049
+      },
+      {
+        "feature": "h_speed_median",
+        "label": "Typical speed limit at recent collisions",
+        "value": 40.0,
+        "display": "40 mph",
+        "shap_log": 0.11421564221382141,
+        "factor": 1.1209938526153564
+      }
+    ],
+    "group_factors": {
+      "history": 5.6983513832092285,
+      "road": 4.524451732635498,
+      "context": 3.4087154865264893
+    }
+  },
+  {
+    "case": "median_with_history",
+    "segment_id": "U-726FA80218BF-00",
+    "rank": 108462,
+    "location": "U 0.0-0.2 km of stretch 64841",
+    "forecast_ksi_2026_27": 0.13155800150391828,
+    "base_value_log": -5.049065113067627,
+    "base_value_count": 0.006415328476577997,
+    "single_event_flag": false,
+    "top_contributions": [
+      {
+        "feature": "h_n_coll",
+        "label": "Collisions on this segment, last 3 years",
+        "value": 2.0,
+        "display": "2",
+        "shap_log": 0.9349886775016785,
+        "factor": 2.547184705734253
+      },
+      {
+        "feature": "nb_coll_3km",
+        "label": "Collisions on nearby roads (3x3 km), last 3 years",
+        "value": 186.0,
+        "display": "186",
+        "shap_log": 0.4686942398548126,
+        "factor": 1.597906470298767
+      },
+      {
+        "feature": "fw_single",
+        "label": "Single carriageway",
+        "value": 0.0,
+        "display": "no",
+        "shap_log": 0.4250803589820862,
+        "factor": 1.5297131538391113
+      },
+      {
+        "feature": "n_junctions",
+        "label": "Junctions on the segment",
+        "value": 7.0,
+        "display": "7",
+        "shap_log": 0.4205522835254669,
+        "factor": 1.5228023529052734
+      },
+      {
+        "feature": "nb_adj_ksi_3km",
+        "label": "Serious/fatal casualties on nearby roads (3x3 km), last 3 years",
+        "value": 50.546348571777344,
+        "display": "50.5",
+        "shap_log": 0.3739911615848541,
+        "factor": 1.4535242319107056
+      },
+      {
+        "feature": "h_n_cas",
+        "label": "All casualties here, last 3 years",
+        "value": 2.0,
+        "display": "2",
+        "shap_log": 0.3522173762321472,
+        "factor": 1.422217607498169
+      },
+      {
+        "feature": "named",
+        "label": "Road has a street name",
+        "value": 0.0,
+        "display": "no",
+        "shap_log": -0.1643422544002533,
+        "factor": 0.848451554775238
+      },
+      {
+        "feature": "log_length",
+        "label": "Segment length",
+        "value": 5.4738054275512695,
+        "display": "238 m",
+        "shap_log": 0.15460842847824097,
+        "factor": 1.1672009229660034
+      },
+      {
+        "feature": "cls_U",
+        "label": "Road class: unclassified",
+        "value": 1.0,
+        "display": "yes",
+        "shap_log": -0.14958500862121582,
+        "factor": 0.8610652685165405
+      },
+      {
+        "feature": "cls_N",
+        "label": "Road class: not classified",
+        "value": 0.0,
+        "display": "no",
+        "shap_log": 0.14211587607860565,
+        "factor": 1.1527103185653687
+      }
+    ],
+    "group_factors": {
+      "history": 5.255184650421143,
+      "road": 2.123054265975952,
+      "context": 1.8380168676376343
+    }
+  },
+  {
+    "case": "median_no_history",
+    "segment_id": "U-1FA72F948359-00",
+    "rank": 992681,
+    "location": "U (Cleevecroft Avenue) 0.0-0.1 km of stretch 0",
+    "forecast_ksi_2026_27": 0.003917689521032055,
+    "base_value_log": -5.049065113067627,
+    "base_value_count": 0.006415328476577997,
+    "single_event_flag": false,
+    "top_contributions": [
+      {
+        "feature": "nb_adj_ksi_3km",
+        "label": "Serious/fatal casualties on nearby roads (3x3 km), last 3 years",
+        "value": 3.0,
+        "display": "3",
+        "shap_log": -0.22732140123844147,
+        "factor": 0.7966646552085876
+      },
+      {
+        "feature": "cls_U",
+        "label": "Road class: unclassified",
+        "value": 1.0,
+        "display": "yes",
+        "shap_log": -0.1771804839372635,
+        "factor": 0.8376285433769226
+      },
+      {
+        "feature": "cls_N",
+        "label": "Road class: not classified",
+        "value": 0.0,
+        "display": "no",
+        "shap_log": 0.15903820097446442,
+        "factor": 1.1723827123641968
+      },
+      {
+        "feature": "n_junctions",
+        "label": "Junctions on the segment",
+        "value": 2.0,
+        "display": "2",
+        "shap_log": 0.13296735286712646,
+        "factor": 1.1422127485275269
+      },
+      {
+        "feature": "h_n_coll",
+        "label": "Collisions on this segment, last 3 years",
+        "value": 0.0,
+        "display": "0",
+        "shap_log": -0.0870596170425415,
+        "factor": 0.9166224598884583
+      },
+      {
+        "feature": "stroke_adj_ksi_other",
+        "label": "Serious/fatal casualties elsewhere on the same stretch, last 3 years",
+        "value": 0.0,
+        "display": "0",
+        "shap_log": -0.08446658402681351,
+        "factor": 0.91900235414505
+      },
+      {
+        "feature": "log_length",
+        "label": "Segment length",
+        "value": 4.9904608726501465,
+        "display": "147 m",
+        "shap_log": -0.07178261876106262,
+        "factor": 0.9307332038879395
+      },
+      {
+        "feature": "named",
+        "label": "Road has a street name",
+        "value": 1.0,
+        "display": "yes",
+        "shap_log": 0.053446780890226364,
+        "factor": 1.054900884628296
+      },
+      {
+        "feature": "cls_A",
+        "label": "Road class: A road",
+        "value": 0.0,
+        "display": "no",
+        "shap_log": -0.05162721499800682,
+        "factor": 0.9496828317642212
+      },
+      {
+        "feature": "stroke_pieces",
+        "label": "Length of the whole junction-to-junction stretch (in ~500 m pieces)",
+        "value": 1.0,
+        "display": "1 x ~500 m",
+        "shap_log": -0.039647214114665985,
+        "factor": 0.9611284136772156
+      }
+    ],
+    "group_factors": {
+      "history": 0.8645960092544556,
+      "road": 0.9548465013504028,
+      "context": 0.7397149205207825
+    }
+  },
+  {
+    "case": "rank_bottom_1pct",
+    "segment_id": "U-D2BC49C019FE-00",
+    "rank": 1809275,
+    "location": "U (Broomhill Court) 0.0-0.0 km of stretch 9",
+    "forecast_ksi_2026_27": 0.0005050486541029769,
+    "base_value_log": -5.049065113067627,
+    "base_value_count": 0.006415328476577997,
+    "single_event_flag": false,
+    "top_contributions": [
+      {
+        "feature": "log_length",
+        "label": "Segment length",
+        "value": 3.6089847087860107,
+        "display": "37 m",
+        "shap_log": -0.9076064229011536,
+        "factor": 0.4034888446331024
+      },
+      {
+        "feature": "nb_coll_3km",
+        "label": "Collisions on nearby roads (3x3 km), last 3 years",
+        "value": 1.0,
+        "display": "1",
+        "shap_log": -0.517617404460907,
+        "factor": 0.5959387421607971
+      },
+      {
+        "feature": "n_junctions",
+        "label": "Junctions on the segment",
+        "value": 1.0,
+        "display": "1",
+        "shap_log": -0.3554966449737549,
+        "factor": 0.7008252739906311
+      },
+      {
+        "feature": "nb_adj_ksi_3km",
+        "label": "Serious/fatal casualties on nearby roads (3x3 km), last 3 years",
+        "value": 0.0,
+        "display": "0",
+        "shap_log": -0.27942612767219543,
+        "factor": 0.7562175393104553
+      },
+      {
+        "feature": "cls_U",
+        "label": "Road class: unclassified",
+        "value": 1.0,
+        "display": "yes",
+        "shap_log": -0.22057275474071503,
+        "factor": 0.8020593523979187
+      },
+      {
+        "feature": "cls_N",
+        "label": "Road class: not classified",
+        "value": 0.0,
+        "display": "no",
+        "shap_log": 0.11860960721969604,
+        "factor": 1.1259303092956543
+      },
+      {
+        "feature": "junctions_per_km",
+        "label": "Junctions per km",
+        "value": 20.0,
+        "display": "20.00 per km",
+        "shap_log": -0.11114092171192169,
+        "factor": 0.8948127031326294
+      },
+      {
+        "feature": "h_n_coll",
+        "label": "Collisions on this segment, last 3 years",
+        "value": 0.0,
+        "display": "0",
+        "shap_log": -0.08889944851398468,
+        "factor": 0.9149375557899475
+      },
+      {
+        "feature": "stroke_adj_ksi_other",
+        "label": "Serious/fatal casualties elsewhere on the same stretch, last 3 years",
+        "value": 0.0,
+        "display": "0",
+        "shap_log": -0.0730486661195755,
+        "factor": 0.9295555353164673
+      },
+      {
+        "feature": "cls_A",
+        "label": "Road class: A road",
+        "value": 0.0,
+        "display": "no",
+        "shap_log": -0.059418320655822754,
+        "factor": 0.942312479019165
+      }
+    ],
+    "group_factors": {
+      "history": 0.8572361469268799,
+      "road": 0.2052314281463623,
+      "context": 0.4474763870239258
+    }
+  },
+  {
+    "case": "top_single_event_flagged",
+    "segment_id": "A57-842C4722100B-00",
+    "rank": 10,
+    "location": "A57 (Water Street) 0.0-0.5 km of stretch 178",
+    "forecast_ksi_2026_27": 6.430572401247575,
+    "base_value_log": -5.049065113067627,
+    "base_value_count": 0.006415328476577997,
+    "single_event_flag": true,
+    "top_contributions": [
+      {
+        "feature": "h_n_coll",
+        "label": "Collisions on this segment, last 3 years",
+        "value": 7.0,
+        "display": "7",
+        "shap_log": 1.3097286224365234,
+        "factor": 3.7051680088043213
+      },
+      {
+        "feature": "n_junctions",
+        "label": "Junctions on the segment",
+        "value": 16.0,
+        "display": "16",
+        "shap_log": 0.896258533000946,
+        "factor": 2.4504177570343018
+      },
+      {
+        "feature": "h_n_cas",
+        "label": "All casualties here, last 3 years",
+        "value": 148.0,
+        "display": "148",
+        "shap_log": 0.776097297668457,
+        "factor": 2.1729753017425537
+      },
+      {
+        "feature": "nb_adj_ksi_3km",
+        "label": "Serious/fatal casualties on nearby roads (3x3 km), last 3 years",
+        "value": 143.0330047607422,
+        "display": "143.0",
+        "shap_log": 0.7519088387489319,
+        "factor": 2.121044874191284
+      },
+      {
+        "feature": "stroke_adj_ksi_other",
+        "label": "Serious/fatal casualties elsewhere on the same stretch, last 3 years",
+        "value": 4.119180202484131,
+        "display": "4.1",
+        "shap_log": 0.5754281878471375,
+        "factor": 1.7778915166854858
+      },
+      {
+        "feature": "log_length",
+        "label": "Segment length",
+        "value": 6.124796390533447,
+        "display": "457 m",
+        "shap_log": 0.5447534918785095,
+        "factor": 1.724183201789856
+      },
+      {
+        "feature": "cls_A",
+        "label": "Road class: A road",
+        "value": 1.0,
+        "display": "yes",
+        "shap_log": 0.5323780179023743,
+        "factor": 1.702977180480957
+      },
+      {
+        "feature": "nb_coll_3km",
+        "label": "Collisions on nearby roads (3x3 km), last 3 years",
+        "value": 482.0,
+        "display": "482",
+        "shap_log": 0.33793312311172485,
+        "factor": 1.4020466804504395
+      },
+      {
+        "feature": "cls_U",
+        "label": "Road class: unclassified",
+        "value": 0.0,
+        "display": "no",
+        "shap_log": 0.17186734080314636,
+        "factor": 1.1875202655792236
+      },
+      {
+        "feature": "net_km_1km",
+        "label": "Road network density, 1 km square (urbanity proxy)",
+        "value": 21.878496170043945,
+        "display": "21.9 km of road",
+        "shap_log": 0.1255752593278885,
+        "factor": 1.1338005065917969
+      }
+    ],
+    "group_factors": {
+      "history": 12.842206954956055,
+      "road": 13.745418548583984,
+      "context": 5.678494930267334
+    }
+  }
+]

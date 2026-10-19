@@ -1,0 +1,184 @@
+{
+  "files": {
+    "data/road_segments_meta.json": {
+      "bytes": 252,
+      "sha256": "a6da74527fe9b2eab7e6f9604edb97e2c8d7ac66739b6319312da86213062ddd"
+    },
+    "data/road_segments_ranked.csv": {
+      "bytes": 6951848,
+      "sha256": "02bc59ac5b5befe2913c5d1d0560ccd944bbf8eede2f187ade81eb55dc591c60"
+    },
+    "data/road_segments_top500.json": {
+      "bytes": 251084,
+      "sha256": "c1ae493f59ac69a01f0d91aa995f11addc55072e92f4e888e45d6521b0f53b8c"
+    },
+    "data/v2/road_segments_meta_v2.json": {
+      "bytes": 2848,
+      "sha256": "210f8701247d0dc5b41400ff5fe7ff5ed1c98be411f3b127472ffd74c78ea6b2"
+    },
+    "data/v2/road_segments_ranked_v2.csv": {
+      "bytes": 22275931,
+      "sha256": "36e1dd585aeb2ee680e43bd65a40efbd69403b8d17c597a2ea3c805cb3467c09"
+    },
+    "data/v2/road_segments_top5000_v2.geojson": {
+      "bytes": 5258252,
+      "sha256": "513781d1e6add5765e28469af263cb51868bcb9080b87d71c10433ea567a2889"
+    },
+    "data/v2/road_segments_top500_v2.json": {
+      "bytes": 813801,
+      "sha256": "cc38a6d897690a5a53236020bb9f757ddfbb4306057e6cd8323cc56ba2149686"
+    },
+    "ml/models/deployable_vs_explanatory.json": {
+      "bytes": 1892,
+      "sha256": "1638da818cb843d96ccf35b240680645b3fb8ba320ac8abde182b908649552d7"
+    },
+    "ml/models/severity_deployable_model.joblib": {
+      "bytes": 8092484,
+      "sha256": "37b78b8b36c0e843697a7377d4fcc2cf62a1206b699e7aeb4f74cdc8824d7a21"
+    },
+    "ml/models/severity_ksi_model.joblib": {
+      "bytes": 8187780,
+      "sha256": "2cc978c390ccde62cf8a9d054d6c6d9840da69dfa64f38ebdde8742779b9f3d7"
+    },
+    "ml/models/severity_metrics.json": {
+      "bytes": 7981,
+      "sha256": "d557b1146199fec1acd8952b29fce984f9b93e9fa3888d0ada51261c6de8eba3"
+    },
+    "ml/shap/deployable_feature_importance.csv": {
+      "bytes": 1285,
+      "sha256": "24e99e63b1697444590fe2c45848ea459bef5b6b48a143645db5769b12632499"
+    },
+    "ml/shap/global_shap_importance.csv": {
+      "bytes": 10213,
+      "sha256": "c0e8e2de10ac58272589395c9737a5fa9f9b272df60051a7b4fae4f85255869a"
+    },
+    "ml/shap/subcategory_ranking.csv": {
+      "bytes": 919,
+      "sha256": "f0565deef8fef0232fd13c2b56dcf1a932728fad239460bd12da4a9b8c6af2e5"
+    },
+    "ml/shap/subcategory_shap_all.csv": {
+      "bytes": 10259,
+      "sha256": "b5e0f131281f8f69537497a652babc0f3aed0c2f4b73aac91173d50162aa63e7"
+    },
+    "ml/shap/per_level/day_of_week.csv": {
+      "bytes": 718,
+      "sha256": "9e770fa0ee7e7160d202adb643e23a422a123abb4d47738be4efedd017bab846"
+    },
+    "ml/shap/per_level/first_road_class.csv": {
+      "bytes": 682,
+      "sha256": "17f8a2e3f13690eca4c2369b7c689d72735b438cde00d0f70cb6c324b9ff38d2"
+    },
+    "ml/shap/per_level/junction_control.csv": {
+      "bytes": 700,
+      "sha256": "2996d1d21008a763022dfc79f1e6d4e42ea5570b9519e9e9066fc640cfc55f6f"
+    },
+    "ml/shap/per_level/junction_detail.csv": {
+      "bytes": 757,
+      "sha256": "a5e844413022a3f141b5ea54ac378f1b6becde52be016dc2318866bf2a3c27df"
+    },
+    "ml/shap/per_level/light_conditions.csv": {
+      "bytes": 588,
+      "sha256": "b9facc8cc116d5559533c29d83e3c6eed93de8e2638c96c94e6ec33e26e8dcfe"
+    },
+    "ml/shap/per_level/police_force.csv": {
+      "bytes": 4060,
+      "sha256": "c795ce9bfb0267bf8ea3aeca6cbb371684648fbcfa13d5db8f88c347b656ad13"
+    },
+    "ml/shap/per_level/road_surface_conditions.csv": {
+      "bytes": 795,
+      "sha256": "395128a324ee06679aa5f857d9ed2fe6b5a7d3ad6a38d2bc505390c4e2f5e7c9"
+    },
+    "ml/shap/per_level/road_type.csv": {
+      "bytes": 650,
+      "sha256": "fde621dd2b8ac65c1c60678e28cfda0ebf2e045f87dcfb8bab2edf4f0eec875b"
+    },
+    "ml/shap/per_level/speed_limit.csv": {
+      "bytes": 634,
+      "sha256": "3bc5834e348e9fc6472c51e7b8657c2d344075e6a2e8be231db344cfee425a1f"
+    },
+    "ml/shap/per_level/urban_or_rural_area.csv": {
+      "bytes": 274,
+      "sha256": "efdf22f52d7ab9a3e0f60a2e6860a6f41dc1f516588072726be19434e559991b"
+    },
+    "ml/shap/per_level/weather_conditions.csv": {
+      "bytes": 885,
+      "sha256": "4a8258eb59451090bd7b61d3aa91ee08ca974e972946c797f3b7538ac230b3b0"
+    },
+    "ml/demo/blackspot_map.html": {
+      "bytes": 314890,
+      "sha256": "b25f0315b16b232e7edf288da398c80f013c33a1767e0c3f62a6d5fefed23820"
+    },
+    "ml/demo/blackspot_map_v2.html": {
+      "bytes": 5236972,
+      "sha256": "96936860b9176560be56d1d24ffd790f6ffa91e5e617f222ca3cc99e6486632a"
+    },
+    "ml/outputs/frozen_spec.json": {
+      "bytes": 867,
+      "sha256": "26d48a3d1e05bc2267a532bd53a7a9bfde980341b97bc74b3e457865b2999d4b"
+    },
+    "ml/outputs/forecast_model_info.json": {
+      "bytes": 1727,
+      "sha256": "5446b9e2adaaf0f77258642b071da6b529b51d246717e22419effc6796e6da74"
+    },
+    "ml/outputs/road_segments_v2_full.parquet": {
+      "bytes": 281507085,
+      "sha256": "578f591936e634cd73efed0ef251eea17f5127503b564e0b25322c8f5c7c8ed2"
+    },
+    "ml/outputs/severity_v2/feature_set_selection.json": {
+      "bytes": 685,
+      "sha256": "e69bfd60c3b5c0523733ba35f8643462d0168a5c25e320059cd0f79f624870d9"
+    },
+    "ml/outputs/severity_v2/severity_deployable_v2.joblib": {
+      "bytes": 2639588,
+      "sha256": "603fc61f6e42b0fabfbc4ac77fb8bde67526a72d2139cabe23e09e82f46d638f"
+    },
+    "ml/outputs/severity_v2/severity_deployable_v2_meta.json": {
+      "bytes": 1183,
+      "sha256": "d948635e9a70dad92fae9dd6b8a2bb8a8f225b3e69232445d25b1c050b61f3bc"
+    },
+    "ml/outputs/severity_v2/shap_global.csv": {
+      "bytes": 425,
+      "sha256": "3a0d98a63c4cd614da7b36af03ff5c84c507d3b4ad1988702c8212c702a48692"
+    },
+    "ml/outputs/severity_v2/shap_per_level.csv": {
+      "bytes": 8010,
+      "sha256": "7d5fc67082b2a0a76b3c2743979e07e28478bce5bfa69df1ed490a19401d18e8"
+    },
+    "ml/outputs/severity_v2/shap_ranking.csv": {
+      "bytes": 1782,
+      "sha256": "5910491ab43232cf6ef7e43258eaa923af19099fc96985ad1df0a2b6409a87fb"
+    },
+    "ml/reports/model_comparison.csv": {
+      "bytes": 67930,
+      "sha256": "6dcca2c763b91999aa5dd71076fdd6cdb4c8931c01a2ab0abbbf3cb5b50ea5aa"
+    },
+    "ml/reports/model_comparison_bootstrap.csv": {
+      "bytes": 83952,
+      "sha256": "d3d8a0013d154c8b1e6ed40a129b92fadab4469bc15aef5f6b8d7a8e21df4314"
+    },
+    "ml/reports/rolling_origin_results.csv": {
+      "bytes": 70916,
+      "sha256": "acd23c3bc7cc6b391982740d8451e1477a2064a85398747f0f615daa12efa07c"
+    },
+    "ml/reports/rolling_origin_bootstrap.csv": {
+      "bytes": 77601,
+      "sha256": "1ade60129fe72c9901d68f03782073ce120fb6a2c709dff598b54a5e46adac5b"
+    },
+    "ml/reports/ablation_results.csv": {
+      "bytes": 3414,
+      "sha256": "4f33bc187eacd609607b6ad17015aa5ca0ccd01226e752e445f871d1f3c0a895"
+    },
+    "ml/reports/final_audit.json": {
+      "bytes": 4218,
+      "sha256": "15e40b46b19f56fcbd76e9dcb9becf8dd69eb92c4ba83f1a2ebf2e9fdc35ea1c"
+    },
+    "ml/reports/headline.json": {
+      "bytes": 1266,
+      "sha256": "c83221811b2d418823fb4933c7b606891a3013c2c77461cee85355225d57de0d"
+    },
+    "blackspot_handoff.zip": {
+      "bytes": 9194853,
+      "sha256": "05f7d82964cf9b0f111dccc763a2fb1d238b57b712a4b2ab3e7b784ff804ac10"
+    }
+  }
+}

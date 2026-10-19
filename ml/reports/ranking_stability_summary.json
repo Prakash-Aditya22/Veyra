@@ -1,0 +1,43 @@
+{
+  "replicates": {
+    "bootstrap": 20,
+    "seed": 5
+  },
+  "seconds_per_refit_mean": 93.3484303355217,
+  "segments": 1827550,
+  "estimated_hours_for_200_bootstrap_refits": 5.186023907528983,
+  "attribution_replicates": 8,
+  "bootstrap_mean_pairwise_corr_log_pred": 0.9900697145858343,
+  "bootstrap_order_preserved_gap1_top1000": 0.5036536536536537,
+  "bootstrap_order_preserved_gap10_top1000": 0.5289393939393939,
+  "bootstrap_order_preserved_gap100_top1000": 0.6837777777777778,
+  "seed_mean_pairwise_corr_log_pred": 0.9988253836808362,
+  "seed_order_preserved_gap1_top1000": 0.5135135135135135,
+  "seed_order_preserved_gap10_top1000": 0.5521212121212121,
+  "seed_order_preserved_gap100_top1000": 0.7808888888888889,
+  "drop_largest_collision": {
+    "production_model_reproduced_max_abs_diff": 0.0,
+    "median_rank_change": -1.0,
+    "share_leaving_top1000": 0.114,
+    "share_leaving_top5pct": 0.0,
+    "flagged_single_event_in_top1000": 1,
+    "flagged_median_new_rank": 2.0
+  },
+  "group_importance_cv": {
+    "context": 0.0499,
+    "history": 0.0377,
+    "road": 0.0247
+  },
+  "feature_importance_cv_top10": {
+    "log_length": 0.0308,
+    "nb_coll_3km": 0.0966,
+    "cls_N": 0.0513,
+    "n_junctions": 0.0868,
+    "cls_U": 0.0411,
+    "nb_adj_ksi_3km": 0.1201,
+    "h_n_coll": 0.0857,
+    "stroke_adj_ksi_other": 0.0503,
+    "cls_A": 0.0745,
+    "named": 0.1787
+  }
+}

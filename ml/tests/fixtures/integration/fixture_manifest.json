@@ -1,0 +1,152 @@
+{
+  "what": "real records copied verbatim from the v2 release; a subset for contract tests",
+  "generated_utc": "2026-10-14T17:43:50+00:00",
+  "generator": "ml/audit/make_integration_fixtures.py",
+  "source_sha256": {
+    "road_segments_ranked_v2.csv": "36e1dd585aeb2ee680e43bd65a40efbd69403b8d17c597a2ea3c805cb3467c09",
+    "road_segments_top500_v2.json": "cc38a6d897690a5a53236020bb9f757ddfbb4306057e6cd8323cc56ba2149686",
+    "road_segments_top5000_v2.geojson": "513781d1e6add5765e28469af263cb51868bcb9080b87d71c10433ea567a2889",
+    "road_segments_meta_v2.json": "210f8701247d0dc5b41400ff5fe7ff5ed1c98be411f3b127472ffd74c78ea6b2",
+    "extensions/segment_explanations_v2.csv": "a5007a4efd22a1aa5dabb07ff09c61cb7aafbde239d09d7329ec94333487a956",
+    "extensions/segment_explanations_top5000_v2.json": "14ef181ab0bc66869ac67cd851ad04ccc7e49ad365eb619253d141a4cbdf18d5",
+    "extensions/segment_stability_v2.csv": "aea0e470f1a675efca10c5a8c6f43f7296311b282b84f9d4ba3a3b5d59041635",
+    "extensions/segment_single_event_sensitivity_v2.csv": "3f19ea153367481b5cfcb987bd9135f30545ebad65f9b7b33f68124439b33368"
+  },
+  "meta_note": "road_segments_meta_v2.json is copied unchanged; its n_rows_in_this_file describes the full release",
+  "n_segments": 13,
+  "rows_per_file": {
+    "road_segments_ranked_v2.csv": 13,
+    "extensions/segment_explanations_v2.csv": 65,
+    "extensions/segment_stability_v2.csv": 13,
+    "extensions/segment_single_event_sensitivity_v2.csv": 7,
+    "road_segments_top500_v2.json": 7,
+    "road_segments_top5000_v2.geojson": 7,
+    "extensions/segment_explanations_top5000_v2.json": 7
+  },
+  "cases": [
+    {
+      "case": "high_rank_normal",
+      "rule": "rank 1",
+      "segments": [
+        {
+          "segment_id": "B5339-8AD45E53257A-00",
+          "rank": 1
+        }
+      ]
+    },
+    {
+      "case": "high_rank_with_exposure",
+      "rule": "best rank with exposure_available, length_m >= 250, sufficient history, no single-event flag",
+      "segments": [
+        {
+          "segment_id": "A100-22D1CA35BA35-00",
+          "rank": 2
+        }
+      ]
+    },
+    {
+      "case": "exposure_short_segment",
+      "rule": "best rank with exposure_available and length_m < 250 (rate exists but must not be displayed)",
+      "segments": [
+        {
+          "segment_id": "A4-FA629E609A3F-00",
+          "rank": 147
+        }
+      ]
+    },
+    {
+      "case": "single_event",
+      "rule": "best rank with single_event_flag",
+      "segments": [
+        {
+          "segment_id": "A57-842C4722100B-00",
+          "rank": 10
+        }
+      ]
+    },
+    {
+      "case": "no_history",
+      "rule": "best rank with data_sufficiency == none (no collision 2023-25)",
+      "segments": [
+        {
+          "segment_id": "B5167-566A50C130D0-01",
+          "rank": 6563
+        }
+      ]
+    },
+    {
+      "case": "sparse_history",
+      "rule": "best rank with data_sufficiency == sparse",
+      "segments": [
+        {
+          "segment_id": "A34-97BCC110FCF3-02",
+          "rank": 369
+        }
+      ]
+    },
+    {
+      "case": "borderline_stability",
+      "rule": "best rank with stability_class == borderline top-1000",
+      "segments": [
+        {
+          "segment_id": "A57-842C4722100B-01",
+          "rank": 140
+        }
+      ]
+    },
+    {
+      "case": "forecast_rises_without_largest_collision",
+      "rule": "largest forecast_without_largest_collision / forecast among non-flagged top-1,000",
+      "segments": [
+        {
+          "segment_id": "A5038-13F65FF58090-01",
+          "rank": 240
+        }
+      ]
+    },
+    {
+      "case": "explained_without_map_json",
+      "rule": "best rank above 5,000 (CSV explanation, no map JSON, no line geometry)",
+      "segments": [
+        {
+          "segment_id": "A551-E68F9612B4DB-00",
+          "rank": 5001
+        }
+      ]
+    },
+    {
+      "case": "rank_50000",
+      "rule": "rank == 50,000 (edge of the top-N export)",
+      "segments": [
+        {
+          "segment_id": "A629-71DA769EE189-07",
+          "rank": 50000
+        }
+      ]
+    },
+    {
+      "case": "lowest_ranked",
+      "rule": "worst rank in the file (exported because n_crashes >= 6)",
+      "segments": [
+        {
+          "segment_id": "U-A6B609EAE534-00",
+          "rank": 136820
+        }
+      ]
+    },
+    {
+      "case": "tie_pair",
+      "rule": "best-ranked adjacent pair with identical full-precision blackspot_score",
+      "segments": [
+        {
+          "segment_id": "A6005-C33B1E4E8A91-01",
+          "rank": 19459
+        },
+        {
+          "segment_id": "A6005-C33B1E4E8A91-02",
+          "rank": 19460
+        }
+      ]
+    }
+  ]
+}

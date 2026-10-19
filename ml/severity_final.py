@@ -1,4 +1,9 @@
 """
+[v1 -- SUPERSEDED for the deployable model by `ml/pipeline.py severity` (v2). Audited
+ defects: thresholds tuned on in-sample predictions (D10); SHAP explains the 236-feature
+ explanatory model, not the deployable one, and the decode maps predate the 2024 code
+ list (D11); random split within 2022-23 only (D12).]
+
 SEVERITY MODEL -- final deliverable.
 
 WINDOW: 2022-2023 only. The severity-share diagnostic showed Grievous

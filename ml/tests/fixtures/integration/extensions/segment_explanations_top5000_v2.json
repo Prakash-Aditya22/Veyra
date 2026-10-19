@@ -1,0 +1,336 @@
+{
+ "model": "production LightGBM (frozen spec b9487674e4f1)",
+ "explains": "blackspot_score (expected adjusted KSI casualties 2026-27), not per-vehicle risk",
+ "how_to_read": "forecast = base x product of all feature factors; factors are model attributions (TreeSHAP), not causal effects",
+ "segments": {
+  "B5339-8AD45E53257A-00": {
+   "rank": 1,
+   "forecast": 9.3004,
+   "base": 0.0064,
+   "groups": {
+    "history": 75.475,
+    "road": 6.585,
+    "context": 2.917
+   },
+   "top": [
+    {
+     "f": "h_n_coll",
+     "label": "Collisions on this segment, last 3 years",
+     "value": 32.0,
+     "display": "32",
+     "factor": 13.359
+    },
+    {
+     "f": "h_n_cas",
+     "label": "All casualties here, last 3 years",
+     "value": 36.0,
+     "display": "36",
+     "factor": 2.386
+    },
+    {
+     "f": "log_length",
+     "label": "Segment length",
+     "value": 6.435,
+     "display": "623 m",
+     "factor": 2.042
+    },
+    {
+     "f": "nb_adj_ksi_3km",
+     "label": "Serious/fatal casualties on nearby roads (3x3 km), last 3 years",
+     "value": 180.162,
+     "display": "180.2",
+     "factor": 1.996
+    },
+    {
+     "f": "n_junctions",
+     "label": "Junctions on the segment",
+     "value": 13.0,
+     "display": "13",
+     "factor": 1.661
+    }
+   ]
+  },
+  "A100-22D1CA35BA35-00": {
+   "rank": 2,
+   "forecast": 7.5366,
+   "base": 0.0064,
+   "groups": {
+    "history": 67.086,
+    "road": 9.53,
+    "context": 1.837
+   },
+   "top": [
+    {
+     "f": "h_n_coll",
+     "label": "Collisions on this segment, last 3 years",
+     "value": 44.0,
+     "display": "44",
+     "factor": 14.216
+    },
+    {
+     "f": "h_n_cas",
+     "label": "All casualties here, last 3 years",
+     "value": 51.0,
+     "display": "51",
+     "factor": 2.33
+    },
+    {
+     "f": "log_length",
+     "label": "Segment length",
+     "value": 6.601,
+     "display": "736 m",
+     "factor": 2.036
+    },
+    {
+     "f": "cls_A",
+     "label": "Road class: A road",
+     "value": 1.0,
+     "display": "yes",
+     "factor": 1.825
+    },
+    {
+     "f": "nb_adj_ksi_3km",
+     "label": "Serious/fatal casualties on nearby roads (3x3 km), last 3 years",
+     "value": 292.006,
+     "display": "292.0",
+     "factor": 1.752
+    }
+   ]
+  },
+  "A57-842C4722100B-00": {
+   "rank": 10,
+   "forecast": 6.4306,
+   "base": 0.0064,
+   "groups": {
+    "history": 12.842,
+    "road": 13.745,
+    "context": 5.678
+   },
+   "top": [
+    {
+     "f": "h_n_coll",
+     "label": "Collisions on this segment, last 3 years",
+     "value": 7.0,
+     "display": "7",
+     "factor": 3.705
+    },
+    {
+     "f": "n_junctions",
+     "label": "Junctions on the segment",
+     "value": 16.0,
+     "display": "16",
+     "factor": 2.45
+    },
+    {
+     "f": "h_n_cas",
+     "label": "All casualties here, last 3 years",
+     "value": 148.0,
+     "display": "148",
+     "factor": 2.173
+    },
+    {
+     "f": "nb_adj_ksi_3km",
+     "label": "Serious/fatal casualties on nearby roads (3x3 km), last 3 years",
+     "value": 143.033,
+     "display": "143.0",
+     "factor": 2.121
+    },
+    {
+     "f": "stroke_adj_ksi_other",
+     "label": "Serious/fatal casualties elsewhere on the same stretch, last 3 years",
+     "value": 4.119,
+     "display": "4.1",
+     "factor": 1.778
+    }
+   ]
+  },
+  "A57-842C4722100B-01": {
+   "rank": 140,
+   "forecast": 3.5906,
+   "base": 0.0064,
+   "groups": {
+    "history": 6.832,
+    "road": 11.157,
+    "context": 7.342
+   },
+   "top": [
+    {
+     "f": "h_n_coll",
+     "label": "Collisions on this segment, last 3 years",
+     "value": 6.0,
+     "display": "6",
+     "factor": 3.258
+    },
+    {
+     "f": "n_junctions",
+     "label": "Junctions on the segment",
+     "value": 16.0,
+     "display": "16",
+     "factor": 2.234
+    },
+    {
+     "f": "nb_adj_ksi_3km",
+     "label": "Serious/fatal casualties on nearby roads (3x3 km), last 3 years",
+     "value": 184.382,
+     "display": "184.4",
+     "factor": 2.222
+    },
+    {
+     "f": "stroke_adj_ksi_other",
+     "label": "Serious/fatal casualties elsewhere on the same stretch, last 3 years",
+     "value": 45.468,
+     "display": "45.5",
+     "factor": 2.222
+    },
+    {
+     "f": "h_n_cas",
+     "label": "All casualties here, last 3 years",
+     "value": 6.0,
+     "display": "6",
+     "factor": 1.754
+    }
+   ]
+  },
+  "A4-FA629E609A3F-00": {
+   "rank": 147,
+   "forecast": 3.5472,
+   "base": 0.0064,
+   "groups": {
+    "history": 58.699,
+    "road": 3.69,
+    "context": 2.553
+   },
+   "top": [
+    {
+     "f": "h_n_coll",
+     "label": "Collisions on this segment, last 3 years",
+     "value": 25.0,
+     "display": "25",
+     "factor": 15.523
+    },
+    {
+     "f": "cls_A",
+     "label": "Road class: A road",
+     "value": 1.0,
+     "display": "yes",
+     "factor": 2.252
+    },
+    {
+     "f": "nb_adj_ksi_3km",
+     "label": "Serious/fatal casualties on nearby roads (3x3 km), last 3 years",
+     "value": 435.199,
+     "display": "435.2",
+     "factor": 2.168
+    },
+    {
+     "f": "h_n_cas",
+     "label": "All casualties here, last 3 years",
+     "value": 34.0,
+     "display": "34",
+     "factor": 2.162
+    },
+    {
+     "f": "n_junctions",
+     "label": "Junctions on the segment",
+     "value": 5.0,
+     "display": "5",
+     "factor": 1.379
+    }
+   ]
+  },
+  "A5038-13F65FF58090-01": {
+   "rank": 240,
+   "forecast": 3.0105,
+   "base": 0.0064,
+   "groups": {
+    "history": 13.097,
+    "road": 8.137,
+    "context": 4.403
+   },
+   "top": [
+    {
+     "f": "h_n_coll",
+     "label": "Collisions on this segment, last 3 years",
+     "value": 10.0,
+     "display": "10",
+     "factor": 4.742
+    },
+    {
+     "f": "nb_adj_ksi_3km",
+     "label": "Serious/fatal casualties on nearby roads (3x3 km), last 3 years",
+     "value": 204.7,
+     "display": "204.7",
+     "factor": 2.325
+    },
+    {
+     "f": "h_n_cas",
+     "label": "All casualties here, last 3 years",
+     "value": 10.0,
+     "display": "10",
+     "factor": 1.812
+    },
+    {
+     "f": "log_length",
+     "label": "Segment length",
+     "value": 6.389,
+     "display": "595 m",
+     "factor": 1.751
+    },
+    {
+     "f": "cls_A",
+     "label": "Road class: A road",
+     "value": 1.0,
+     "display": "yes",
+     "factor": 1.696
+    }
+   ]
+  },
+  "A34-97BCC110FCF3-02": {
+   "rank": 369,
+   "forecast": 2.6158,
+   "base": 0.0064,
+   "groups": {
+    "history": 10.182,
+    "road": 8.393,
+    "context": 4.771
+   },
+   "top": [
+    {
+     "f": "h_n_coll",
+     "label": "Collisions on this segment, last 3 years",
+     "value": 5.0,
+     "display": "5",
+     "factor": 3.317
+    },
+    {
+     "f": "nb_adj_ksi_3km",
+     "label": "Serious/fatal casualties on nearby roads (3x3 km), last 3 years",
+     "value": 171.0,
+     "display": "171",
+     "factor": 2.301
+    },
+    {
+     "f": "h_n_cas",
+     "label": "All casualties here, last 3 years",
+     "value": 5.0,
+     "display": "5",
+     "factor": 1.804
+    },
+    {
+     "f": "n_junctions",
+     "label": "Junctions on the segment",
+     "value": 15.0,
+     "display": "15",
+     "factor": 1.751
+    },
+    {
+     "f": "cls_A",
+     "label": "Road class: A road",
+     "value": 1.0,
+     "display": "yes",
+     "factor": 1.713
+    }
+   ]
+  }
+ }
+}

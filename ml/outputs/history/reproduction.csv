@@ -1,0 +1,16 @@
+cutoff,archived_study,model,metrics_compared,max_abs_diff
+2019,main,lgbm,6,0.0
+2019,main,hist_adj_ksi,6,0.0
+2019,main,hist_collisions,6,0.0
+2020,main,lgbm,6,0.0
+2020,main,hist_adj_ksi,6,0.0
+2020,main,hist_collisions,6,0.0
+2021,main,lgbm,6,0.0
+2021,main,hist_adj_ksi,6,0.0
+2021,main,hist_collisions,6,0.0
+2022,posthoc,lgbm,6,0.0
+2022,posthoc,hist_adj_ksi,6,0.0
+2022,posthoc,hist_collisions,6,0.0
+2023,holdout,lgbm,6,0.0
+2023,holdout,hist_adj_ksi,6,0.0
+2023,holdout,hist_collisions,6,0.0

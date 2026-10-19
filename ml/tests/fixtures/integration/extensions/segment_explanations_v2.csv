@@ -1,0 +1,66 @@
+segment_id,rank,contrib_rank,feature,label,group,feature_value,display_value,shap_log,factor
+B5339-8AD45E53257A-00,1,1,h_n_coll,"Collisions on this segment, last 3 years",history,32.0,32,2.59217,13.358726
+B5339-8AD45E53257A-00,1,2,h_n_cas,"All casualties here, last 3 years",history,36.0,36,0.869456,2.385612
+B5339-8AD45E53257A-00,1,3,log_length,Segment length,road,6.434959,623 m,0.713697,2.041526
+B5339-8AD45E53257A-00,1,4,nb_adj_ksi_3km,"Serious/fatal casualties on nearby roads (3x3 km), last 3 years",context,180.161896,180.2,0.69093,1.99557
+B5339-8AD45E53257A-00,1,5,n_junctions,Junctions on the segment,road,13.0,13,0.507318,1.660831
+A100-22D1CA35BA35-00,2,1,h_n_coll,"Collisions on this segment, last 3 years",history,44.0,44,2.654364,14.21594
+A100-22D1CA35BA35-00,2,2,h_n_cas,"All casualties here, last 3 years",history,51.0,51,0.845672,2.329542
+A100-22D1CA35BA35-00,2,3,log_length,Segment length,road,6.600649,736 m,0.710956,2.035937
+A100-22D1CA35BA35-00,2,4,cls_A,Road class: A road,road,1.0,yes,0.601474,1.824806
+A100-22D1CA35BA35-00,2,5,nb_adj_ksi_3km,"Serious/fatal casualties on nearby roads (3x3 km), last 3 years",context,292.006104,292.0,0.560902,1.752252
+A57-842C4722100B-00,10,1,h_n_coll,"Collisions on this segment, last 3 years",history,7.0,7,1.309729,3.705168
+A57-842C4722100B-00,10,2,n_junctions,Junctions on the segment,road,16.0,16,0.896259,2.450418
+A57-842C4722100B-00,10,3,h_n_cas,"All casualties here, last 3 years",history,148.0,148,0.776097,2.172975
+A57-842C4722100B-00,10,4,nb_adj_ksi_3km,"Serious/fatal casualties on nearby roads (3x3 km), last 3 years",context,143.033005,143.0,0.751909,2.121045
+A57-842C4722100B-00,10,5,stroke_adj_ksi_other,"Serious/fatal casualties elsewhere on the same stretch, last 3 years",context,4.11918,4.1,0.575428,1.777892
+A57-842C4722100B-01,140,1,h_n_coll,"Collisions on this segment, last 3 years",history,6.0,6,1.181234,3.258393
+A57-842C4722100B-01,140,2,n_junctions,Junctions on the segment,road,16.0,16,0.803881,2.234196
+A57-842C4722100B-01,140,3,nb_adj_ksi_3km,"Serious/fatal casualties on nearby roads (3x3 km), last 3 years",context,184.381714,184.4,0.798411,2.222007
+A57-842C4722100B-01,140,4,stroke_adj_ksi_other,"Serious/fatal casualties elsewhere on the same stretch, last 3 years",context,45.467892,45.5,0.798315,2.221793
+A57-842C4722100B-01,140,5,h_n_cas,"All casualties here, last 3 years",history,6.0,6,0.56212,1.754388
+A4-FA629E609A3F-00,147,1,h_n_coll,"Collisions on this segment, last 3 years",history,25.0,25,2.742325,15.523027
+A4-FA629E609A3F-00,147,2,cls_A,Road class: A road,road,1.0,yes,0.811823,2.252011
+A4-FA629E609A3F-00,147,3,nb_adj_ksi_3km,"Serious/fatal casualties on nearby roads (3x3 km), last 3 years",context,435.198914,435.2,0.773759,2.167901
+A4-FA629E609A3F-00,147,4,h_n_cas,"All casualties here, last 3 years",history,34.0,34,0.770836,2.161572
+A4-FA629E609A3F-00,147,5,n_junctions,Junctions on the segment,road,5.0,5,0.321371,1.379018
+A5038-13F65FF58090-01,240,1,h_n_coll,"Collisions on this segment, last 3 years",history,10.0,10,1.556552,4.742439
+A5038-13F65FF58090-01,240,2,nb_adj_ksi_3km,"Serious/fatal casualties on nearby roads (3x3 km), last 3 years",context,204.699722,204.7,0.843813,2.325215
+A5038-13F65FF58090-01,240,3,h_n_cas,"All casualties here, last 3 years",history,10.0,10,0.594288,1.811741
+A5038-13F65FF58090-01,240,4,log_length,Segment length,road,6.389005,595 m,0.560009,1.750689
+A5038-13F65FF58090-01,240,5,cls_A,Road class: A road,road,1.0,yes,0.52852,1.696419
+A34-97BCC110FCF3-02,369,1,h_n_coll,"Collisions on this segment, last 3 years",history,5.0,5,1.199025,3.31688
+A34-97BCC110FCF3-02,369,2,nb_adj_ksi_3km,"Serious/fatal casualties on nearby roads (3x3 km), last 3 years",context,171.0,171,0.833278,2.300849
+A34-97BCC110FCF3-02,369,3,h_n_cas,"All casualties here, last 3 years",history,5.0,5,0.590191,1.804334
+A34-97BCC110FCF3-02,369,4,n_junctions,Junctions on the segment,road,15.0,15,0.560295,1.751189
+A34-97BCC110FCF3-02,369,5,cls_A,Road class: A road,road,1.0,yes,0.53821,1.712938
+A551-E68F9612B4DB-00,5001,1,h_n_coll,"Collisions on this segment, last 3 years",history,4.0,4,1.091928,2.980015
+A551-E68F9612B4DB-00,5001,2,cls_A,Road class: A road,road,1.0,yes,0.561473,1.753253
+A551-E68F9612B4DB-00,5001,3,log_length,Segment length,road,6.154378,471 m,0.523095,1.687242
+A551-E68F9612B4DB-00,5001,4,stroke_adj_ksi_other,"Serious/fatal casualties elsewhere on the same stretch, last 3 years",context,3.0,3,0.480694,1.617197
+A551-E68F9612B4DB-00,5001,5,nb_coll_3km,"Collisions on nearby roads (3x3 km), last 3 years",context,114.0,114,0.422278,1.525433
+B5167-566A50C130D0-01,6563,1,stroke_adj_ksi_other,"Serious/fatal casualties elsewhere on the same stretch, last 3 years",context,9.0,9,0.87227,2.392335
+B5167-566A50C130D0-01,6563,2,log_length,Segment length,road,6.179995,483 m,0.813687,2.256212
+B5167-566A50C130D0-01,6563,3,n_junctions,Junctions on the segment,road,17.0,17,0.794879,2.214172
+B5167-566A50C130D0-01,6563,4,nb_coll_3km,"Collisions on nearby roads (3x3 km), last 3 years",context,127.0,127,0.664542,1.943601
+B5167-566A50C130D0-01,6563,5,nb_adj_ksi_3km,"Serious/fatal casualties on nearby roads (3x3 km), last 3 years",context,52.0,52,0.502284,1.652491
+A6005-C33B1E4E8A91-01,19459,1,stroke_adj_ksi_other,"Serious/fatal casualties elsewhere on the same stretch, last 3 years",context,9.52571,9.5,0.687731,1.989196
+A6005-C33B1E4E8A91-01,19459,2,log_length,Segment length,road,6.214446,500 m,0.62031,1.859504
+A6005-C33B1E4E8A91-01,19459,3,cls_A,Road class: A road,road,1.0,yes,0.593969,1.811162
+A6005-C33B1E4E8A91-01,19459,4,h_n_coll,"Collisions on this segment, last 3 years",history,1.0,1,0.429397,1.53633
+A6005-C33B1E4E8A91-01,19459,5,h_n_cas,"All casualties here, last 3 years",history,3.0,3,0.318525,1.375098
+A6005-C33B1E4E8A91-02,19460,1,stroke_adj_ksi_other,"Serious/fatal casualties elsewhere on the same stretch, last 3 years",context,9.52571,9.5,0.687731,1.989196
+A6005-C33B1E4E8A91-02,19460,2,log_length,Segment length,road,6.214446,500 m,0.62031,1.859504
+A6005-C33B1E4E8A91-02,19460,3,cls_A,Road class: A road,road,1.0,yes,0.593969,1.811162
+A6005-C33B1E4E8A91-02,19460,4,h_n_coll,"Collisions on this segment, last 3 years",history,1.0,1,0.429397,1.53633
+A6005-C33B1E4E8A91-02,19460,5,h_n_cas,"All casualties here, last 3 years",history,3.0,3,0.318525,1.375098
+A629-71DA769EE189-07,50000,1,stroke_adj_ksi_other,"Serious/fatal casualties elsewhere on the same stretch, last 3 years",context,3.19951,3.2,0.983661,2.674228
+A629-71DA769EE189-07,50000,2,log_length,Segment length,road,6.250117,518 m,0.884132,2.420882
+A629-71DA769EE189-07,50000,3,cls_A,Road class: A road,road,1.0,yes,0.86125,2.366118
+A629-71DA769EE189-07,50000,4,cls_U,Road class: unclassified,road,0.0,no,0.285561,1.330509
+A629-71DA769EE189-07,50000,5,stroke_pieces,Length of the whole junction-to-junction stretch (in ~500 m pieces),road,8.0,8 x ~500 m,0.224001,1.251072
+U-A6B609EAE534-00,136820,1,h_n_coll,"Collisions on this segment, last 3 years",history,7.0,7,1.962494,7.117053
+U-A6B609EAE534-00,136820,2,h_n_cas,"All casualties here, last 3 years",history,7.0,7,0.736039,2.08765
+U-A6B609EAE534-00,136820,3,nb_adj_ksi_3km,"Serious/fatal casualties on nearby roads (3x3 km), last 3 years",context,89.0,89,0.516887,1.676799
+U-A6B609EAE534-00,136820,4,log_length,Segment length,road,4.593537,99 m,-0.483666,0.616519
+U-A6B609EAE534-00,136820,5,n_junctions,Junctions on the segment,road,1.0,1,-0.33438,0.715782

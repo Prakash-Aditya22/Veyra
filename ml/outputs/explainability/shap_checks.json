@@ -1,0 +1,9 @@
+{
+  "shap_library_vs_lightgbm_max_abs_diff": 1.107191085480963e-07,
+  "additivity_max_abs_err": 3.2139581518375593e-07,
+  "n_segments_explained": 281353,
+  "uniform_sample": 200000,
+  "backend_rows_explained": 50015,
+  "top5pct_explained": 91377,
+  "seconds_treeshap": 1132.0
+}

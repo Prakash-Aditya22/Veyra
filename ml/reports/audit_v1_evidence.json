@@ -1,0 +1,140 @@
+{
+  "reconstructed_test_capture_model": {
+    "top1": 8.016179444750874,
+    "top5": 23.01893730465159,
+    "top10": 34.932892075749216,
+    "top20": 50.39529325243611
+  },
+  "in_sample_vs_held_out": {
+    "test": {
+      "n": 13505,
+      "spearman_score_vs_future": 0.3626567382359624,
+      "poisson_deviance": 0.8528524984202902,
+      "capture_top20": 50.39529325243611
+    },
+    "train": {
+      "n": 31509,
+      "spearman_score_vs_future": 0.5500530739280692,
+      "poisson_deviance": 0.6456297387361363,
+      "capture_top20": 63.01263663849911
+    }
+  },
+  "top500_share_train_segments": 0.768,
+  "top100_share_train_segments": 0.77,
+  "ties": {
+    "n_crashes_top1": {
+      "v1_reported_style(argsort)": 7.4646074646074645,
+      "worst_tiebreak": 7.354293068578782,
+      "best_tiebreak": 7.482993197278912,
+      "expected_random_tiebreak": 7.4217074217074215
+    },
+    "n_crashes_top5": {
+      "v1_reported_style(argsort)": 22.982165839308696,
+      "worst_tiebreak": 22.779922779922778,
+      "best_tiebreak": 23.49696635410921,
+      "expected_random_tiebreak": 22.990817948801144
+    },
+    "n_crashes_top10": {
+      "v1_reported_style(argsort)": 34.34454863026291,
+      "worst_tiebreak": 32.39566096708954,
+      "best_tiebreak": 36.348593491450636,
+      "expected_random_tiebreak": 34.449069451366185
+    },
+    "n_crashes_top20": {
+      "v1_reported_style(argsort)": 49.51277808420665,
+      "worst_tiebreak": 47.288104430961575,
+      "best_tiebreak": 53.759882331310905,
+      "expected_random_tiebreak": 49.512920294293615
+    },
+    "n_ksi_top1": {
+      "v1_reported_style(argsort)": 6.784335355763928,
+      "worst_tiebreak": 6.195991910277625,
+      "best_tiebreak": 7.611693325979041,
+      "expected_random_tiebreak": 6.680149537292395
+    },
+    "n_ksi_top5": {
+      "v1_reported_style(argsort)": 18.20187534473249,
+      "worst_tiebreak": 17.650303364589078,
+      "best_tiebreak": 21.658393086964516,
+      "expected_random_tiebreak": 18.45438966109495
+    },
+    "n_ksi_top10": {
+      "v1_reported_style(argsort)": 26.916712630998347,
+      "worst_tiebreak": 19.433719433719435,
+      "best_tiebreak": 32.21180364037507,
+      "expected_random_tiebreak": 26.934987319555297
+    },
+    "n_ksi_top20": {
+      "v1_reported_style(argsort)": 37.929766501195076,
+      "worst_tiebreak": 32.21180364037507,
+      "best_tiebreak": 56.37065637065637,
+      "expected_random_tiebreak": 38.33912565265283
+    },
+    "n_crashes_top20_cutoff_value": 4,
+    "n_segments_tied_at_cutoff": 905,
+    "share_test_segments_with_1_crash": 0.4322843391336542,
+    "model_top20_expected": 50.39529325243611
+  },
+  "model_minus_count_top20_road_cluster_bootstrap": {
+    "mean": 0.8521934602726227,
+    "ci95": [
+      0.048063248640379544,
+      1.7338172023265432
+    ],
+    "share_negative": 0.023333333333333334
+  },
+  "eligibility": {
+    "roads_eligible_v1(2019-2023 counts)": 1027,
+    "roads_eligible_if_build_only(2019-2021)": 629,
+    "roads_admitted_only_by_future_crashes": 398,
+    "roads_dropped_if_build_only": [
+      "A(M)3",
+      "A(M)74",
+      "A1003",
+      "A1009",
+      "A1016",
+      "A1027",
+      "A1031",
+      "A1032",
+      "A1035",
+      "A1066",
+      "A1068",
+      "A1074",
+      "A1075",
+      "A1080",
+      "A1085",
+      "A1123",
+      "A1124",
+      "A1136",
+      "A1151",
+      "A1153",
+      "A1184",
+      "A1198",
+      "A1211",
+      "A1237",
+      "A1240"
+    ]
+  },
+  "coverage_2022_2023_ksi_collisions": {
+    "national_ksi_collisions": 49895,
+    "by_first_road_class": {
+      "A": 22139,
+      "A(M)": 137,
+      "B": 6898,
+      "C": 1742,
+      "M": 1342,
+      "U": 17637
+    },
+    "share_on_numbered_roads": 0.61150415873334,
+    "share_on_v1_eligible_roads": 0.45629822627517785,
+    "share_in_scored_segments(sum future_ksi in output)": 0.36753181681531216,
+    "share_in_v1_test_segments": 0.10900891872933159,
+    "c_and_unclassified_share": 0.38839563082473194,
+    "note": "collision grain: v1 target counts KSI collisions, not KSI casualties"
+  },
+  "casualties_per_ksi_collision_mean(all severities)": 1.3877342419080068,
+  "feature_notes": {
+    "run_max": 50,
+    "km_from_direction": "chainage measured from an arbitrary end of the MST diameter"
+  }
+}

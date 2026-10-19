@@ -1,0 +1,45 @@
+{
+  "n_segments": 2698893,
+  "n_strokes": 2283855,
+  "total_km": 580182.0359019726,
+  "km_by_class": {
+    "A": 49438.3,
+    "B": 30393.5,
+    "C": 82610.4,
+    "M": 4906.0,
+    "N": 53353.7,
+    "U": 214558.9,
+    "X": 144921.2
+  },
+  "segments_by_class": {
+    "U": 1103383,
+    "X": 871343,
+    "N": 313927,
+    "C": 191487,
+    "A": 136635,
+    "B": 69911,
+    "M": 12207
+  },
+  "length_quantiles_m": {
+    "0.01": 11.6,
+    "0.05": 25.6,
+    "0.25": 59.3,
+    "0.5": 125.6,
+    "0.75": 408.0,
+    "0.95": 537.9,
+    "0.99": 649.6
+  },
+  "share_segments_shorter_than_250m": 0.666180911951678,
+  "share_length_in_segments_333_750m": 0.6543839210770935,
+  "form_of_way_km": {
+    "Collapsed Dual Carriageway": 11983.8,
+    "Dual Carriageway": 1121.0,
+    "Guided Busway": 66.7,
+    "Roundabout": 1915.4,
+    "Shared Use Carriageway": 257.2,
+    "Single Carriageway": 561709.8,
+    "Slip Road": 3128.1
+  },
+  "segment_id_unique": true,
+  "n_vertices": 21321875
+}

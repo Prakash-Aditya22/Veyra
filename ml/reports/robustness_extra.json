@@ -1,0 +1,164 @@
+{
+  "frozen_spec_sha256": "b9487674e4f1da7951f787ef122b7f8caea033cebdfc34e26649de35562ad378",
+  "target_sensitivity": {
+    "n_ksi_cas": {
+      "spearman_vs_primary": 0.9991056278137188,
+      "top100_overlap": 0.93,
+      "top500_overlap": 0.956,
+      "top1000_overlap": 0.949,
+      "top5000_overlap": 0.9298
+    },
+    "is_ksi_collision": {
+      "spearman_vs_primary": 0.9982115236102115,
+      "top100_overlap": 0.85,
+      "top500_overlap": 0.92,
+      "top1000_overlap": 0.926,
+      "top5000_overlap": 0.89
+    }
+  },
+  "regression_to_the_mean_holdout": {
+    "top100_by_history": {
+      "history_per_2y": 721.9151611328125,
+      "future_2y": 432.24710000000005,
+      "future_over_history": 0.5987505503025147
+    },
+    "top500_by_history": {
+      "history_per_2y": 2413.091796875,
+      "future_2y": 1200.06582,
+      "future_over_history": 0.49731461586090847
+    },
+    "top1000_by_history": {
+      "history_per_2y": 4003.190673828125,
+      "future_2y": 1858.43675,
+      "future_over_history": 0.4642388787898618
+    },
+    "top5000_by_history": {
+      "history_per_2y": 12403.21875,
+      "future_2y": 4699.59245,
+      "future_over_history": 0.3789010372811493
+    },
+    "top100_by_model": {
+      "forecast_2y": 575.0132914347296,
+      "future_2y": 501.0,
+      "future_over_forecast": 0.8712842076223017
+    },
+    "top500_by_model": {
+      "forecast_2y": 1871.4375775258072,
+      "future_2y": 1695.35592,
+      "future_over_forecast": 0.9059110174764143
+    },
+    "top1000_by_model": {
+      "forecast_2y": 2901.6276373407936,
+      "future_2y": 2655.2447700000002,
+      "future_over_forecast": 0.9150880477666694
+    },
+    "top5000_by_model": {
+      "forecast_2y": 7510.199765547044,
+      "future_2y": 6876.663420000001,
+      "future_over_forecast": 0.9156432098579609
+    }
+  },
+  "holdout_model_vs_counts_subpopulations": {
+    "numbered": {
+      "model_c10": 41.58614476533899,
+      "counts_c10": 39.32624963541837,
+      "diff_c10_ci": [
+        1.3750034902514976,
+        3.747216543940542
+      ],
+      "model_c20": 57.7424120182157,
+      "counts_c20": 53.39516624978518,
+      "diff_c20_ci": [
+        2.5968438657083515,
+        6.013326817114888
+      ]
+    },
+    "hist1": {
+      "model_c10": 39.41652914219252,
+      "counts_c10": 36.93564390880306,
+      "diff_c10_ci": [
+        1.8977228710935763,
+        3.611963175195606
+      ],
+      "model_c20": 56.199948873053074,
+      "counts_c20": 51.23539793009194,
+      "diff_c20_ci": [
+        3.378657403000746,
+        6.446289197234419
+      ]
+    }
+  },
+  "exposure_interpretation_MA_with_aadf": {
+    "n_segments": 132899,
+    "overlap": {
+      "top100": {
+        "burden_vs_rate": 0.04,
+        "burden_vs_excess_exposure": 0.58,
+        "burden_vs_excess_no_exposure": 0.59,
+        "rate_vs_excess_exposure": 0.03
+      },
+      "top500": {
+        "burden_vs_rate": 0.17,
+        "burden_vs_excess_exposure": 0.626,
+        "burden_vs_excess_no_exposure": 0.59,
+        "rate_vs_excess_exposure": 0.198
+      }
+    },
+    "top500_by_burden": {
+      "median_aadf": 17708.833333333336,
+      "median_length_m": 504.75,
+      "share_motorway": 0.0,
+      "median_n_crashes": 24.5
+    },
+    "top500_by_rate": {
+      "median_aadf": 9564.333333333332,
+      "median_length_m": 46.55,
+      "share_motorway": 0.028,
+      "median_n_crashes": 1.0
+    },
+    "top500_by_excess_exposure": {
+      "median_aadf": 17933.166666666664,
+      "median_length_m": 504.45000000000005,
+      "share_motorway": 0.008,
+      "median_n_crashes": 20.0
+    },
+    "length_ge_250m": {
+      "n_segments": 90492,
+      "overlap": {
+        "top100": {
+          "burden_vs_rate": 0.22,
+          "burden_vs_excess_exposure": 0.58
+        },
+        "top500": {
+          "burden_vs_rate": 0.368,
+          "burden_vs_excess_exposure": 0.628
+        }
+      },
+      "top500_by_burden": {
+        "median_aadf": 17749.333333333336,
+        "median_length_m": 504.9,
+        "share_motorway": 0.0,
+        "median_n_crashes": 24.0
+      },
+      "top500_by_rate": {
+        "median_aadf": 7910.166666666666,
+        "median_length_m": 499.9,
+        "share_motorway": 0.0,
+        "median_n_crashes": 9.5
+      }
+    }
+  },
+  "single_event_flag": {
+    "segments_flagged_nationally": 104,
+    "flagged_in_top500": 1,
+    "flagged_in_top5000": 9
+  },
+  "assignment_sensitivity_holdout_target": {
+    "class": 0.2981,
+    "fallback": 0.0082,
+    "near_class": 0.0898,
+    "none": 0.0013,
+    "number": 0.5961,
+    "second_number": 0.0065
+  }
+}

@@ -1,0 +1,2297 @@
+{
+  "contract_version": "1.0",
+  "score_version": "v2.0",
+  "join_key": "segment_id",
+  "required_files": [
+    "road_segments_ranked_v2.csv",
+    "road_segments_meta_v2.json"
+  ],
+  "min_length_m_for_rate_display": 250.0,
+  "geojson": {
+    "crs": "WGS84 (EPSG:4326), RFC 7946 [longitude, latitude]; no 'crs' member",
+    "geometry": "LineString, >= 2 distinct positions, 6 decimals"
+  },
+  "tables": {
+    "road_segments_ranked_v2.csv": [
+      {
+        "name": "rank",
+        "type": "int",
+        "nullable": false,
+        "meaning": "national rank among all 1,827,550 scored segments by blackspot_score, highest first; ties broken by segment_id ascending. Gaps occur because only some segments are exported",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          1,
+          null
+        ],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "segment_id",
+        "type": "str",
+        "nullable": false,
+        "meaning": "segment identifier: <road number or class>-<first 12 hex characters of the first OS Open Roads link identifier>-<piece, at least 2 digits>. Unique in the file",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "network.segment_network",
+        "identifier": true,
+        "changes_between_versions": false
+      },
+      {
+        "name": "location",
+        "type": "str",
+        "nullable": false,
+        "meaning": "display label: road (name) from-to km of stretch run",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "road_id",
+        "type": "str",
+        "nullable": false,
+        "meaning": "road number (e.g. A23, A1(M), M6 TOLL), or the road class letter C, U or N for unnumbered roads",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "km_from",
+        "type": "float",
+        "nullable": false,
+        "meaning": "start of the segment along its junction-to-junction stretch (not a milepost)",
+        "units": "km",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "network.cut_strokes",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "km_to",
+        "type": "float",
+        "nullable": false,
+        "meaning": "end of the segment along its stretch",
+        "units": "km",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "network.cut_strokes",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "lat",
+        "type": "float",
+        "nullable": false,
+        "meaning": "segment midpoint latitude, WGS84 (EPSG:4326), converted from the BNG midpoint; CSV keeps 6 significant digits (about 10 m)",
+        "units": "degrees",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          49.8,
+          61.0
+        ],
+        "source": "outputs._wgs84",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "lon",
+        "type": "float",
+        "nullable": false,
+        "meaning": "segment midpoint longitude, WGS84 (EPSG:4326)",
+        "units": "degrees",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          -8.7,
+          2.0
+        ],
+        "source": "outputs._wgs84",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "blackspot_score",
+        "type": "float",
+        "nullable": false,
+        "meaning": "PRIMARY SCORE. Expected killed-or-seriously-injured casualties (DfT severity-adjusted) on this segment over 2026 and 2027 combined, forecast by the frozen LightGBM (Poisson) from 2023-25 history. A burden, not a per-vehicle risk. CSV keeps 6 significant digits; order by rank, never by this rounded value",
+        "units": "expected adjusted KSI casualties, 2-year total (2026-27)",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "outputs.run_forecast",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "n_crashes",
+        "type": "int",
+        "nullable": false,
+        "meaning": "injury collisions snapped to this segment, all severities",
+        "units": "collisions, 2023-25 history window",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "features.history_features (h_n_coll)",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "n_ksi",
+        "type": "int",
+        "nullable": false,
+        "meaning": "collisions whose STATS19 collision_severity is fatal or serious (reported, not adjusted)",
+        "units": "collisions, 2023-25 history window",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "h_is_ksi_collision",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "n_fatal",
+        "type": "int",
+        "nullable": false,
+        "meaning": "fatal collisions",
+        "units": "collisions, 2023-25 history window",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "h_is_fatal_collision",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "ksi_rate",
+        "type": "float",
+        "nullable": true,
+        "meaning": "n_ksi / n_crashes",
+        "units": "share",
+        "null_when": "n_crashes = 0",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "crashes_per_year",
+        "type": "float",
+        "nullable": false,
+        "meaning": "n_crashes / 3",
+        "units": "collisions per year",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "speed_max",
+        "type": "float",
+        "nullable": true,
+        "meaning": "highest speed limit recorded at this segment's collisions",
+        "units": "mph",
+        "null_when": "n_crashes = 0",
+        "allowed": [
+          20.0,
+          30.0,
+          40.0,
+          50.0,
+          60.0,
+          70.0
+        ],
+        "range": [],
+        "source": "STATS19 speed_limit (codes < 15 dropped)",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "pct_night",
+        "type": "float",
+        "nullable": true,
+        "meaning": "share of collisions between 22:00 and 05:59",
+        "units": "share",
+        "null_when": "n_crashes = 0",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "STATS19 time",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "pct_junction",
+        "type": "float",
+        "nullable": true,
+        "meaning": "v1 definition kept for compatibility: share with junction_detail != 0. Missing and unknown codes count as junction, and 2024-format roundabouts as non-junction. Use pct_junction_v2",
+        "units": "share",
+        "null_when": "n_crashes = 0",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "STATS19 junction_detail",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "future_ksi",
+        "type": "float",
+        "nullable": true,
+        "meaning": "always empty: the forecast period has not happened",
+        "units": "",
+        "null_when": "always",
+        "allowed": [],
+        "range": [],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "future_fatal",
+        "type": "float",
+        "nullable": true,
+        "meaning": "always empty",
+        "units": "",
+        "null_when": "always",
+        "allowed": [],
+        "range": [],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "run",
+        "type": "int",
+        "nullable": false,
+        "meaning": "stretch ordinal within road_id, for drawing a road in order only; not a risk feature",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "network.segment_network",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "score_version",
+        "type": "str",
+        "nullable": false,
+        "meaning": "output version",
+        "units": "",
+        "null_when": "",
+        "allowed": [
+          "v2.0"
+        ],
+        "range": [],
+        "source": "outputs.SCORE_VERSION",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "score_model",
+        "type": "str",
+        "nullable": false,
+        "meaning": "model behind blackspot_score",
+        "units": "",
+        "null_when": "",
+        "allowed": [
+          "lgbm"
+        ],
+        "range": [],
+        "source": "frozen_spec.json",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "score_definition",
+        "type": "str",
+        "nullable": false,
+        "meaning": "plain-text definition of blackspot_score",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "forecast_period",
+        "type": "str",
+        "nullable": false,
+        "meaning": "years the score forecasts",
+        "units": "",
+        "null_when": "",
+        "allowed": [
+          "2026-2027"
+        ],
+        "range": [],
+        "source": "features.Fold(2025).test_y",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "history_period",
+        "type": "str",
+        "nullable": false,
+        "meaning": "years the history columns and model inputs cover",
+        "units": "",
+        "null_when": "",
+        "allowed": [
+          "2023-2025"
+        ],
+        "range": [],
+        "source": "features.Fold(2025).test_x",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "road_class",
+        "type": "str",
+        "nullable": false,
+        "meaning": "OS Open Roads class by majority length: M motorway, A, B, C classified unnumbered, U unclassified, N not classified",
+        "units": "",
+        "null_when": "",
+        "allowed": [
+          "M",
+          "A",
+          "B",
+          "C",
+          "U",
+          "N"
+        ],
+        "range": [],
+        "source": "network.segment_network",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "road_number",
+        "type": "str",
+        "nullable": true,
+        "meaning": "road number",
+        "units": "",
+        "null_when": "unnumbered road (empty cell)",
+        "allowed": [],
+        "range": [],
+        "source": "OS Open Roads roadNumber",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "road_name",
+        "type": "str",
+        "nullable": true,
+        "meaning": "road name",
+        "units": "",
+        "null_when": "unnamed (empty cell)",
+        "allowed": [],
+        "range": [],
+        "source": "OS Open Roads name1",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "form_of_way",
+        "type": "str",
+        "nullable": false,
+        "meaning": "OS Open Roads formOfWay by majority length",
+        "units": "",
+        "null_when": "",
+        "allowed": [
+          "Single Carriageway",
+          "Collapsed Dual Carriageway",
+          "Dual Carriageway",
+          "Roundabout",
+          "Slip Road",
+          "Shared Use Carriageway",
+          "Guided Busway",
+          "Layby",
+          "Traffic Island Link",
+          "Traffic Island Link At Junction"
+        ],
+        "range": [],
+        "source": "OS Open Roads",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "length_m",
+        "type": "float",
+        "nullable": false,
+        "meaning": "planar length of the segment centreline in British National Grid",
+        "units": "m",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "network.cut_strokes",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "os_first_link_id",
+        "type": "str",
+        "nullable": false,
+        "meaning": "OS Open Roads RoadLink identifier of the segment's first link: a geometry reference into OS data",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "network.cut_strokes",
+        "identifier": false,
+        "changes_between_versions": false
+      },
+      {
+        "name": "piece",
+        "type": "int",
+        "nullable": false,
+        "meaning": "piece index within the stroke (0-based); the last part of segment_id",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "network.cut_strokes",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "pct_junction_v2",
+        "type": "float",
+        "nullable": true,
+        "meaning": "share of collisions at a junction: junction_detail in {13, 16, 17, 18, 19} (DfT 2024 coding) or road_type = roundabout",
+        "units": "share",
+        "null_when": "n_crashes = 0",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "features.assigned_collisions",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "n_ksi_casualties",
+        "type": "int",
+        "nullable": false,
+        "meaning": "killed or seriously injured casualties as reported",
+        "units": "casualties, 2023-25 history window",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "casualty table",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "n_ksi_casualties_adjusted",
+        "type": "float",
+        "nullable": false,
+        "meaning": "KSI casualties on DfT's severity-adjusted scale (fatal + adjusted serious probability); the scale of the target",
+        "units": "adjusted casualties, 2023-25 history window",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "casualty table",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "eb_expected_ksi",
+        "type": "float",
+        "nullable": false,
+        "meaning": "Empirical Bayes benchmark forecast (not the production score): EB estimate of history KSI x k, where k is the history-to-target scale estimated on the training pair",
+        "units": "expected adjusted KSI casualties, 2-year total (2026-27 forecast)",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "models.eb_forecast",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "spf_expected_ksi_history",
+        "type": "float",
+        "nullable": false,
+        "meaning": "KSI expected on similar roads (NB2 safety performance function on road attributes; no crash history, no traffic)",
+        "units": "expected adjusted KSI casualties, 2023-25 history window",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "models.EmpiricalBayes",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "eb_ksi_history",
+        "type": "float",
+        "nullable": false,
+        "meaning": "EB estimate of this segment's KSI over the history window (weighted mix of SPF and observed)",
+        "units": "adjusted KSI casualties, 2023-25 history window",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "models.EmpiricalBayes",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "eb_excess_ksi_history",
+        "type": "float",
+        "nullable": false,
+        "meaning": "eb_ksi_history - spf_expected_ksi_history: KSI above similar roads. Can be negative. A screening signal, not a cause",
+        "units": "adjusted KSI casualties, 2023-25 history window",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "models.eb_forecast",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "eb_weight",
+        "type": "float",
+        "nullable": false,
+        "meaning": "EB weight on the SPF prior, 1 / (1 + alpha x SPF)",
+        "units": "share",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "models.EmpiricalBayes",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "aadf",
+        "type": "float",
+        "nullable": true,
+        "meaning": "mean annual average daily flow, all motor vehicles, at the matched DfT count point over 2023-25",
+        "units": "vehicles per day",
+        "null_when": "exposure_available is false",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "aadf.window_flows / match_segments",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "aadf_count_point",
+        "type": "int",
+        "nullable": true,
+        "meaning": "DfT count_point_id used for aadf (stored as a float-formatted number in the CSV)",
+        "units": "",
+        "null_when": "exposure_available is false",
+        "allowed": [],
+        "range": [],
+        "source": "aadf.match_segments",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "aadf_share_counted",
+        "type": "float",
+        "nullable": true,
+        "meaning": "share of the count point's 2023-25 AADF years that were counted, not estimated, by DfT",
+        "units": "share",
+        "null_when": "exposure_available is false",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "aadf.window_flows",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "exposure_available",
+        "type": "bool",
+        "nullable": false,
+        "meaning": "true when a same-number DfT count point matched the segment (motorway and A roads only)",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "vehicle_km_history",
+        "type": "float",
+        "nullable": true,
+        "meaning": "aadf x 365 x 3 x length_m / 1000",
+        "units": "vehicle-km, 2023-25 history window",
+        "null_when": "exposure_available is false",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "ksi_per_100m_vkm_eb",
+        "type": "float",
+        "nullable": true,
+        "meaning": "EB-smoothed adjusted KSI per 100 million vehicle-km over the history window (exposure SPF), a per-vehicle risk rate, separate from blackspot_score. Do not display below 250 m length",
+        "units": "adjusted KSI per 100 million vehicle-km, 2023-25 history window",
+        "null_when": "exposure_available is false (never imputed)",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "outputs.run_forecast",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "eb_excess_ksi_exposure",
+        "type": "float",
+        "nullable": true,
+        "meaning": "EB KSI minus the exposure-SPF expectation (similar roads with similar traffic). Can be negative",
+        "units": "adjusted KSI casualties, 2023-25 history window",
+        "null_when": "exposure_available is false",
+        "allowed": [],
+        "range": [],
+        "source": "outputs.run_forecast",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "data_sufficiency",
+        "type": "str",
+        "nullable": false,
+        "meaning": "sufficient: >= 6 collisions; sparse: 1-5; none: 0. Scores for sparse/none lean on road type and neighbours",
+        "units": "",
+        "null_when": "",
+        "allowed": [
+          "sufficient",
+          "sparse",
+          "none"
+        ],
+        "range": [],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "max_single_collision_ksi",
+        "type": "float",
+        "nullable": false,
+        "meaning": "largest adjusted KSI from any one collision on the segment (0 when none)",
+        "units": "adjusted KSI casualties, 2023-25 history window",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "single_event_share",
+        "type": "float",
+        "nullable": true,
+        "meaning": "max_single_collision_ksi / n_ksi_casualties_adjusted",
+        "units": "share",
+        "null_when": "n_ksi_casualties_adjusted = 0",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "single_event_flag",
+        "type": "bool",
+        "nullable": false,
+        "meaning": "true when one collision supplied >= 5 adjusted KSI and >= 50% of the segment's history KSI (mass-casualty events). Post-hoc annotation; changes no score",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "spatial_block",
+        "type": "int",
+        "nullable": false,
+        "meaning": "50 km British National Grid square used for spatial validation: floor(E/50000) x 1000 + floor(N/50000). Not an administrative area",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "experiment.block_id",
+        "identifier": false,
+        "changes_between_versions": false
+      }
+    ],
+    "road_segments_top500_v2.json": [
+      {
+        "name": "rank",
+        "type": "int",
+        "nullable": false,
+        "meaning": "national rank among all 1,827,550 scored segments by blackspot_score, highest first; ties broken by segment_id ascending. Gaps occur because only some segments are exported",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          1,
+          null
+        ],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "segment_id",
+        "type": "str",
+        "nullable": false,
+        "meaning": "segment identifier: <road number or class>-<first 12 hex characters of the first OS Open Roads link identifier>-<piece, at least 2 digits>. Unique in the file",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "network.segment_network",
+        "identifier": true,
+        "changes_between_versions": false
+      },
+      {
+        "name": "location",
+        "type": "str",
+        "nullable": false,
+        "meaning": "display label: road (name) from-to km of stretch run",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "road_id",
+        "type": "str",
+        "nullable": false,
+        "meaning": "road number (e.g. A23, A1(M), M6 TOLL), or the road class letter C, U or N for unnumbered roads",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "km_from",
+        "type": "float",
+        "nullable": false,
+        "meaning": "start of the segment along its junction-to-junction stretch (not a milepost)",
+        "units": "km",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "network.cut_strokes",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "km_to",
+        "type": "float",
+        "nullable": false,
+        "meaning": "end of the segment along its stretch",
+        "units": "km",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "network.cut_strokes",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "lat",
+        "type": "float",
+        "nullable": false,
+        "meaning": "segment midpoint latitude, WGS84 (EPSG:4326), converted from the BNG midpoint; CSV keeps 6 significant digits (about 10 m)",
+        "units": "degrees",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          49.8,
+          61.0
+        ],
+        "source": "outputs._wgs84",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "lon",
+        "type": "float",
+        "nullable": false,
+        "meaning": "segment midpoint longitude, WGS84 (EPSG:4326)",
+        "units": "degrees",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          -8.7,
+          2.0
+        ],
+        "source": "outputs._wgs84",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "blackspot_score",
+        "type": "float",
+        "nullable": false,
+        "meaning": "PRIMARY SCORE. Expected killed-or-seriously-injured casualties (DfT severity-adjusted) on this segment over 2026 and 2027 combined, forecast by the frozen LightGBM (Poisson) from 2023-25 history. A burden, not a per-vehicle risk. CSV keeps 6 significant digits; order by rank, never by this rounded value",
+        "units": "expected adjusted KSI casualties, 2-year total (2026-27)",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "outputs.run_forecast",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "n_crashes",
+        "type": "int",
+        "nullable": false,
+        "meaning": "injury collisions snapped to this segment, all severities",
+        "units": "collisions, 2023-25 history window",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "features.history_features (h_n_coll)",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "n_ksi",
+        "type": "int",
+        "nullable": false,
+        "meaning": "collisions whose STATS19 collision_severity is fatal or serious (reported, not adjusted)",
+        "units": "collisions, 2023-25 history window",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "h_is_ksi_collision",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "n_fatal",
+        "type": "int",
+        "nullable": false,
+        "meaning": "fatal collisions",
+        "units": "collisions, 2023-25 history window",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "h_is_fatal_collision",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "ksi_rate",
+        "type": "float",
+        "nullable": true,
+        "meaning": "n_ksi / n_crashes",
+        "units": "share",
+        "null_when": "n_crashes = 0",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "crashes_per_year",
+        "type": "float",
+        "nullable": false,
+        "meaning": "n_crashes / 3",
+        "units": "collisions per year",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "speed_max",
+        "type": "float",
+        "nullable": true,
+        "meaning": "highest speed limit recorded at this segment's collisions",
+        "units": "mph",
+        "null_when": "n_crashes = 0",
+        "allowed": [
+          20.0,
+          30.0,
+          40.0,
+          50.0,
+          60.0,
+          70.0
+        ],
+        "range": [],
+        "source": "STATS19 speed_limit (codes < 15 dropped)",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "pct_night",
+        "type": "float",
+        "nullable": true,
+        "meaning": "share of collisions between 22:00 and 05:59",
+        "units": "share",
+        "null_when": "n_crashes = 0",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "STATS19 time",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "pct_junction",
+        "type": "float",
+        "nullable": true,
+        "meaning": "v1 definition kept for compatibility: share with junction_detail != 0. Missing and unknown codes count as junction, and 2024-format roundabouts as non-junction. Use pct_junction_v2",
+        "units": "share",
+        "null_when": "n_crashes = 0",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "STATS19 junction_detail",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "future_ksi",
+        "type": "float",
+        "nullable": true,
+        "meaning": "always empty: the forecast period has not happened",
+        "units": "",
+        "null_when": "always",
+        "allowed": [],
+        "range": [],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "future_fatal",
+        "type": "float",
+        "nullable": true,
+        "meaning": "always empty",
+        "units": "",
+        "null_when": "always",
+        "allowed": [],
+        "range": [],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "run",
+        "type": "int",
+        "nullable": false,
+        "meaning": "stretch ordinal within road_id, for drawing a road in order only; not a risk feature",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "network.segment_network",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "score_version",
+        "type": "str",
+        "nullable": false,
+        "meaning": "output version",
+        "units": "",
+        "null_when": "",
+        "allowed": [
+          "v2.0"
+        ],
+        "range": [],
+        "source": "outputs.SCORE_VERSION",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "score_model",
+        "type": "str",
+        "nullable": false,
+        "meaning": "model behind blackspot_score",
+        "units": "",
+        "null_when": "",
+        "allowed": [
+          "lgbm"
+        ],
+        "range": [],
+        "source": "frozen_spec.json",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "score_definition",
+        "type": "str",
+        "nullable": false,
+        "meaning": "plain-text definition of blackspot_score",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "forecast_period",
+        "type": "str",
+        "nullable": false,
+        "meaning": "years the score forecasts",
+        "units": "",
+        "null_when": "",
+        "allowed": [
+          "2026-2027"
+        ],
+        "range": [],
+        "source": "features.Fold(2025).test_y",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "history_period",
+        "type": "str",
+        "nullable": false,
+        "meaning": "years the history columns and model inputs cover",
+        "units": "",
+        "null_when": "",
+        "allowed": [
+          "2023-2025"
+        ],
+        "range": [],
+        "source": "features.Fold(2025).test_x",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "road_class",
+        "type": "str",
+        "nullable": false,
+        "meaning": "OS Open Roads class by majority length: M motorway, A, B, C classified unnumbered, U unclassified, N not classified",
+        "units": "",
+        "null_when": "",
+        "allowed": [
+          "M",
+          "A",
+          "B",
+          "C",
+          "U",
+          "N"
+        ],
+        "range": [],
+        "source": "network.segment_network",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "road_number",
+        "type": "str",
+        "nullable": true,
+        "meaning": "road number",
+        "units": "",
+        "null_when": "unnumbered road (empty cell)",
+        "allowed": [],
+        "range": [],
+        "source": "OS Open Roads roadNumber",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "road_name",
+        "type": "str",
+        "nullable": true,
+        "meaning": "road name",
+        "units": "",
+        "null_when": "unnamed (empty cell)",
+        "allowed": [],
+        "range": [],
+        "source": "OS Open Roads name1",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "form_of_way",
+        "type": "str",
+        "nullable": false,
+        "meaning": "OS Open Roads formOfWay by majority length",
+        "units": "",
+        "null_when": "",
+        "allowed": [
+          "Single Carriageway",
+          "Collapsed Dual Carriageway",
+          "Dual Carriageway",
+          "Roundabout",
+          "Slip Road",
+          "Shared Use Carriageway",
+          "Guided Busway",
+          "Layby",
+          "Traffic Island Link",
+          "Traffic Island Link At Junction"
+        ],
+        "range": [],
+        "source": "OS Open Roads",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "length_m",
+        "type": "float",
+        "nullable": false,
+        "meaning": "planar length of the segment centreline in British National Grid",
+        "units": "m",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "network.cut_strokes",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "os_first_link_id",
+        "type": "str",
+        "nullable": false,
+        "meaning": "OS Open Roads RoadLink identifier of the segment's first link: a geometry reference into OS data",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "network.cut_strokes",
+        "identifier": false,
+        "changes_between_versions": false
+      },
+      {
+        "name": "piece",
+        "type": "int",
+        "nullable": false,
+        "meaning": "piece index within the stroke (0-based); the last part of segment_id",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "network.cut_strokes",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "pct_junction_v2",
+        "type": "float",
+        "nullable": true,
+        "meaning": "share of collisions at a junction: junction_detail in {13, 16, 17, 18, 19} (DfT 2024 coding) or road_type = roundabout",
+        "units": "share",
+        "null_when": "n_crashes = 0",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "features.assigned_collisions",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "n_ksi_casualties",
+        "type": "int",
+        "nullable": false,
+        "meaning": "killed or seriously injured casualties as reported",
+        "units": "casualties, 2023-25 history window",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "casualty table",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "n_ksi_casualties_adjusted",
+        "type": "float",
+        "nullable": false,
+        "meaning": "KSI casualties on DfT's severity-adjusted scale (fatal + adjusted serious probability); the scale of the target",
+        "units": "adjusted casualties, 2023-25 history window",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "casualty table",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "eb_expected_ksi",
+        "type": "float",
+        "nullable": false,
+        "meaning": "Empirical Bayes benchmark forecast (not the production score): EB estimate of history KSI x k, where k is the history-to-target scale estimated on the training pair",
+        "units": "expected adjusted KSI casualties, 2-year total (2026-27 forecast)",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "models.eb_forecast",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "spf_expected_ksi_history",
+        "type": "float",
+        "nullable": false,
+        "meaning": "KSI expected on similar roads (NB2 safety performance function on road attributes; no crash history, no traffic)",
+        "units": "expected adjusted KSI casualties, 2023-25 history window",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "models.EmpiricalBayes",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "eb_ksi_history",
+        "type": "float",
+        "nullable": false,
+        "meaning": "EB estimate of this segment's KSI over the history window (weighted mix of SPF and observed)",
+        "units": "adjusted KSI casualties, 2023-25 history window",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "models.EmpiricalBayes",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "eb_excess_ksi_history",
+        "type": "float",
+        "nullable": false,
+        "meaning": "eb_ksi_history - spf_expected_ksi_history: KSI above similar roads. Can be negative. A screening signal, not a cause",
+        "units": "adjusted KSI casualties, 2023-25 history window",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "models.eb_forecast",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "eb_weight",
+        "type": "float",
+        "nullable": false,
+        "meaning": "EB weight on the SPF prior, 1 / (1 + alpha x SPF)",
+        "units": "share",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "models.EmpiricalBayes",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "aadf",
+        "type": "float",
+        "nullable": true,
+        "meaning": "mean annual average daily flow, all motor vehicles, at the matched DfT count point over 2023-25",
+        "units": "vehicles per day",
+        "null_when": "exposure_available is false",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "aadf.window_flows / match_segments",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "aadf_count_point",
+        "type": "int",
+        "nullable": true,
+        "meaning": "DfT count_point_id used for aadf (stored as a float-formatted number in the CSV)",
+        "units": "",
+        "null_when": "exposure_available is false",
+        "allowed": [],
+        "range": [],
+        "source": "aadf.match_segments",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "aadf_share_counted",
+        "type": "float",
+        "nullable": true,
+        "meaning": "share of the count point's 2023-25 AADF years that were counted, not estimated, by DfT",
+        "units": "share",
+        "null_when": "exposure_available is false",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "aadf.window_flows",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "exposure_available",
+        "type": "bool",
+        "nullable": false,
+        "meaning": "true when a same-number DfT count point matched the segment (motorway and A roads only)",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "vehicle_km_history",
+        "type": "float",
+        "nullable": true,
+        "meaning": "aadf x 365 x 3 x length_m / 1000",
+        "units": "vehicle-km, 2023-25 history window",
+        "null_when": "exposure_available is false",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "ksi_per_100m_vkm_eb",
+        "type": "float",
+        "nullable": true,
+        "meaning": "EB-smoothed adjusted KSI per 100 million vehicle-km over the history window (exposure SPF), a per-vehicle risk rate, separate from blackspot_score. Do not display below 250 m length",
+        "units": "adjusted KSI per 100 million vehicle-km, 2023-25 history window",
+        "null_when": "exposure_available is false (never imputed)",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "outputs.run_forecast",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "eb_excess_ksi_exposure",
+        "type": "float",
+        "nullable": true,
+        "meaning": "EB KSI minus the exposure-SPF expectation (similar roads with similar traffic). Can be negative",
+        "units": "adjusted KSI casualties, 2023-25 history window",
+        "null_when": "exposure_available is false",
+        "allowed": [],
+        "range": [],
+        "source": "outputs.run_forecast",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "data_sufficiency",
+        "type": "str",
+        "nullable": false,
+        "meaning": "sufficient: >= 6 collisions; sparse: 1-5; none: 0. Scores for sparse/none lean on road type and neighbours",
+        "units": "",
+        "null_when": "",
+        "allowed": [
+          "sufficient",
+          "sparse",
+          "none"
+        ],
+        "range": [],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "max_single_collision_ksi",
+        "type": "float",
+        "nullable": false,
+        "meaning": "largest adjusted KSI from any one collision on the segment (0 when none)",
+        "units": "adjusted KSI casualties, 2023-25 history window",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "single_event_share",
+        "type": "float",
+        "nullable": true,
+        "meaning": "max_single_collision_ksi / n_ksi_casualties_adjusted",
+        "units": "share",
+        "null_when": "n_ksi_casualties_adjusted = 0",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "single_event_flag",
+        "type": "bool",
+        "nullable": false,
+        "meaning": "true when one collision supplied >= 5 adjusted KSI and >= 50% of the segment's history KSI (mass-casualty events). Post-hoc annotation; changes no score",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "outputs.assemble",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "spatial_block",
+        "type": "int",
+        "nullable": false,
+        "meaning": "50 km British National Grid square used for spatial validation: floor(E/50000) x 1000 + floor(N/50000). Not an administrative area",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "experiment.block_id",
+        "identifier": false,
+        "changes_between_versions": false
+      }
+    ],
+    "road_segments_top5000_v2.geojson (feature properties)": [
+      {
+        "name": "rank",
+        "type": "int",
+        "nullable": false,
+        "meaning": "as in the CSV",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          1,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "segment_id",
+        "type": "str",
+        "nullable": false,
+        "meaning": "as in the CSV; join key",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "",
+        "identifier": true,
+        "changes_between_versions": false
+      },
+      {
+        "name": "road_id",
+        "type": "str",
+        "nullable": false,
+        "meaning": "as in the CSV",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "location",
+        "type": "str",
+        "nullable": false,
+        "meaning": "as in the CSV",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "blackspot_score",
+        "type": "float",
+        "nullable": false,
+        "meaning": "as in the CSV, rounded to 4 decimals",
+        "units": "expected adjusted KSI casualties, 2-year total (2026-27)",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "eb_excess_ksi_history",
+        "type": "float",
+        "nullable": true,
+        "meaning": "as in the CSV, rounded to 4 decimals",
+        "units": "adjusted KSI casualties, 2023-25 history window",
+        "null_when": "never in the current file",
+        "allowed": [],
+        "range": [],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "n_crashes",
+        "type": "int",
+        "nullable": false,
+        "meaning": "as in the CSV",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "data_sufficiency",
+        "type": "str",
+        "nullable": false,
+        "meaning": "as in the CSV",
+        "units": "",
+        "null_when": "",
+        "allowed": [
+          "sufficient",
+          "sparse",
+          "none"
+        ],
+        "range": [],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "single_event_flag",
+        "type": "bool",
+        "nullable": false,
+        "meaning": "as in the CSV",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      }
+    ],
+    "extensions/segment_explanations_v2.csv": [
+      {
+        "name": "segment_id",
+        "type": "str",
+        "nullable": false,
+        "meaning": "join key to the base CSV",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "",
+        "identifier": true,
+        "changes_between_versions": false
+      },
+      {
+        "name": "rank",
+        "type": "int",
+        "nullable": false,
+        "meaning": "production rank, copied from the base CSV",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          1,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "contrib_rank",
+        "type": "int",
+        "nullable": false,
+        "meaning": "1 = largest absolute attribution for this segment",
+        "units": "",
+        "null_when": "",
+        "allowed": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "range": [],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "feature",
+        "type": "str",
+        "nullable": false,
+        "meaning": "model input name (one of the 45 production features)",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "label",
+        "type": "str",
+        "nullable": false,
+        "meaning": "plain-English feature label",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "group",
+        "type": "str",
+        "nullable": false,
+        "meaning": "where the information comes from",
+        "units": "",
+        "null_when": "",
+        "allowed": [
+          "history",
+          "road",
+          "context"
+        ],
+        "range": [],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "feature_value",
+        "type": "float",
+        "nullable": true,
+        "meaning": "raw model input value (log_length is log metres; shares 0-1)",
+        "units": "",
+        "null_when": "the model input is missing (e.g. history descriptors with no collisions)",
+        "allowed": [],
+        "range": [],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "display_value",
+        "type": "str",
+        "nullable": true,
+        "meaning": "human-readable value (metres, yes/no, %, mph)",
+        "units": "",
+        "null_when": "feature_value is null",
+        "allowed": [],
+        "range": [],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "shap_log",
+        "type": "float",
+        "nullable": false,
+        "meaning": "TreeSHAP attribution in log expected KSI (production model)",
+        "units": "log expected adjusted KSI",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "factor",
+        "type": "float",
+        "nullable": false,
+        "meaning": "exp(shap_log): multiplies the model baseline; an attribution, not a causal effect",
+        "units": "multiplicative factor",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      }
+    ],
+    "extensions/segment_stability_v2.csv": [
+      {
+        "name": "segment_id",
+        "type": "str",
+        "nullable": false,
+        "meaning": "join key",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "",
+        "identifier": true,
+        "changes_between_versions": false
+      },
+      {
+        "name": "rank",
+        "type": "int",
+        "nullable": false,
+        "meaning": "production rank",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          1,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "rank_median",
+        "type": "float",
+        "nullable": false,
+        "meaning": "median national rank across 20 spatial-block bootstrap refits",
+        "units": "rank",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          1,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "rank_p05",
+        "type": "float",
+        "nullable": false,
+        "meaning": "5th percentile rank across the 20 refits (interpolated)",
+        "units": "rank",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          1,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "rank_p95",
+        "type": "float",
+        "nullable": false,
+        "meaning": "95th percentile rank across the 20 refits (interpolated)",
+        "units": "rank",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          1,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "rank_iqr",
+        "type": "float",
+        "nullable": false,
+        "meaning": "interquartile range of the refit ranks",
+        "units": "ranks",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "freq_top100",
+        "type": "float",
+        "nullable": false,
+        "meaning": "share of the 20 refits ranking the segment in the national top 100 (5% steps)",
+        "units": "share",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "freq_top1000",
+        "type": "float",
+        "nullable": false,
+        "meaning": "share of refits in the top 1,000",
+        "units": "share",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "freq_top5pct",
+        "type": "float",
+        "nullable": false,
+        "meaning": "share of refits in the top 5% (91,377)",
+        "units": "share",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "freq_top10pct",
+        "type": "float",
+        "nullable": false,
+        "meaning": "share of refits in the top 10%",
+        "units": "share",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "freq_top20pct",
+        "type": "float",
+        "nullable": false,
+        "meaning": "share of refits in the top 20%",
+        "units": "share",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          1
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "seed_rank_p05",
+        "type": "float",
+        "nullable": false,
+        "meaning": "5th percentile rank across 5 seed-only refits",
+        "units": "rank",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          1,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "seed_rank_p95",
+        "type": "float",
+        "nullable": false,
+        "meaning": "95th percentile rank across 5 seed-only refits",
+        "units": "rank",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          1,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "stability_class",
+        "type": "str",
+        "nullable": false,
+        "meaning": "robust top-1000: >= 90% of refits in the top 1,000; borderline top-1000: 50-90%; robust top-5%: otherwise in the top 5% in >= 90%; variable: the rest",
+        "units": "",
+        "null_when": "",
+        "allowed": [
+          "robust top-1000",
+          "borderline top-1000",
+          "robust top-5%",
+          "variable"
+        ],
+        "range": [],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "window_rank_min",
+        "type": "int",
+        "nullable": false,
+        "meaning": "best rank across the 12 historical-window rankings",
+        "units": "rank",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          1,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "window_rank_max",
+        "type": "int",
+        "nullable": false,
+        "meaning": "worst rank across the 12 historical-window rankings",
+        "units": "rank",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          1,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "rank_without_largest_collision",
+        "type": "float",
+        "nullable": true,
+        "meaning": "SIMULTANEOUS definition: national rank when every top-1,000 segment loses its own largest 2023-25 collision at once. For 'how much does this one collision matter' use segment_single_event_sensitivity_v2.csv",
+        "units": "rank",
+        "null_when": "rank > 1000 (not computed)",
+        "allowed": [],
+        "range": [
+          1,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      }
+    ],
+    "extensions/segment_single_event_sensitivity_v2.csv": [
+      {
+        "name": "segment_id",
+        "type": "str",
+        "nullable": false,
+        "meaning": "join key",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "",
+        "identifier": true,
+        "changes_between_versions": false
+      },
+      {
+        "name": "rank",
+        "type": "int",
+        "nullable": false,
+        "meaning": "production rank (top 1,000 only)",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          1,
+          1000
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "forecast",
+        "type": "float",
+        "nullable": false,
+        "meaning": "production blackspot_score, 4 decimals",
+        "units": "expected adjusted KSI casualties, 2-year total (2026-27)",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "forecast_without_largest_collision",
+        "type": "float",
+        "nullable": false,
+        "meaning": "the production model's forecast with the segment's largest 2023-25 collision (by adjusted KSI) removed from its own history features; road and context unchanged; no refit. Can be HIGHER than forecast (non-monotone model)",
+        "units": "expected adjusted KSI casualties, 2-year total (2026-27)",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "rank_without_largest_collision_one_at_a_time",
+        "type": "int",
+        "nullable": false,
+        "meaning": "national rank if only this segment changed; use this for per-segment wording",
+        "units": "rank",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          1,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "rank_without_largest_collision_simultaneous",
+        "type": "int",
+        "nullable": false,
+        "meaning": "national rank when all top-1,000 segments change at once (equals rank_without_largest_collision in the stability file)",
+        "units": "rank",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          1,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "largest_collision_adj_ksi",
+        "type": "float",
+        "nullable": false,
+        "meaning": "adjusted KSI of the removed collision",
+        "units": "adjusted KSI casualties",
+        "null_when": "",
+        "allowed": [],
+        "range": [
+          0,
+          null
+        ],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      },
+      {
+        "name": "single_event_flag",
+        "type": "bool",
+        "nullable": false,
+        "meaning": "copied from the base CSV",
+        "units": "",
+        "null_when": "",
+        "allowed": [],
+        "range": [],
+        "source": "",
+        "identifier": false,
+        "changes_between_versions": true
+      }
+    ]
+  }
+}

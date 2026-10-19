@@ -1,0 +1,15 @@
+variability,k,k_segments,mean_pairwise_overlap,mean_overlap_with_production,share_of_production_topk_in_topk_in_>=90pct,share_of_production_topk_in_topk_in_<50pct
+bootstrap,top100,100,0.6364,0.734,0.28,0.14
+bootstrap,top500,500,0.7958,0.835,0.632,0.112
+bootstrap,top1000,1000,0.82,0.8536,0.668,0.098
+bootstrap,top1pct,18275,0.8582,0.8883,0.7338,0.0644
+bootstrap,top5pct,91377,0.8928,0.9183,0.7917,0.0378
+bootstrap,top10pct,182755,0.9294,0.9464,0.8624,0.0236
+bootstrap,top20pct,365510,0.9511,0.9634,0.9052,0.0155
+seed,top100,100,0.854,0.856,0.71,0.12
+seed,top500,500,0.904,0.9184,0.808,0.062
+seed,top1000,1000,0.9177,0.9278,0.825,0.05
+seed,top1pct,18275,0.9338,0.9313,0.8551,0.0582
+seed,top5pct,91377,0.959,0.9584,0.9095,0.0347
+seed,top10pct,182755,0.9747,0.9742,0.9436,0.0213
+seed,top20pct,365510,0.983,0.9827,0.9621,0.014

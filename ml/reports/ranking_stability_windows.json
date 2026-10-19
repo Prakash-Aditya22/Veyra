@@ -1,0 +1,134 @@
+{
+  "REF_recent3_single": {
+    "max_abs_diff_vs_production_pred": 2.3764921674995776e-07,
+    "overlap_top100": 1.0,
+    "overlap_top500": 1.0,
+    "overlap_top1000": 1.0,
+    "overlap_top1pct": 1.0,
+    "overlap_top5pct": 1.0,
+    "overlap_top10pct": 1.0,
+    "overlap_top20pct": 1.0,
+    "spearman_log_pred": 0.9999999999999016
+  },
+  "A_all_single": {
+    "max_abs_diff_vs_production_pred": null,
+    "overlap_top100": 0.73,
+    "overlap_top500": 0.792,
+    "overlap_top1000": 0.777,
+    "overlap_top1pct": 0.7633926128590971,
+    "overlap_top5pct": 0.8030029438480143,
+    "overlap_top10pct": 0.8555880824054062,
+    "overlap_top20pct": 0.8758720691636344,
+    "spearman_log_pred": 0.974660430134084
+  },
+  "A_recent3_stacked": {
+    "max_abs_diff_vs_production_pred": null,
+    "overlap_top100": 0.71,
+    "overlap_top500": 0.838,
+    "overlap_top1000": 0.866,
+    "overlap_top1pct": 0.9004651162790698,
+    "overlap_top5pct": 0.9254188690808409,
+    "overlap_top10pct": 0.9497852315942108,
+    "overlap_top20pct": 0.9667450958934092,
+    "spearman_log_pred": 0.9943935951279829
+  },
+  "B_nocovid3_single": {
+    "max_abs_diff_vs_production_pred": null,
+    "overlap_top100": 0.85,
+    "overlap_top500": 0.878,
+    "overlap_top1000": 0.873,
+    "overlap_top1pct": 0.9066484268125855,
+    "overlap_top5pct": 0.9393173336835309,
+    "overlap_top10pct": 0.9617411288336845,
+    "overlap_top20pct": 0.9756997072583513,
+    "spearman_log_pred": 0.9976229553221947
+  },
+  "B_recent3_noncovidpair": {
+    "max_abs_diff_vs_production_pred": null,
+    "overlap_top100": 1.0,
+    "overlap_top500": 1.0,
+    "overlap_top1000": 1.0,
+    "overlap_top1pct": 1.0,
+    "overlap_top5pct": 1.0,
+    "overlap_top10pct": 1.0,
+    "overlap_top20pct": 1.0,
+    "spearman_log_pred": 0.9999999999999016
+  },
+  "B_nocovid3_noncovidpair": {
+    "max_abs_diff_vs_production_pred": null,
+    "overlap_top100": 0.85,
+    "overlap_top500": 0.878,
+    "overlap_top1000": 0.873,
+    "overlap_top1pct": 0.9066484268125855,
+    "overlap_top5pct": 0.9393173336835309,
+    "overlap_top10pct": 0.9617411288336845,
+    "overlap_top20pct": 0.9756997072583513,
+    "spearman_log_pred": 0.9976229553221947
+  },
+  "C_recent2_single": {
+    "max_abs_diff_vs_production_pred": null,
+    "overlap_top100": 0.77,
+    "overlap_top500": 0.818,
+    "overlap_top1000": 0.827,
+    "overlap_top1pct": 0.8341450068399453,
+    "overlap_top5pct": 0.880724908893923,
+    "overlap_top10pct": 0.9203140816940713,
+    "overlap_top20pct": 0.9510027085442259,
+    "spearman_log_pred": 0.9930333338651777
+  },
+  "C_recent4_single": {
+    "max_abs_diff_vs_production_pred": null,
+    "overlap_top100": 0.81,
+    "overlap_top500": 0.848,
+    "overlap_top1000": 0.847,
+    "overlap_top1pct": 0.8621067031463748,
+    "overlap_top5pct": 0.8973483480525734,
+    "overlap_top10pct": 0.93073240130229,
+    "overlap_top20pct": 0.9573664195234056,
+    "spearman_log_pred": 0.9943471415601736
+  },
+  "C_recent5_single": {
+    "max_abs_diff_vs_production_pred": null,
+    "overlap_top100": 0.78,
+    "overlap_top500": 0.814,
+    "overlap_top1000": 0.822,
+    "overlap_top1pct": 0.8297127222982216,
+    "overlap_top5pct": 0.865392823139302,
+    "overlap_top10pct": 0.9043801811167957,
+    "overlap_top20pct": 0.9376515006429372,
+    "spearman_log_pred": 0.9905825796687371
+  },
+  "D_decay_h1_single": {
+    "max_abs_diff_vs_production_pred": null,
+    "overlap_top100": 0.71,
+    "overlap_top500": 0.85,
+    "overlap_top1000": 0.848,
+    "overlap_top1pct": 0.8047606019151847,
+    "overlap_top5pct": 0.8306576053054926,
+    "overlap_top10pct": 0.868430412300621,
+    "overlap_top20pct": 0.8880605181800771,
+    "spearman_log_pred": 0.9791609082026149
+  },
+  "D_decay_h2_single": {
+    "max_abs_diff_vs_production_pred": null,
+    "overlap_top100": 0.75,
+    "overlap_top500": 0.82,
+    "overlap_top1000": 0.834,
+    "overlap_top1pct": 0.814391244870041,
+    "overlap_top5pct": 0.834356566750933,
+    "overlap_top10pct": 0.8720363327952724,
+    "overlap_top20pct": 0.8885283576372739,
+    "spearman_log_pred": 0.979068285095094
+  },
+  "D_decay_h4_single": {
+    "max_abs_diff_vs_production_pred": null,
+    "overlap_top100": 0.74,
+    "overlap_top500": 0.828,
+    "overlap_top1000": 0.8,
+    "overlap_top1pct": 0.8015321477428181,
+    "overlap_top5pct": 0.8295851253597732,
+    "overlap_top10pct": 0.8698585538015375,
+    "overlap_top20pct": 0.8841810073595797,
+    "spearman_log_pred": 0.9776174623721869
+  }
+}

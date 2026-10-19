@@ -1,0 +1,326 @@
+{
+  "generated_utc": "2026-10-19T09:17:57+00:00",
+  "spec_sha256": "b9487674e4f1da7951f787ef122b7f8caea033cebdfc34e26649de35562ad378",
+  "selected_model": "lgbm",
+  "lgbm_params": {
+    "num_leaves": 31,
+    "min_child_samples": 1000,
+    "n_estimators": 800
+  },
+  "network_release": "OS Open Roads 2026-04 (one snapshot for every period)",
+  "segments": 1827550,
+  "rows": 10965300,
+  "cutoffs": {
+    "2019": {
+      "cutoff": 2019,
+      "ranking_kind": "retrospective_backtest",
+      "train_feature_period": "2015-2017",
+      "train_target_period": "2018-2019",
+      "history_period": "2017-2019",
+      "forecast_period": "2020-2021",
+      "target_observed": true,
+      "fold_role": "development fold (spec selection)",
+      "caveat": "Retrospective backtest, not a ranking that existed in 2019: the model type, hyperparameters and features were chosen in 2026 on development folds with targets up to 2023. This cutoff's target 2020-2021 was one of the selection targets. COVID-affected years (2020, 2021) fall in this cutoff's history, training or target windows, so totals are less reliable than ranks. Road segments, classes and junctions are the OS Open Roads 2026-04 snapshot (used for every period), not the network of 2017-2019.",
+      "fold": {
+        "cutoff": 2019,
+        "train_features": "2015-2017",
+        "train_target": "2018-2019",
+        "test_features": "2017-2019",
+        "test_target": "2020-2021"
+      },
+      "model_source": "refitted on Fold(c) training pair",
+      "run_fold_seconds": 64.7,
+      "invariance_check_seconds": 11.2,
+      "future_invariance": {
+        "collisions_after_cutoff_dropped": 591292,
+        "training_frame_identical": true,
+        "prediction_features_identical": true
+      },
+      "training_target_adj_ksi": 58763.29268,
+      "seconds": 76.0,
+      "memory": {
+        "peak_working_set_mb": 2825,
+        "peak_commit_mb": 3748
+      }
+    },
+    "2020": {
+      "cutoff": 2020,
+      "ranking_kind": "retrospective_backtest",
+      "train_feature_period": "2016-2018",
+      "train_target_period": "2019-2020",
+      "history_period": "2018-2020",
+      "forecast_period": "2021-2022",
+      "target_observed": true,
+      "fold_role": "development fold (spec selection)",
+      "caveat": "Retrospective backtest, not a ranking that existed in 2020: the model type, hyperparameters and features were chosen in 2026 on development folds with targets up to 2023. This cutoff's target 2021-2022 was one of the selection targets. COVID-affected years (2020, 2021) fall in this cutoff's history, training or target windows, so totals are less reliable than ranks. Road segments, classes and junctions are the OS Open Roads 2026-04 snapshot (used for every period), not the network of 2018-2020.",
+      "fold": {
+        "cutoff": 2020,
+        "train_features": "2016-2018",
+        "train_target": "2019-2020",
+        "test_features": "2018-2020",
+        "test_target": "2021-2022"
+      },
+      "model_source": "refitted on Fold(c) training pair",
+      "run_fold_seconds": 68.3,
+      "invariance_check_seconds": 13.5,
+      "future_invariance": {
+        "collisions_after_cutoff_dropped": 502062,
+        "training_frame_identical": true,
+        "prediction_features_identical": true
+      },
+      "training_target_adj_ksi": 51750.52507999999,
+      "seconds": 81.9,
+      "memory": {
+        "peak_working_set_mb": 2701,
+        "peak_commit_mb": 3595
+      }
+    },
+    "2021": {
+      "cutoff": 2021,
+      "ranking_kind": "retrospective_backtest",
+      "train_feature_period": "2017-2019",
+      "train_target_period": "2020-2021",
+      "history_period": "2019-2021",
+      "forecast_period": "2022-2023",
+      "target_observed": true,
+      "fold_role": "development fold (spec selection)",
+      "caveat": "Retrospective backtest, not a ranking that existed in 2021: the model type, hyperparameters and features were chosen in 2026 on development folds with targets up to 2023. This cutoff's target 2022-2023 was one of the selection targets. COVID-affected years (2020, 2021) fall in this cutoff's history, training or target windows, so totals are less reliable than ranks. Road segments, classes and junctions are the OS Open Roads 2026-04 snapshot (used for every period), not the network of 2019-2021.",
+      "fold": {
+        "cutoff": 2021,
+        "train_features": "2017-2019",
+        "train_target": "2020-2021",
+        "test_features": "2019-2021",
+        "test_target": "2022-2023"
+      },
+      "model_source": "refitted on Fold(c) training pair",
+      "run_fold_seconds": 62.5,
+      "invariance_check_seconds": 14.3,
+      "future_invariance": {
+        "collisions_after_cutoff_dropped": 403201,
+        "training_frame_identical": true,
+        "prediction_features_identical": true
+      },
+      "training_target_adj_ksi": 48544.31698,
+      "seconds": 77.0,
+      "memory": {
+        "peak_working_set_mb": 2728,
+        "peak_commit_mb": 3595
+      }
+    },
+    "2022": {
+      "cutoff": 2022,
+      "ranking_kind": "retrospective_backtest",
+      "train_feature_period": "2018-2020",
+      "train_target_period": "2021-2022",
+      "history_period": "2020-2022",
+      "forecast_period": "2023-2024",
+      "target_observed": true,
+      "fold_role": "post-hoc fold (overlaps holdout)",
+      "caveat": "Retrospective backtest, not a ranking that existed in 2022: the model type, hyperparameters and features were chosen in 2026 on development folds with targets up to 2023. Target 2023-2024 overlaps the already-examined 2024-2025 holdout. COVID-affected years (2020, 2021) fall in this cutoff's history, training or target windows, so totals are less reliable than ranks. Road segments, classes and junctions are the OS Open Roads 2026-04 snapshot (used for every period), not the network of 2020-2022.",
+      "fold": {
+        "cutoff": 2022,
+        "train_features": "2018-2020",
+        "train_target": "2021-2022",
+        "test_features": "2020-2022",
+        "test_target": "2023-2024"
+      },
+      "model_source": "refitted on Fold(c) training pair",
+      "run_fold_seconds": 72.1,
+      "invariance_check_seconds": 12.5,
+      "future_invariance": {
+        "collisions_after_cutoff_dropped": 299635,
+        "training_frame_identical": true,
+        "prediction_features_identical": true
+      },
+      "training_target_adj_ksi": 54147.46196,
+      "seconds": 84.7,
+      "memory": {
+        "peak_working_set_mb": 2751,
+        "peak_commit_mb": 3595
+      }
+    },
+    "2023": {
+      "cutoff": 2023,
+      "ranking_kind": "retrospective_backtest",
+      "train_feature_period": "2019-2021",
+      "train_target_period": "2022-2023",
+      "history_period": "2021-2023",
+      "forecast_period": "2024-2025",
+      "target_observed": true,
+      "fold_role": "final holdout (already examined)",
+      "caveat": "Retrospective backtest, not a ranking that existed in 2023: the model type, hyperparameters and features were chosen in 2026 on development folds with targets up to 2023. Target 2024-2025 is the final holdout, already examined: not an untouched test. COVID-affected years (2020, 2021) fall in this cutoff's history, training or target windows, so totals are less reliable than ranks. Road segments, classes and junctions are the OS Open Roads 2026-04 snapshot (used for every period), not the network of 2021-2023.",
+      "fold": {
+        "cutoff": 2023,
+        "train_features": "2019-2021",
+        "train_target": "2022-2023",
+        "test_features": "2021-2023",
+        "test_target": "2024-2025"
+      },
+      "model_source": "refitted on Fold(c) training pair",
+      "run_fold_seconds": 68.4,
+      "invariance_check_seconds": 12.8,
+      "future_invariance": {
+        "collisions_after_cutoff_dropped": 197770,
+        "training_frame_identical": true,
+        "prediction_features_identical": true
+      },
+      "training_target_adj_ksi": 56656.80493,
+      "seconds": 81.2,
+      "memory": {
+        "peak_working_set_mb": 2777,
+        "peak_commit_mb": 3595
+      }
+    },
+    "2025": {
+      "cutoff": 2025,
+      "ranking_kind": "production_forecast",
+      "train_feature_period": "2021-2023",
+      "train_target_period": "2024-2025",
+      "history_period": "2023-2025",
+      "forecast_period": "2026-2027",
+      "target_observed": false,
+      "fold_role": "production",
+      "caveat": "Production forecast: the released v2.0 scores, reproduced by the saved production model (not refitted). 2026-2027 is not yet observed. The model was trained on the 2024-2025 outcomes of the examined holdout. Road segments, classes and junctions are the OS Open Roads 2026-04 snapshot (used for every period), not the network of 2023-2025.",
+      "model_source": "stored release scores (road_segments_v2_full.parquet); not refitted",
+      "source": "stored release scores (road_segments_v2_full.parquet); not refitted",
+      "check": "saved production model applied to the 2023-2025 features",
+      "max_abs_diff_model_vs_stored": 0.0,
+      "ranks_identical_to_stored": true,
+      "model_file_sha256": "dd116b22425f47cb44f500ce00fb8ae573be2109a8df66cdf1c8fd9c2934c795",
+      "training_target_adj_ksi": 57446.39392,
+      "seconds": 31.8,
+      "memory": {
+        "peak_working_set_mb": 2777,
+        "peak_commit_mb": 3595
+      }
+    }
+  },
+  "omitted_cutoffs": {
+    "2024": "target 2025-2026 is incomplete: the data end in 2025"
+  },
+  "earliest_cutoff": 2019,
+  "ranking_kinds": {
+    "retrospective_backtest": "model ranking refitted at the cutoff (2019-2023)",
+    "production_forecast": "the released v2.0 ranking (2025 cutoff)",
+    "observed": "ranking of recorded counts: observed_target_rank, observed_history_rank, and the count baselines in capture.csv"
+  },
+  "tie_handling": "capture: tie block at the cut counted pro rata; overlaps and persistence: expected values under independent random tie-breaking (topk_inclusion); stored observed_*_rank columns order ties by segment_id for convenience only",
+  "columns": {
+    "cutoff": "last year of data the ranking may use",
+    "ranking_kind": "what predicted_* are: 'retrospective_backtest' (2019-2023, refitted at the cutoff) or 'production_forecast' (2025)",
+    "train_feature_period": "history window of the training pair (features c-4..c-2)",
+    "train_target_period": "target window of the training pair (c-1..c); never beyond the cutoff",
+    "history_period": "history window the ranking is computed from (c-2..c)",
+    "forecast_period": "two-year period the ranking forecasts (c+1..c+2)",
+    "target_observed": "whether the forecast period is complete in the data",
+    "segment_id": "OS Open Roads 2026-04 segment (same id in every period)",
+    "predicted_adj_ksi": "MODEL OUTPUT: expected adjusted KSI casualties in forecast_period",
+    "predicted_rank": "MODEL RANK: 1 = highest predicted_adj_ksi; ties by segment_id ascending (production rule)",
+    "observed_target_adj_ksi": "RECORDED: adjusted KSI casualties in forecast_period; null when not observed",
+    "observed_target_rank": "RECORDED RANK (observed): rank of observed_target_adj_ksi; null when not observed. Recorded counts tie heavily, at zero and at positive values (e.g. 1.0 adjusted KSI); tied segments are ordered by segment_id only, which is arbitrary. Do not build top-k sets from this column: the summaries use tie-aware inclusion probabilities (topk_inclusion)",
+    "observed_history_adj_ksi": "RECORDED: adjusted KSI casualties in history_period",
+    "observed_history_ksi_cas": "RECORDED: KSI casualties as reported in history_period",
+    "observed_history_collisions": "RECORDED: collisions in history_period",
+    "observed_history_ksi_collisions": "RECORDED: collisions with >= 1 KSI casualty in history_period",
+    "observed_history_fatal_cas": "RECORDED: fatal casualties in history_period",
+    "observed_history_rank": "RECORDED RANK (observed): rank of observed_history_adj_ksi (the count ranking a history-only method would give). Ties at zero and at positive values are ordered by segment_id only; use tie-aware statistics, not top-k sets from this column",
+    "spec_sha256": "frozen model specification (ml/outputs/frozen_spec.json)",
+    "network_release": "road network used for every period",
+    "caveat": "what the row's ranking is and is not"
+  },
+  "checks": [
+    {
+      "name": "cutoff 2019 periods follow features.Fold",
+      "pass": true,
+      "detail": "train 2015-2017 \u2192 2018-2019, applied 2017-2019 \u2192 2020-2021; training target ends at the cutoff"
+    },
+    {
+      "name": "cutoff 2019 unaffected by later collisions",
+      "pass": true,
+      "detail": "dropping all 591,292 collisions after 2019 leaves the training frame and the prediction features bit-identical"
+    },
+    {
+      "name": "cutoff 2020 periods follow features.Fold",
+      "pass": true,
+      "detail": "train 2016-2018 \u2192 2019-2020, applied 2018-2020 \u2192 2021-2022; training target ends at the cutoff"
+    },
+    {
+      "name": "cutoff 2020 unaffected by later collisions",
+      "pass": true,
+      "detail": "dropping all 502,062 collisions after 2020 leaves the training frame and the prediction features bit-identical"
+    },
+    {
+      "name": "cutoff 2021 periods follow features.Fold",
+      "pass": true,
+      "detail": "train 2017-2019 \u2192 2020-2021, applied 2019-2021 \u2192 2022-2023; training target ends at the cutoff"
+    },
+    {
+      "name": "cutoff 2021 unaffected by later collisions",
+      "pass": true,
+      "detail": "dropping all 403,201 collisions after 2021 leaves the training frame and the prediction features bit-identical"
+    },
+    {
+      "name": "cutoff 2022 periods follow features.Fold",
+      "pass": true,
+      "detail": "train 2018-2020 \u2192 2021-2022, applied 2020-2022 \u2192 2023-2024; training target ends at the cutoff"
+    },
+    {
+      "name": "cutoff 2022 unaffected by later collisions",
+      "pass": true,
+      "detail": "dropping all 299,635 collisions after 2022 leaves the training frame and the prediction features bit-identical"
+    },
+    {
+      "name": "cutoff 2023 periods follow features.Fold",
+      "pass": true,
+      "detail": "train 2019-2021 \u2192 2022-2023, applied 2021-2023 \u2192 2024-2025; training target ends at the cutoff"
+    },
+    {
+      "name": "cutoff 2023 unaffected by later collisions",
+      "pass": true,
+      "detail": "dropping all 197,770 collisions after 2023 leaves the training frame and the prediction features bit-identical"
+    },
+    {
+      "name": "cutoff 2025 periods follow features.Fold",
+      "pass": true,
+      "detail": "train 2021-2023 \u2192 2024-2025, applied 2023-2025 \u2192 2026-2027; training target ends at the cutoff"
+    },
+    {
+      "name": "cutoff 2025 reproduces the released scores without refitting",
+      "pass": true,
+      "detail": "saved production model vs stored blackspot_score: max |diff| = 0.0; ranks identical: True"
+    },
+    {
+      "name": "backtests reproduce the archived development, post-hoc and holdout metrics",
+      "pass": true,
+      "detail": "15 model\u00d7cutoff rows, 90 metrics, max |diff| = 0.0e+00"
+    },
+    {
+      "name": "backtests never use the production model",
+      "pass": true,
+      "detail": "every 2019-2023 prediction comes from a model refitted on its own Fold(c) training pair"
+    },
+    {
+      "name": "top-k statistics are tie-aware",
+      "pass": true,
+      "detail": "68 inclusion vectors each sum to k; recorded-count overlaps are expected values under random tie-breaking, not segment_id order; model scores split a tie at 1 of 24 reported cuts (largest model block 2)"
+    },
+    {
+      "name": "gap decomposition agrees with the capture metric",
+      "pass": true,
+      "detail": "model capture from inclusion probabilities vs capture.csv: max |diff| = 1.4e-14; history and no-history parts add up to the total"
+    },
+    {
+      "name": "unobserved target stays null",
+      "pass": true,
+      "detail": "observed_target_* is null exactly where the forecast period is not in the data"
+    }
+  ],
+  "result_bytes": 302544241,
+  "runtime": {
+    "total_minutes": 1.11,
+    "memory": {
+      "peak_working_set_mb": 4214,
+      "peak_commit_mb": 5097
+    }
+  }
+}

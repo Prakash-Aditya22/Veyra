@@ -1,4 +1,10 @@
 """
+[v1 -- SUPERSEDED by ml/pipeline.py (v2). Kept unchanged so data/road_segments_ranked.csv
+ stays reproducible. Audited defects (ml/reports/preliminary_audit.md): road eligibility
+ and chainage use 2022-23 (target-period) crashes (D1, D2); shipped scores are in-sample
+ for 70% of segments (D3); the target counts KSI collisions, not casualties (D4); random
+ split of neighbouring segments (D5); tie-dependent baseline comparison (D6).]
+
 ROAD-SEGMENT BLACKSPOTS -- a road cut into 500m pieces ALONG ITS LENGTH.
 
 This replaces the 500m x 500m grid. A grid bin is a square patch of the map:

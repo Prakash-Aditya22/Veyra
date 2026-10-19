@@ -1,0 +1,17 @@
+label_set,bin,n,observed,predicted
+injury_based_only,0,1933,0.13451,0.08246
+injury_based_only,1,25196,0.21714,0.16124
+injury_based_only,2,38800,0.26714,0.24765
+injury_based_only,3,15760,0.32126,0.34116
+injury_based_only,4,4598,0.38995,0.43854
+injury_based_only,5,1288,0.46972,0.54012
+injury_based_only,6,257,0.59144,0.6333
+injury_based_only,7,16,0.6875,0.72339
+all_records,0,9508,0.14188,0.06874
+all_records,1,30926,0.21965,0.16531
+all_records,2,43534,0.2714,0.24026
+all_records,3,13121,0.35523,0.34002
+all_records,4,3554,0.43697,0.43956
+all_records,5,807,0.5254,0.53391
+all_records,6,73,0.65753,0.62554
+all_records,7,2,0.5,0.71988

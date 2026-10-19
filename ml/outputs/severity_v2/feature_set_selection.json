@@ -1,0 +1,11 @@
+{
+  "validation_auc_by_feature_set": {
+    "core": 0.5772152165617082,
+    "core+geo": 0.6039990425974477,
+    "core+geo+force": 0.6205932518450693,
+    "core+vehicles(not deployable)": 0.6203189797465173
+  },
+  "best_validation_auc": "core+geo+force",
+  "served_and_explained": "core",
+  "reason": "Coordinates and police force raise validation AUC, but force is administrative (recording practice) and both act as location lookups; their gain cannot be explained as road or environment risk. The served model therefore uses road, environment and time only, and its SHAP is what the UI may show. Scores of the geo/force variants are reported for transparency, not served."
+}

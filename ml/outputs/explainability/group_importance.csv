@@ -1,0 +1,5 @@
+population,mean_abs_history,mean_abs_road,mean_abs_context
+"all segments (uniform random sample of 200,000)",0.255739,1.060581,0.499328
+"top 5% by forecast (all 91,377)",1.185869,1.828326,0.805132
+segments with >= 1 collision 2023-25 (in the sample),1.376353,1.277942,0.552956
+segments with no collision 2023-25 (in the sample),0.146031,1.039302,0.494077

@@ -1,0 +1,68 @@
+{
+  "selected_model": "lgbm",
+  "eb_k": 0.6965382208769693,
+  "eb_alpha": 1.4800045393091168,
+  "eb_spf_coef": {
+    "intercept": -4.3693,
+    "log_length": 1.2971,
+    "cls_M": 0.2393,
+    "cls_A": 0.8133,
+    "cls_B": 0.5162,
+    "cls_C": 0.4987,
+    "cls_U": 0.4219,
+    "fw_collapsed_dual": -0.0101,
+    "fw_dual": -0.0258,
+    "fw_roundabout": -0.0171,
+    "fw_slip": -0.0652,
+    "share_roundabout": -0.005,
+    "n_junctions": 0.1218,
+    "junctions_per_km": 0.336,
+    "primary_route": 0.0587,
+    "trunk_road": 0.0113,
+    "net_km_1km": -0.0547,
+    "net_km_3km": 0.646
+  },
+  "exposure_spf": {
+    "alpha": 1.195052059711703,
+    "coef": {
+      "intercept": -1.7122,
+      "log_length": 1.0952,
+      "cls_M": -0.0442,
+      "cls_A": 0.0442,
+      "cls_B": 0.0,
+      "cls_C": 0.0,
+      "cls_U": 0.0,
+      "fw_collapsed_dual": -0.1295,
+      "fw_dual": -0.1658,
+      "fw_roundabout": -0.0938,
+      "fw_slip": -0.2929,
+      "share_roundabout": -0.0962,
+      "n_junctions": 0.183,
+      "junctions_per_km": 0.374,
+      "primary_route": 0.0678,
+      "trunk_road": -0.0617,
+      "net_km_1km": -0.0286,
+      "net_km_3km": 0.3322,
+      "log_aadf": 0.4353
+    }
+  },
+  "model_info": {
+    "gain_share": {
+      "h_n_coll": 0.3343,
+      "h_n_cas": 0.1575,
+      "stroke_adj_ksi_other": 0.1032,
+      "log_length": 0.0904,
+      "nb_coll_3km": 0.0417,
+      "cls_A": 0.0407,
+      "h_years_with_crash": 0.0345,
+      "n_junctions": 0.0334,
+      "h_speed_median": 0.0243,
+      "nb_adj_ksi_3km": 0.0236,
+      "cls_N": 0.013,
+      "cls_U": 0.0119,
+      "net_km_3km": 0.0099,
+      "stroke_pieces": 0.0089,
+      "h_share_wet": 0.0077
+    }
+  }
+}

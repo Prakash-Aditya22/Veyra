@@ -1,0 +1,59 @@
+{
+  "score_version": "v2.0",
+  "segment_length_target_m": 500,
+  "segmentation": "OS Open Roads centrelines (2026-04 release); junction-to-junction strokes of one road cut into round(L/500) equal pieces; independent of crash data",
+  "history_years": [
+    2023,
+    2024,
+    2025
+  ],
+  "forecast_years": [
+    2026,
+    2027
+  ],
+  "model": "lgbm",
+  "frozen_spec_sha256": "b9487674e4f1da7951f787ef122b7f8caea033cebdfc34e26649de35562ad378",
+  "score_definition": "expected KSI casualties (DfT severity-adjusted) on this segment, 2026-2027",
+  "n_segments_scored_nationally": 1827550,
+  "n_rows_in_this_file": 50015,
+  "selection_of_rows": "rank <= 50000 or n_crashes >= 6 (history window)",
+  "legacy_columns_preserved": [
+    "rank",
+    "segment_id",
+    "location",
+    "road_id",
+    "km_from",
+    "km_to",
+    "lat",
+    "lon",
+    "blackspot_score",
+    "n_crashes",
+    "n_ksi",
+    "n_fatal",
+    "ksi_rate",
+    "crashes_per_year",
+    "speed_max",
+    "pct_night",
+    "pct_junction",
+    "future_ksi",
+    "future_fatal"
+  ],
+  "legacy_column_notes": {
+    "segment_id": "new v2 identifiers (network-based, stable for a network release); v1 IDs are not comparable",
+    "location": "road, name, distance along the junction-to-junction stretch",
+    "n_crashes": "collisions in the history window",
+    "n_ksi": "KSI collisions in the history window (v1 meaning); casualties in n_ksi_casualties*",
+    "n_fatal": "fatal collisions in the history window (v1 meaning)",
+    "pct_junction": "share of history crashes with junction_detail != 0 (v1 definition; roundabouts count as non-junction under the 2024 coding); corrected value: pct_junction_v2",
+    "future_ksi, future_fatal": "empty: the forecast period has not happened; holdout outcomes are in ml/reports/model_comparison.csv",
+    "run": "stretch ordinal within road_id (drawing order only); not a risk feature",
+    "km_from, km_to": "distance along the OS stretch, not an official milepost",
+    "blackspot_score": "now expected KSI CASUALTIES (severity-adjusted) for the next two years; v1 was an in-sample fit of KSI COLLISIONS"
+  },
+  "columns_needing_care": {
+    "eb_excess_ksi_history": "expected KSI above similar roads (SPF without traffic) over the history window; a screening signal, not a cause",
+    "ksi_per_100m_vkm_eb, eb_excess_ksi_exposure": "only where exposure_available (M/A roads with a matched DfT count point)",
+    "data_sufficiency": "'sufficient' = >= 6 crashes in the history window; grey out others in the UI",
+    "single_event_flag": "true when one collision supplied >= 5 KSI casualties and >= 50% of the segment's history KSI (mass-casualty events, e.g. the May 2025 Liverpool parade incident on Water Street); label such segments, do not present them as road-design blackspots"
+  }
+}
