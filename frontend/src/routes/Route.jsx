@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MapContainer, TileLayer, Polyline, CircleMarker, useMap } from 'react-leaflet';
+import { MapContainer, Polyline, CircleMarker, useMap } from 'react-leaflet';
 import { motion, useReducedMotion } from 'motion/react';
 import { Warning } from '@phosphor-icons/react';
 import RouteCompare from '../components/RouteCompare.jsx';
 import RiskBadge from '../components/RiskBadge.jsx';
 import Legend from '../components/Legend.jsx';
+import Basemap from '../components/Basemap.jsx';
 import { EmptyState, ErrorState, TableSkeleton } from '../components/States.jsx';
 import { geocode, routeRisk, ApiError } from '../lib/api.js';
 import { scoreToDisplay } from '../lib/riskScale.js';
@@ -386,12 +387,7 @@ export default function RouteScreen() {
             zoomControl={false}
             attributionControl
           >
-            <TileLayer
-              url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-              subdomains="abcd"
-              maxZoom={19}
-            />
+            <Basemap />
 
             {lines.map((l) => {
               const isSelected = l.index === (selected?.index ?? selectedIndex);

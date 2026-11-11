@@ -15,65 +15,126 @@ import ProvenanceStrip from '../components/ProvenanceStrip.jsx';
 import Reveal from '../components/motion/Reveal.jsx';
 import CountUp from '../components/motion/CountUp.jsx';
 import SpringBar from '../components/motion/SpringBar.jsx';
-import { BLACKSPOTS, DATASET } from '../data/blackspots.js';
-import { BY_MONTH, BY_YEAR_SEVERITY } from '../data/series.js';
-import { byHour, byRoadClass, topFactors, totals, peakHour } from '../lib/stats.js';
-import { num, pct, hourLabel } from '../lib/format.js';
+import GB from '../data/gbStats.json';
+import { TIERS, tierOf } from '../lib/risk.js';
+import { scoreToDisplay } from '../lib/riskScale.js';
+import { num, pct } from '../lib/format.js';
 import './Statistics.css';
+
+/*
+  Great Britain, from what the pipeline actually produced.
+
+  gbStats.json is built by ml/build_stats_summary.py from the scored segment
+  CSV, the blackspot run's validation log and the severity model's SHAP
+  output. The crash-level STATS19 file is not shipped, so there is no
+  month, hour or year breakdown here: every panel is either a per-segment
+  aggregate of 2019-2021 counts or a number the pipeline printed.
+*/
 
 const TEAL = '#0F766E';
 const TEAL_LIFT = '#14918A';
+const SLATE = '#64748B';
+const SLATE_DIM = '#3F4A5A';
+
+const T = GB.totals;
+const CRASH_SPAN = `${GB.crashYears[0]} to ${GB.crashYears[1]}`;
+const FORECAST_SPAN = `${GB.forecastYears[0]} to ${GB.forecastYears[1]}`;
+
+const LEGEND_STYLE = {
+  fontSize: 11,
+  fontFamily: "'Satoshi', sans-serif",
+  color: '#9AA2AE',
+  paddingTop: 6,
+};
+
+/** Validation rows -> one record per cutoff, one key per method, for grouped bars. */
+function validationSeries() {
+  const [model, crashes, ksi] = GB.validation.rows;
+  return GB.validation.cutoffs.map((cutoff, i) => ({
+    cutoff,
+    model: model.values[i],
+    crashes: crashes.values[i],
+    ksi: ksi.values[i],
+  }));
+}
+
+/*
+  Tiers are binned here, with the map's own functions, rather than in the
+  Python script, so the cutoffs keep living in riskScale.js alone.
+*/
+function tierCounts() {
+  const counts = new Map(TIERS.map((t) => [t.key, 0]));
+  for (const s of GB.evidencedScores) {
+    const tier = tierOf(scoreToDisplay(s));
+    counts.set(tier.key, (counts.get(tier.key) ?? 0) + 1);
+  }
+  return TIERS.map((t) => ({ tier: t.word, count: counts.get(t.key), fill: t.hex }));
+}
 
 export default function Statistics() {
-  const t = useMemo(() => totals(BLACKSPOTS), []);
-  const hours = useMemo(() => byHour(BLACKSPOTS), []);
-  const peak = useMemo(() => peakHour(BLACKSPOTS), []);
-  const roads = useMemo(() => byRoadClass(BLACKSPOTS).slice(0, 8), []);
-  const factors = useMemo(() => topFactors(BLACKSPOTS, 7), []);
+  const validation = useMemo(validationSeries, []);
+  const tiers = useMemo(tierCounts, []);
+  const peakSpeed = useMemo(
+    () => GB.bySpeed.reduce((a, b) => (b.ksiShare > a.ksiShare ? b : a)),
+    [],
+  );
+  const [model, crashCount] = GB.validation.rows;
 
-  const clusterMeta = `${num(t.incidents)} records inside ${DATASET.clusters} clusters, ${DATASET.from} to ${DATASET.to}`;
-  const datasetMeta = `${num(DATASET.records)} records, all of ${DATASET.from} to ${DATASET.to}`;
+  const segmentMeta = `${num(T.segments)} segments on ${num(T.roads)} roads, crashes ${CRASH_SPAN}`;
 
   return (
     <div className="stats">
       <div className="container stats__head">
         <h1 className="screen-title">Statistics</h1>
         <p className="body-secondary">
-          Aggregate patterns across the {DATASET.region}. The monthly and yearly panels
-          cover every record in the window; the hourly and road-class panels cover only
-          records that fell inside a detected cluster.
+          Patterns across Great Britain&rsquo;s numbered roads, from the STATS19 record. Counts
+          are recorded crashes from {CRASH_SPAN}; the blackspot score is the model&rsquo;s
+          forecast of killed-or-seriously-injured casualties in {FORECAST_SPAN}, checked on
+          road it never trained on.
         </p>
-        <ProvenanceStrip />
+        <ProvenanceStrip
+          items={[
+            'STATS19, Great Britain',
+            `crashes ${CRASH_SPAN}`,
+            `KSI forecast ${FORECAST_SPAN}`,
+            `${num(T.segments)} scored 500 m segments`,
+            `${num(T.roads)} roads`,
+          ]}
+        />
       </div>
 
       {/* KPI strip. Plain layout, hairline separated. No cards in a dense region. */}
       <div className="container">
         <div className="kpi-strip">
           <Reveal className="kpi" index={0}>
-            <p className="label">Records in window</p>
+            <p className="label">Crashes on scored roads</p>
             <p className="kpi__value mono">
-              <CountUp value={DATASET.records} />
+              <CountUp value={T.crashes} />
             </p>
+            <p className="kpi__note mono">{CRASH_SPAN}</p>
           </Reveal>
           <Reveal className="kpi" index={1}>
-            <p className="label">Clustered records</p>
+            <p className="label">Fatal or serious</p>
             <p className="kpi__value mono">
-              <CountUp value={t.incidents} />
+              <CountUp value={T.ksi} />
             </p>
-            <p className="kpi__note mono">{pct(t.incidents, DATASET.records)}% of window</p>
+            <p className="kpi__note mono">{pct(T.ksi, T.crashes)}% of crashes</p>
           </Reveal>
           <Reveal className="kpi" index={2}>
-            <p className="label">Fatal outcomes</p>
+            <p className="label">Fatal</p>
             <p className="kpi__value mono">
-              <CountUp value={t.fatal} />
+              <CountUp value={T.fatal} />
             </p>
-            <p className="kpi__note mono">{pct(t.fatal, t.incidents)}% of clustered</p>
+            <p className="kpi__note mono">{pct(T.fatal, T.crashes)}% of crashes</p>
           </Reveal>
           <Reveal className="kpi" index={3}>
-            <p className="label">Peak hour</p>
-            {/* A clock reading is not a quantity, so it does not count up. */}
-            <p className="kpi__value mono">{hourLabel(peak.hour)}</p>
-            <p className="kpi__note mono">{num(peak.count)} incidents</p>
+            <p className="label">Evidenced segments</p>
+            <p className="kpi__value mono">
+              <CountUp value={T.evidencedSegments} />
+            </p>
+            <p className="kpi__note mono">
+              {GB.minCrashes}+ crashes, of {num(T.segments)}
+            </p>
           </Reveal>
         </div>
       </div>
@@ -81,193 +142,139 @@ export default function Statistics() {
       {/* Asymmetric 2:1, then 1:2. Never four equal cards. */}
       <div className="container stats__grid">
         <Reveal className="stats__panel stats__panel--wide">
-        <ChartFrame
-          title="Incidents by calendar month"
-          meta={datasetMeta}
-        >
-          <div className="stats__chart">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={BY_MONTH} margin={{ top: 4, right: 4, bottom: 0, left: -14 }}>
-                <CartesianGrid {...GRID} />
-                <XAxis {...AXIS} dataKey="month" />
-                <YAxis {...AXIS} width={46} />
-                <Tooltip
-                  cursor={{ fill: 'rgba(148, 163, 184, 0.08)' }}
-                  content={(p) => <ChartTooltip {...p} unit="records in month" />}
-                />
-                <Bar
-                  dataKey="count"
-                  name="Records"
-                  radius={[3, 3, 0, 0]}
-                  isAnimationActive={false}
-                >
-                  {BY_MONTH.map((m) => (
-                    <Cell
-                      key={m.month}
-                      fill={TEAL}
-                      // Monsoon months carry the visual weight; same hue, no second accent.
-                      fillOpacity={['Jun', 'Jul', 'Aug', 'Sep'].includes(m.month) ? 1 : 0.5}
-                    />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </ChartFrame>
+          <ChartFrame
+            title="Share of future serious harm found by each ranking"
+            meta={`Held-out segments, KSI in ${FORECAST_SPAN}. The model's top 20% captures ${model.values[3]}%; ranking by past crash count captures ${crashCount.values[3]}%.`}
+          >
+            <div className="stats__chart">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={validation} margin={{ top: 4, right: 4, bottom: 0, left: -14 }}>
+                  <CartesianGrid {...GRID} />
+                  <XAxis {...AXIS} dataKey="cutoff" />
+                  <YAxis {...AXIS} width={46} unit="%" />
+                  <Tooltip
+                    cursor={{ fill: 'rgba(148, 163, 184, 0.08)' }}
+                    content={(p) => (
+                      <ChartTooltip {...p} unit={`% of ${FORECAST_SPAN} KSI on those segments`} />
+                    )}
+                  />
+                  <RechartsLegend iconType="square" iconSize={9} wrapperStyle={LEGEND_STYLE} />
+                  <Bar dataKey="model" name="Blackspot model" fill={TEAL} radius={[3, 3, 0, 0]} isAnimationActive={false} />
+                  <Bar dataKey="crashes" name="Past crash count" fill={SLATE} radius={[3, 3, 0, 0]} isAnimationActive={false} />
+                  <Bar dataKey="ksi" name="Past KSI count" fill={SLATE_DIM} radius={[3, 3, 0, 0]} isAnimationActive={false} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </ChartFrame>
         </Reveal>
 
         <Reveal className="stats__panel">
-        <ChartFrame
-          title="Incidents by hour"
-          meta={`${clusterMeta}. Peak at ${hourLabel(peak.hour)}.`}
-        >
-          <div className="stats__chart">
-            <ResponsiveContainer width="100%" height="100%">
-              {/* left margin kept shallow so three-digit y ticks are not clipped */}
-              <BarChart data={hours} margin={{ top: 4, right: 4, bottom: 0, left: -6 }}>
-                <CartesianGrid {...GRID} />
-                <XAxis
-                  {...AXIS}
-                  dataKey="hour"
-                  interval={3}
-                  tickFormatter={(h) => String(h).padStart(2, '0')}
-                />
-                <YAxis {...AXIS} width={42} />
-                <Tooltip
-                  cursor={{ fill: 'rgba(148, 163, 184, 0.08)' }}
-                  content={(p) => (
-                    <ChartTooltip {...p} label={hourLabel(p.label)} unit="clustered incidents" />
-                  )}
-                />
-                <Bar
-                  dataKey="count"
-                  name="Incidents"
-                  radius={[2, 2, 0, 0]}
-                  isAnimationActive={false}
-                >
-                  {hours.map((h) => (
-                    <Cell
-                      key={h.hour}
-                      fill={h.hour === peak.hour ? TEAL_LIFT : TEAL}
-                      fillOpacity={h.hour === peak.hour ? 1 : 0.55}
-                    />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </ChartFrame>
+          <ChartFrame
+            title="Evidenced segments by risk tier"
+            meta={`${num(T.evidencedSegments)} segments with ${GB.minCrashes}+ crashes. Tiers are relative to these, not to every road.`}
+          >
+            <div className="stats__chart">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={tiers} margin={{ top: 4, right: 4, bottom: 0, left: -6 }}>
+                  <CartesianGrid {...GRID} />
+                  <XAxis {...AXIS} dataKey="tier" />
+                  <YAxis {...AXIS} width={42} />
+                  <Tooltip
+                    cursor={{ fill: 'rgba(148, 163, 184, 0.08)' }}
+                    content={(p) => <ChartTooltip {...p} unit="segments" />}
+                  />
+                  <Bar dataKey="count" name="Segments" radius={[3, 3, 0, 0]} isAnimationActive={false}>
+                    {tiers.map((t) => (
+                      <Cell key={t.tier} fill={t.fill} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </ChartFrame>
         </Reveal>
 
         <Reveal className="stats__panel">
-        <ChartFrame
-          title="Severity split by year"
-          meta={datasetMeta}
-        >
-          <div className="stats__chart">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={BY_YEAR_SEVERITY}
-                margin={{ top: 4, right: 4, bottom: 0, left: -14 }}
-              >
-                <CartesianGrid {...GRID} />
-                <XAxis {...AXIS} dataKey="year" />
-                <YAxis {...AXIS} width={46} />
-                <Tooltip
-                  cursor={{ fill: 'rgba(148, 163, 184, 0.08)' }}
-                  content={(p) => <ChartTooltip {...p} unit="records" />}
-                />
-                <RechartsLegend
-                  iconType="square"
-                  iconSize={9}
-                  wrapperStyle={{
-                    fontSize: 11,
-                    fontFamily: "'Satoshi', sans-serif",
-                    color: '#9AA2AE',
-                    paddingTop: 6,
-                  }}
-                />
-                {/* Severity uses the risk ramp. Status green and amber are banned here. */}
-                <Bar
-                  dataKey="slight"
-                  stackId="s"
-                  name="Slight"
-                  fill="#C2711F"
-                  isAnimationActive={false}
-                />
-                <Bar
-                  dataKey="serious"
-                  stackId="s"
-                  name="Serious"
-                  fill="#A33A2B"
-                  isAnimationActive={false}
-                />
-                <Bar
-                  dataKey="fatal"
-                  stackId="s"
-                  name="Fatal"
-                  fill="#7A1F1A"
-                  radius={[3, 3, 0, 0]}
-                  isAnimationActive={false}
-                />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </ChartFrame>
+          <ChartFrame
+            title="Crashes that were fatal or serious, by speed limit"
+            meta={`${segmentMeta}. Highest speed limit on each segment. Peak at ${peakSpeed.speed}.`}
+          >
+            <div className="stats__chart">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={GB.bySpeed} margin={{ top: 4, right: 4, bottom: 0, left: -14 }}>
+                  <CartesianGrid {...GRID} />
+                  <XAxis {...AXIS} dataKey="speed" />
+                  <YAxis {...AXIS} width={46} unit="%" />
+                  <Tooltip
+                    cursor={{ fill: 'rgba(148, 163, 184, 0.08)' }}
+                    content={(p) => <ChartTooltip {...p} unit="% of crashes at this limit" />}
+                  />
+                  <Bar dataKey="ksiShare" name="Fatal or serious" radius={[3, 3, 0, 0]} isAnimationActive={false}>
+                    {GB.bySpeed.map((s) => (
+                      <Cell
+                        key={s.speed}
+                        fill={s.speed === peakSpeed.speed ? TEAL_LIFT : TEAL}
+                        fillOpacity={s.speed === peakSpeed.speed ? 1 : 0.55}
+                      />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </ChartFrame>
         </Reveal>
 
         <Reveal className="stats__panel stats__panel--wide">
-        <ChartFrame
-          title="Clustered incidents by road class"
-          meta={clusterMeta}
-        >
-          <div className="stats__chart">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                data={roads}
-                layout="vertical"
-                /* bottom margin leaves room for the wrapped "Rural district road" tick */
-                margin={{ top: 4, right: 12, bottom: 10, left: 34 }}
-              >
-                <CartesianGrid
-                  stroke="rgba(148, 163, 184, 0.14)"
-                  horizontal={false}
-                  strokeDasharray="0"
-                />
-                <XAxis {...AXIS} type="number" />
-                <YAxis {...AXIS} type="category" dataKey="roadClass" width={124} />
-                <Tooltip
-                  cursor={{ fill: 'rgba(148, 163, 184, 0.08)' }}
-                  content={(p) => <ChartTooltip {...p} unit="clustered incidents" />}
-                />
-                <Bar
-                  dataKey="incidents"
-                  name="Incidents"
-                  fill={TEAL}
-                  radius={[0, 3, 3, 0]}
-                  barSize={14}
-                  isAnimationActive={false}
-                />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </ChartFrame>
+          <ChartFrame
+            title="Roads with the most fatal or serious crashes"
+            meta={`Summed over each road's scored segments, ${CRASH_SPAN}.`}
+          >
+            <div className="stats__chart">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={GB.topRoads}
+                  layout="vertical"
+                  margin={{ top: 4, right: 12, bottom: 10, left: 0 }}
+                >
+                  <CartesianGrid stroke="rgba(148, 163, 184, 0.14)" horizontal={false} strokeDasharray="0" />
+                  <XAxis {...AXIS} type="number" />
+                  <YAxis {...AXIS} type="category" dataKey="road" width={56} />
+                  <Tooltip
+                    cursor={{ fill: 'rgba(148, 163, 184, 0.08)' }}
+                    content={(p) => <ChartTooltip {...p} unit="crashes" />}
+                  />
+                  <RechartsLegend iconType="square" iconSize={9} wrapperStyle={LEGEND_STYLE} />
+                  <Bar dataKey="ksi" name="Fatal or serious" fill={TEAL} radius={[0, 3, 3, 0]} barSize={14} isAnimationActive={false} />
+                  <Bar dataKey="fatal" name="Fatal" fill="#7A1F1A" radius={[0, 3, 3, 0]} barSize={14} isAnimationActive={false} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </ChartFrame>
         </Reveal>
       </div>
 
       {/* A different layout family: a ranked list, not another chart panel. */}
       <div className="container stats__factors">
         <div className="stats__factors-head">
-          <h2 className="panel-title">Contributing factors, weighted by cluster size</h2>
+          <h2 className="panel-title">Conditions linked to more serious crashes</h2>
           <p className="label stats__factors-meta">
-            {clusterMeta}. Weights scaled against the highest-ranked factor.
+            Severity model, {FORECAST_SPAN} collisions. Ranked by how far the predicted chance
+            of a serious outcome moves between a condition&rsquo;s levels, scaled to the top
+            factor. Associations, not causes; police force excluded as administrative.
           </p>
         </div>
         <ol className="factor-rank">
-          {factors.map((f, i) => (
-            <Reveal as="li" key={f.label} className="factor-rank__row" index={i}>
+          {GB.factors.map((f, i) => (
+            <Reveal as="li" key={f.key} className="factor-rank__row" index={i}>
               <span className="factor-rank__index mono">{String(i + 1).padStart(2, '0')}</span>
-              <span className="factor-rank__label">{f.label}</span>
+              <span className="factor-rank__label">
+                {f.label}
+                {f.highest && (
+                  <span className="factor-rank__detail">
+                    {f.highest} highest, {f.lowest} lowest
+                  </span>
+                )}
+              </span>
               <span className="factor-rank__track" aria-hidden="true">
                 <SpringBar className="factor-rank__fill" percent={f.share} index={i} />
               </span>

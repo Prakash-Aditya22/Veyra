@@ -7,7 +7,7 @@ const MONTHS = [
 
 export function num(value) {
   if (value === null || value === undefined) return '--';
-  return value.toLocaleString('en-IN');
+  return value.toLocaleString('en-GB');
 }
 
 export function score(value) {

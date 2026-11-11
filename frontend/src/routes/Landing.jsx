@@ -9,16 +9,32 @@ import RiskBadge from '../components/RiskBadge.jsx';
 import ProvenanceStrip from '../components/ProvenanceStrip.jsx';
 import CountUp from '../components/motion/CountUp.jsx';
 import { gsap, ScrollTrigger } from '../lib/gsapScroll.js';
-import { BLACKSPOTS, DATASET } from '../data/blackspots.js';
-import { MODEL_RUN } from '../data/series.js';
-import { num, shortDate } from '../lib/format.js';
+import GB from '../data/gbStats.json';
+import { toView } from '../lib/geo.js';
+import { num } from '../lib/format.js';
 import './Landing.css';
 
-// The two crops in the headline are centred on the corridor's two
-// highest-scoring clusters, so the imagery is the dataset's own.
-const [TOP, SECOND] = BLACKSPOTS;
+/*
+  Everything on this page comes from gbStats.json, built by
+  ml/build_stats_summary.py from the scored segments and the pipeline's own
+  validation and model reports. The page is static on purpose: it should
+  render even when the backend is down.
+*/
+const SEGMENTS = GB.topSegments.map(toView);
+const T = GB.totals;
+const [MODEL, CRASH_COUNT] = GB.validation.rows;
+const CRASH_SPAN = `${GB.crashYears[0]} to ${GB.crashYears[1]}`;
+const FORECAST_SPAN = `${GB.forecastYears[0]} to ${GB.forecastYears[1]}`;
 
-const PREVIEW_ROWS = BLACKSPOTS.slice(0, 5);
+// The two crops in the headline are centred on Great Britain's two
+// highest-scoring segments, so the imagery is the dataset's own.
+const [TOP, SECOND] = SEGMENTS;
+
+const PREVIEW_ROWS = SEGMENTS.slice(0, 5);
+
+/* The extent of the STATS19 record, framed so London's cluster reads too. */
+const GB_CENTER = [53.6, -2.4];
+const GB_ZOOM = 5;
 
 export default function Landing() {
   const reduce = useReducedMotion();
@@ -196,17 +212,23 @@ export default function Landing() {
         <span className="hero__scrim" aria-hidden="true" />
 
         <div className="hero__type">
+          {/*
+            The claim is the validation result, not a slogan: the top 20% of
+            held-out segments by score carried 50.4% of the next two years'
+            killed-or-seriously-injured casualties.
+          */}
           <motion.h1 className="hero__headline" {...rise(0)}>
-            A few stretches
+            A fifth of the road
             <MapFragment lat={TOP.lat} lng={TOP.lng} label={TOP.name} />
-            account for most of the
+            carries half the
             <MapFragment lat={SECOND.lat} lng={SECOND.lng} label={SECOND.name} />
             harm.
           </motion.h1>
 
           <motion.p className="hero__sub" {...rise(0.06)}>
-            Historical incident records for the Bhubaneswar to Cuttack corridor, clustered
-            and scored so the worst stretches surface first.
+            STATS19 crash records for Great Britain&rsquo;s numbered roads, cut into 500 m
+            segments and scored so the stretches most likely to see serious harm surface
+            first.
           </motion.p>
         </div>
       </section>
@@ -216,20 +238,20 @@ export default function Landing() {
         <div className="container metrics__inner">
           <div className="metric">
             <p className="metric__value mono">
-              <CountUp value={DATASET.records} />
+              <CountUp value={T.crashes} />
             </p>
-            <p className="label">Records analysed</p>
+            <p className="label">Crashes analysed, {CRASH_SPAN}</p>
           </div>
           <div className="metric">
             <p className="metric__value mono">
-              <CountUp value={DATASET.clusters} />
+              <CountUp value={T.segments} />
             </p>
-            <p className="label">Clusters identified</p>
+            <p className="label">500 m segments scored</p>
           </div>
           <div className="metric">
             {/* A span of years is not a quantity, so it does not count up. */}
             <p className="metric__value mono">
-              {DATASET.from} to {DATASET.to}
+              {GB.crashYears[0]} to {GB.forecastYears[1]}
             </p>
             <p className="label">Coverage window</p>
           </div>
@@ -239,19 +261,24 @@ export default function Landing() {
       {/* ---------------- Capability one: map, copy on the right ---------------- */}
       <section className="capability container">
         <div className="capability__visual">
+          {/* The top 300 evidenced segments; the explorer draws all of them. */}
           <MapCanvas
-            blackspots={BLACKSPOTS}
+            blackspots={SEGMENTS}
             selectedId={null}
+            center={GB_CENTER}
+            zoom={GB_ZOOM}
+            homeLabel="Great Britain"
             interactive={false}
             showLegend={false}
           />
         </div>
         <div className="capability__copy">
-          <h2 className="capability__title">Read the whole corridor in one view</h2>
+          <h2 className="capability__title">Read the whole country in one view</h2>
           <p className="body-secondary">
-            Every cluster is drawn at its centroid, sized by how many records fall inside
-            it and filled with its danger tier. Filter by period, severity, road class or
-            conditions, and the map and the ranked panel move together.
+            Every scored segment is drawn at its midpoint, sized by how many crashes it
+            recorded and filled with its risk tier. Filter by tier, by how much evidence
+            sits behind a score, or by road, and the map and the ranked panel move
+            together.
           </p>
           <Link to="/explorer" className="capability__link">
             Open the map
@@ -265,9 +292,11 @@ export default function Landing() {
         <div className="capability__copy">
           <h2 className="capability__title">Rank stretches by evidence, not impression</h2>
           <p className="body-secondary">
-            The composite score combines how often a stretch appears, how severe those
-            records were, and how recent they are. Boundaries are fixed and published, so
-            a score of 74 means the same thing on every screen and in every filter state.
+            Each score is a forecast: the killed-or-seriously-injured casualties a 500 m
+            stretch is expected to see over two years, learned from {CRASH_SPAN} crashes
+            and checked against {FORECAST_SPAN}. Tier boundaries are fixed and published,
+            so a score of 74 means the same thing on every screen and in every filter
+            state.
           </p>
           <Link to="/rankings" className="capability__link">
             See the full ranking
@@ -276,25 +305,25 @@ export default function Landing() {
         </div>
 
         {/*
-          Not a mock-up: these are the same row and badge components the
-          rankings screen renders, reading the same data.
-
-          The rows open the explorer, not a particular stretch. This preview
-          still reads the Bhubaneswar fixture, whose ids (BBS-C0417) cannot
-          resolve against /api/segments/{id}, so a per-row deep link would
-          land on an explorer with nothing selected. It returns in Phase 2,
-          when this screen moves onto the segment API.
+          Not a mock-up: the top five segments nationally, with the same badge
+          component the rankings screen renders. Each row opens that segment
+          in the explorer by its real segment id.
         */}
         <div className="capability__rows">
           {PREVIEW_ROWS.map((b, i) => (
-            <Link key={b.id} to="/explorer" className="preview-row">
+            <Link
+              key={b.id}
+              to={`/explorer?segment=${encodeURIComponent(b.id)}`}
+              className="preview-row"
+            >
               <span className="preview-row__rank mono">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <span className="preview-row__body">
                 <span className="preview-row__name">{b.name}</span>
                 <span className="preview-row__meta mono">
-                  {num(b.incidents)} incidents, last {shortDate(b.lastIncident)}
+                  {num(b.incidents)} crashes, {num(b.ksi)} fatal or serious,{' '}
+                  {b.blackspotScore.toFixed(2)} expected KSI
                 </span>
               </span>
               <RiskBadge score={b.score} size="sm" />
@@ -307,60 +336,70 @@ export default function Landing() {
       <section className="method container">
         <div className="method__intro">
           <p className="label">How the scores are produced</p>
-          <h2 className="method__title">
-            Density clustering first, severity weighting second
-          </h2>
+          <h2 className="method__title">Segment the road first, forecast harm second</h2>
           <p className="body-secondary">
-            Records are cleaned and projected, then grouped by spatial density so clusters
-            follow the shape of the road rather than a grid. A severity classifier
-            estimates outcome from road class, hour, light and surface state. The two feed
-            a single composite score with recent records weighted higher.
+            Crashes on each numbered road are split into geographic stretches, ordered
+            along the road by a minimum spanning tree over the crash points, and binned
+            into 500 m segments. A Poisson model then learns, from each segment&rsquo;s{' '}
+            {CRASH_SPAN} record, how many killed-or-seriously-injured casualties it will
+            see in {FORECAST_SPAN}, and is scored on segments it never trained on.
           </p>
           <p className="method__caveat">
-            The model surfaces historical clustering. It describes where harm has
-            concentrated, not where harm will occur.
+            The model beats simply ranking by past crash count by about one point: crash
+            history does most of the work, and the model refines it. Scores resting on
+            fewer than {GB.minCrashes} crashes are noisy and are hidden by default.
           </p>
         </div>
 
         <dl className="method__spec">
           <div className="method__row">
-            <dt>Clustering</dt>
-            <dd>{MODEL_RUN.algorithm}</dd>
+            <dt>Segment length</dt>
+            <dd className="mono">500 m</dd>
           </div>
           <div className="method__row">
-            <dt>Neighbourhood radius</dt>
-            <dd className="mono">{MODEL_RUN.epsilonMetres} m</dd>
+            <dt>Roads covered</dt>
+            <dd className="mono">{num(T.roads)}, each with 60+ crashes</dd>
           </div>
           <div className="method__row">
-            <dt>Minimum cluster size</dt>
-            <dd className="mono">{MODEL_RUN.minSamples} records</dd>
+            <dt>Blackspot model</dt>
+            <dd>Poisson regression, expected KSI over two years</dd>
           </div>
           <div className="method__row">
-            <dt>Silhouette score</dt>
-            <dd className="mono">{MODEL_RUN.silhouette.toFixed(2)}</dd>
+            <dt>Top 20% of segments capture</dt>
+            <dd className="mono">{MODEL.values[3]}% of future KSI</dd>
           </div>
           <div className="method__row">
-            <dt>Severity classifier</dt>
-            <dd>{MODEL_RUN.classifier}</dd>
+            <dt>Ranking by crash count captures</dt>
+            <dd className="mono">{CRASH_COUNT.values[3]}%</dd>
           </div>
           <div className="method__row">
-            <dt>Macro F1</dt>
-            <dd className="mono">{MODEL_RUN.macroF1.toFixed(2)}</dd>
+            <dt>Severity model, deployable</dt>
+            <dd className="mono">
+              ROC-AUC {GB.severityModels.deployable.rocAuc.toFixed(2)},{' '}
+              {GB.severityModels.deployable.features} features
+            </dd>
           </div>
           <div className="method__row">
-            <dt>Recall, fatal class</dt>
-            <dd className="mono">{MODEL_RUN.recallFatal.toFixed(2)}</dd>
+            <dt>Evidence floor shown</dt>
+            <dd className="mono">{GB.minCrashes}+ crashes</dd>
           </div>
         </dl>
       </section>
 
       <footer className="landing__foot">
         <div className="container landing__foot-inner">
-          <ProvenanceStrip />
+          <ProvenanceStrip
+            items={[
+              'STATS19, Great Britain',
+              `crashes ${CRASH_SPAN}`,
+              `KSI forecast ${FORECAST_SPAN}`,
+              `${num(T.segments)} scored 500 m segments`,
+            ]}
+          />
           <p className="landing__foot-note">
-            Figures on this build are a demonstration fixture standing in for the
-            processed dataset. Clusters are precomputed and served as static output; the
-            interface does not read live traffic or incident feeds.
+            Scores are precomputed from the Department for Transport&rsquo;s STATS19 record
+            and served from a database. The interface does not read live traffic or
+            incident feeds.
           </p>
         </div>
       </footer>

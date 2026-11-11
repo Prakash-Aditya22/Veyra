@@ -1,3 +1,4 @@
+import { basemapTileUrl } from './Basemap.jsx';
 import './MapFragment.css';
 
 /*
@@ -43,7 +44,7 @@ export default function MapFragment({ lat, lng, zoom = 14, label }) {
         // Offset of this tile's top-left corner from the fragment centre.
         left: tx * TILE - x,
         top: ty * TILE - y,
-        src: `https://a.basemaps.cartocdn.com/dark_all/${zoom}/${tx}/${ty}.png`,
+        src: basemapTileUrl(zoom, tx, ty),
       });
     }
   }

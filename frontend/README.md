@@ -31,44 +31,30 @@ npm run build
 | `/rankings` | Rankings Table | Sortable, searchable, sticky header, sticky rank column |
 | `/statistics` | Statistics Dashboard | Four panels on an asymmetric 2:1 grid, plus a weighted factor ranking |
 
-## The data is a demonstration fixture
+## Where the data comes from
 
-**Nothing in this build is derived from `AccidentsBig.csv` yet.** The road names
-and coordinates in `src/data/blackspots.js` are real locations on the
-Bhubaneswar / Cuttack / Puri corridor; the incident counts, scores and dates are
-hand-authored stand-ins shaped like the clustering pipeline's output.
+Every screen reads Great Britain STATS19 data produced by the `ml/` pipeline.
+There is no demonstration fixture any more.
 
-This is stated in the user interface too, in the provenance strip on every
-screen and in the landing page footer, so the build never claims data it does
-not have. Keep that honesty when you swap the real data in: if the pipeline has
-not run, the interface should say so.
+| Screen | Source |
+|---|---|
+| Explorer, Route | The live backend (`/api/segments`, `/api/route/risk`) over the 45,014 scored segments in PostGIS |
+| Rankings | The live backend: the top 2,000 evidenced segments (`n_crashes >= 6`), the API's per-request cap |
+| Overview, Statistics | `src/data/gbStats.json`, a precomputed summary, so these screens render even with the backend down |
 
-### Swapping in the real pipeline output
-
-`src/data/blackspots.js` documents the exact shape the UI expects. Match it in
-the Spring Boot response and no component needs to change:
+`gbStats.json` is generated, not hand-edited. Rebuild it whenever
+`data/road_segments_ranked.csv` or the pipeline's reports change:
 
 ```
-id            stable cluster identifier
-name          human-readable stretch name
-lat, lng      cluster centroid
-score         composite danger score, 0-100, one decimal, or null
-incidents     total records in the cluster
-fatal/serious/slight   severity split, must sum to `incidents`
-lastIncident  ISO date of the most recent record
-roadType, roadClass, speedLimit
-factors       [{ label, weight }], descending
-landmarks     [string], nearest first
-hourly        [{ hour, count }], 24 entries
+cd ml && python build_stats_summary.py
 ```
 
-Replace the module's export with a fetch, and update `DATASET` in the same file
-(`label`, `records`, `computedOn`, `isDemo`). `score: null` is meaningful: it
-renders as the No Data tier, never as low risk.
+It reads the segment CSV, `ml/reports/blackspot_full_output.log` (validation),
+`ml/models/deployable_vs_explanatory.json` and `ml/shap/`. The crash-level file
+is not shipped, so nothing can be broken down by month, hour or year.
 
-The two dataset-level chart series live in `src/data/series.js` and cover every
-record in the window, not only clustered records. The charts that use them say
-so beneath their titles.
+Risk tier cutoffs live only in `src/lib/riskScale.js`; the summary ships raw
+scores and the screens bin them with the same function the map uses.
 
 ## Hero background
 
@@ -145,10 +131,9 @@ the map. Markers currently resize in one step when the filter set changes.
 src/
   styles/tokens.css      Every colour, size and duration in the product
   styles/global.css      Reset, type primitives, buttons, inputs, Leaflet overrides
-  data/                  The demonstration fixture
+  data/gbStats.json      Generated GB summary for Overview and Statistics
   lib/risk.js            Tier boundaries and marker sizing
   lib/filters.js         Filter definitions and the pure filter function
-  lib/stats.js           Aggregations over whatever clusters are in view
   components/            Shared UI, one CSS file per component
   routes/                One file per screen
 ```
@@ -179,7 +164,8 @@ src/
 ## Fonts and tiles
 
 Satoshi loads from Fontshare and JetBrains Mono from Google Fonts, both via
-`<link>` in `index.html`. Basemap tiles come from CARTO Dark Matter. All three
+`<link>` in `index.html`. Basemap tiles come from Esri World Dark Gray Canvas (keyless; CARTO Dark Matter
+now requires an API key), configured once in `src/components/Basemap.jsx`. All three
 are network dependencies: if you need a fully offline demo for the viva,
 self-host the two font files and cache a tile set for the corridor first.
 

@@ -133,6 +133,15 @@
   white-space: nowrap;
 }
 
+/* Which level of the condition sits at each end; quieter than the name. */
+.factor-rank__detail {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--dim-grey);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .factor-rank__track {
   height: 5px;
   background: rgba(148, 163, 184, 0.1);

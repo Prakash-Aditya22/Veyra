@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { MapContainer, TileLayer, CircleMarker, useMap } from 'react-leaflet';
+import { MapContainer, CircleMarker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet.heat';
 import { Plus, Minus, StackSimple, MapTrifold, CrosshairSimple } from '@phosphor-icons/react';
 import { tierOf, markerRadius, THIN_FILL_OPACITY } from '../lib/risk.js';
-import { MAP_CENTER, MAP_ZOOM } from '../data/blackspots.js';
 import Legend from './Legend.jsx';
+import Basemap from './Basemap.jsx';
 import './MapCanvas.css';
 
 const DEEP_GRAPHITE = '#131417';
@@ -185,15 +185,13 @@ export default function MapCanvas({
   onSelect,
   onBoundsChange,
   /*
-    The home view is a prop rather than a module constant because two screens
-    use this map over two different datasets: Explorer draws live GB segments,
-    while the landing page still previews the demonstration fixture on the
-    Bhubaneswar corridor. The fixture's frame stays the default so that screen
-    is unaffected.
+    The home view is a prop because two screens frame the map differently:
+    Explorer opens on the whole of Great Britain to browse, the Overview
+    frames a static preview. Both pass their own; these defaults are GB.
   */
-  center = MAP_CENTER,
-  zoom = MAP_ZOOM,
-  homeLabel = 'the full corridor',
+  center = [54.2, -2.6],
+  zoom = 6,
+  homeLabel = 'the whole of Great Britain',
   interactive = true,
   showLegend = true,
   className = '',
@@ -239,12 +237,7 @@ export default function MapCanvas({
         keyboard={interactive}
         attributionControl
       >
-        <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-          subdomains="abcd"
-          maxZoom={19}
-        />
+        <Basemap />
 
         {layer === 'heat' && <HeatLayer points={heatPoints} active />}
 
