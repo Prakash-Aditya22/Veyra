@@ -3,7 +3,9 @@ package com.veyra.blackspot.routing;
 import java.util.List;
 
 import com.veyra.blackspot.config.OrsProperties;
+import com.veyra.blackspot.domain.RouteRisk.Coord;
 import com.veyra.blackspot.domain.RouteRisk.GeocodeCandidate;
+import com.veyra.blackspot.domain.RouteRisk.RawRoute;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.web.client.MockServerRestTemplateCustomizer;
@@ -14,8 +16,10 @@ import org.springframework.test.web.client.MockRestServiceServer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.header;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.queryParam;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.withBadRequest;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 /**
@@ -85,6 +89,34 @@ class OrsRoutingClientTest {
         assertThat(client.geocode("King's Cross &size=1")).isEmpty();
 
         server.verify();
+    }
+
+    @Test
+    void aTripTooLongForAlternativesFallsBackToTheSingleBestRoute() {
+        // ORS refuses alternative_routes when the approximated route exceeds
+        // 100 km -- HTTP 400, error.code 2004. Verified live: Cheltenham ->
+        // Camden (~150 km) got exactly this, and the same body without
+        // alternative_routes returned 200. Before this fallback, every trip
+        // over 100 km surfaced as "routing temporarily unavailable".
+        server.expect(requestTo(BASE + "/v2/directions/driving-car/geojson"))
+              .andExpect(jsonPath("$.alternative_routes").exists())
+              .andRespond(withBadRequest().contentType(MediaType.APPLICATION_JSON).body("""
+                  {"error":{"code":2004,
+                            "message":"The approximated route distance must not be greater than 100000.0 meters for use with the alternative Routes algorithm."}}
+                  """));
+        server.expect(requestTo(BASE + "/v2/directions/driving-car/geojson"))
+              .andExpect(jsonPath("$.alternative_routes").doesNotExist())
+              .andRespond(withSuccess("""
+                  {"features":[{"properties":{"summary":{"distance":152000,"duration":7200}},
+                                "geometry":{"coordinates":[[-2.07,51.90],[-0.14,51.54]]}}]}
+                  """, MediaType.APPLICATION_JSON));
+
+        List<RawRoute> routes = client.route(new Coord(-2.07211, 51.900898),
+                                             new Coord(-0.1426, 51.5390), 3);
+
+        server.verify();
+        assertThat(routes).singleElement()
+            .extracting(RawRoute::distanceMetres).isEqualTo(152000.0);
     }
 
     @Test

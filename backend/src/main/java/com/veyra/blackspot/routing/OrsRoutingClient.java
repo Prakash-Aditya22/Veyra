@@ -76,6 +76,14 @@ public class OrsRoutingClient implements RoutingClient {
             // not as a 200 with zero features. Verified live: an unroutable
             // coordinate returns 404 with error.code 2010.
             Integer code = orsErrorCode(e);
+            // 2004: ORS only computes alternatives for trips whose approximated
+            // distance is <= 100 km. Verified live (Cheltenham -> Camden, 400
+            // with code 2004; the same body without alternative_routes, 200).
+            // A long trip still has a best route, so ask for just that one --
+            // "at most N" routes holds with one.
+            if (code != null && code == 2004 && alternatives > 1) {
+                return route(from, to, 1);
+            }
             if (code != null && (code == 2010 || code == 2009)) {
                 throw new RoutingException(RoutingException.Kind.NO_ROUTE,
                     "no drivable route between those points", e);
