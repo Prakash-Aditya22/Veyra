@@ -6,10 +6,23 @@
   controls occupy the canvas, in reserved corners.
 */
 
+/*
+  A column, not a fixed set of grid rows: what sits above the grid varies (the
+  banner is conditional, the legend strip shows only on phones), and a row
+  template assumed a fixed count. With no banner the grid fell into an auto
+  row sized to the rail's content, cutting the map off with an empty 1fr row
+  below it. flex: 1 on the grid gives it the remainder whatever comes before.
+*/
 .route {
-  display: grid;
-  grid-template-rows: auto auto auto 1fr;
+  display: flex;
+  flex-direction: column;
   min-height: 0;
+  /* A grid item of #root: without this its min width is its widest unwrapped
+     line (the phone legend strip, ~766px), pushing the screen off the right. */
+  min-width: 0;
+  /* vh first: a browser without dvh drops the whole declaration, and the
+     screen then shrinks to its content. */
+  height: calc(100vh - var(--nav-height));
   height: calc(100dvh - var(--nav-height));
 }
 
@@ -66,6 +79,7 @@
 }
 
 .route__grid {
+  flex: 1 1 auto;
   display: grid;
   grid-template-columns: var(--rail-width) minmax(0, 1fr) var(--results-width);
   min-height: 0;

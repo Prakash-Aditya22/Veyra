@@ -6,9 +6,15 @@
 */
 
 .explorer {
-  display: grid;
-  grid-template-rows: auto auto 1fr;
+  /* A column, not fixed grid rows, so the grid takes the remaining height
+     however many items sit above it. Same fix as .route. */
+  display: flex;
+  flex-direction: column;
   min-height: 0;
+  /* As .route: a grid item of #root must not size to its widest line. */
+  min-width: 0;
+  /* vh first: a browser without dvh drops the whole declaration. */
+  height: calc(100vh - var(--nav-height));
   height: calc(100dvh - var(--nav-height));
 }
 
@@ -67,6 +73,7 @@
 }
 
 .explorer__grid {
+  flex: 1 1 auto;
   display: grid;
   grid-template-columns: var(--rail-width) minmax(0, 1fr) var(--results-width);
   min-height: 0;
