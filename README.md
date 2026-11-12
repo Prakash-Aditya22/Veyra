@@ -57,9 +57,10 @@ meaning:
   apart). Distance along each stretch (chainage) comes from a minimum spanning
   tree over its own crash points, and is then cut into 500 m blocks. No
   external road geometry is used.
-- **Features.** 18 inputs from 2019–2021 crashes on the segment: crash
+- **Features.** 24 inputs from 2019–2021 crashes on the segment: crash
   history, speed limit, road and junction type, urban/rural, lighting, night
-  share and location.
+  share, location and extent, and position along the road (the full list is in
+  [`ml/README.md`](ml/README.md)).
 - **Target.** The segment's KSI count in **2022–2023**, a period the model
   never saw.
 - **Model.** LightGBM with a Poisson objective, since the target is a count.

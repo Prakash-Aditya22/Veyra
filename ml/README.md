@@ -53,7 +53,9 @@ The score is a model output, and it means one specific thing:
 A block scoring 2.4 is predicted to produce roughly two to three KSI
 casualties in two years.
 
-**18 inputs**, all from 2019–2021 crashes on that segment:
+**24 inputs**, all from 2019–2021 crashes on that segment. `road_segments.py`
+feeds the model every segment column except the id and target columns
+(`DROPM`), so this table is the full list:
 
 | Group | Features |
 |---|---|
@@ -61,7 +63,8 @@ casualties in two years.
 | Road | `speed_max`, `speed_mean`, `mode_road_type`, `mode_junction_detail`, `pct_junction` |
 | Context | `mode_urban_or_rural_area`, `mode_light_conditions`, `pct_night` |
 | Crash shape | `n_veh_mean`, `n_cas_mean` |
-| Location | `lat`, `lon` |
+| Location | `lat`, `lon` (mean), `lat_min`, `lat_max`, `lon_min`, `lon_max` (extent) |
+| Position on road | `run` (stretch number), `km_from` (chainage of segment start) |
 
 **Target:** KSI count on that segment in 2022–2023.
 **Model:** LightGBM, Poisson objective — the target is a count whose variance
