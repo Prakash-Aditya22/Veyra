@@ -7,17 +7,17 @@
 */
 
 export const TIERS = [
-  { key: 'watch', word: 'Watch', min: 0, max: 24, color: 'var(--risk-1)', hex: '#C9A227' },
-  { key: 'elevated', word: 'Elevated', min: 25, max: 49, color: 'var(--risk-2)', hex: '#C2711F' },
-  { key: 'severe', word: 'Severe', min: 50, max: 74, color: 'var(--risk-3)', hex: '#A33A2B' },
-  { key: 'critical', word: 'Critical', min: 75, max: 100, color: 'var(--risk-4)', hex: '#7A1F1A' },
+  { key: 'watch', word: 'Watch', min: 0, max: 24, color: 'var(--risk-1)', hex: '#F2A31B' },
+  { key: 'elevated', word: 'Elevated', min: 25, max: 49, color: 'var(--risk-2)', hex: '#F2A31B' },
+  { key: 'severe', word: 'Severe', min: 50, max: 74, color: 'var(--risk-3)', hex: '#D7120F' },
+  { key: 'critical', word: 'Critical', min: 75, max: 100, color: 'var(--risk-4)', hex: '#8E44AD' },
 ];
 
 export const NO_DATA_TIER = {
   key: 'nodata',
   word: 'No data',
   color: 'var(--risk-none)',
-  hex: '#3A3E46',
+  hex: 'rgba(238, 240, 244, 0.22)',
 };
 
 /**

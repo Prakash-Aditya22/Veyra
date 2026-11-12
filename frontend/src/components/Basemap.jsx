@@ -3,7 +3,8 @@ import { TileLayer } from 'react-leaflet';
 /*
   The one dark basemap every map in the app draws on.
 
-  Esri World Dark Gray Canvas, served without an API key. It replaced CARTO
+  Esri World Dark Gray Canvas, served without an API key, so the black theme
+  carries through to the map. It replaced CARTO
   dark_all, which began answering every tile with an "API KEY REQUIRED" image.
   The canvas comes as two layers, roads and water plus a separate place-name
   layer; both stay in the tile pane, under the markers and route lines.

@@ -31,10 +31,10 @@ import './Statistics.css';
   aggregate of 2019-2021 counts or a number the pipeline printed.
 */
 
-const TEAL = '#0F766E';
-const TEAL_LIFT = '#14918A';
-const SLATE = '#64748B';
-const SLATE_DIM = '#3F4A5A';
+const BLUE = '#1F4FBF'; // 青色, the interface accent
+const BLUE_DEEP = BLUE; // the peak bar is marked by full opacity, not a second blue
+const SLATE = 'rgba(238, 240, 244, 0.5)'; // paper-white, for comparison series
+const SLATE_DIM = 'rgba(238, 240, 244, 0.22)';
 
 const T = GB.totals;
 const CRASH_SPAN = `${GB.crashYears[0]} to ${GB.crashYears[1]}`;
@@ -43,7 +43,7 @@ const FORECAST_SPAN = `${GB.forecastYears[0]} to ${GB.forecastYears[1]}`;
 const LEGEND_STYLE = {
   fontSize: 11,
   fontFamily: "'Satoshi', sans-serif",
-  color: '#9AA2AE',
+  color: 'rgba(238, 240, 244, 0.74)',
   paddingTop: 6,
 };
 
@@ -153,13 +153,13 @@ export default function Statistics() {
                   <XAxis {...AXIS} dataKey="cutoff" />
                   <YAxis {...AXIS} width={46} unit="%" />
                   <Tooltip
-                    cursor={{ fill: 'rgba(148, 163, 184, 0.08)' }}
+                    cursor={{ fill: 'rgba(238, 240, 244, 0.06)' }}
                     content={(p) => (
                       <ChartTooltip {...p} unit={`% of ${FORECAST_SPAN} KSI on those segments`} />
                     )}
                   />
                   <RechartsLegend iconType="square" iconSize={9} wrapperStyle={LEGEND_STYLE} />
-                  <Bar dataKey="model" name="Blackspot model" fill={TEAL} radius={[3, 3, 0, 0]} isAnimationActive={false} />
+                  <Bar dataKey="model" name="Blackspot model" fill={BLUE} radius={[3, 3, 0, 0]} isAnimationActive={false} />
                   <Bar dataKey="crashes" name="Past crash count" fill={SLATE} radius={[3, 3, 0, 0]} isAnimationActive={false} />
                   <Bar dataKey="ksi" name="Past KSI count" fill={SLATE_DIM} radius={[3, 3, 0, 0]} isAnimationActive={false} />
                 </BarChart>
@@ -180,7 +180,7 @@ export default function Statistics() {
                   <XAxis {...AXIS} dataKey="tier" />
                   <YAxis {...AXIS} width={42} />
                   <Tooltip
-                    cursor={{ fill: 'rgba(148, 163, 184, 0.08)' }}
+                    cursor={{ fill: 'rgba(238, 240, 244, 0.06)' }}
                     content={(p) => <ChartTooltip {...p} unit="segments" />}
                   />
                   <Bar dataKey="count" name="Segments" radius={[3, 3, 0, 0]} isAnimationActive={false}>
@@ -206,14 +206,14 @@ export default function Statistics() {
                   <XAxis {...AXIS} dataKey="speed" />
                   <YAxis {...AXIS} width={46} unit="%" />
                   <Tooltip
-                    cursor={{ fill: 'rgba(148, 163, 184, 0.08)' }}
+                    cursor={{ fill: 'rgba(238, 240, 244, 0.06)' }}
                     content={(p) => <ChartTooltip {...p} unit="% of crashes at this limit" />}
                   />
                   <Bar dataKey="ksiShare" name="Fatal or serious" radius={[3, 3, 0, 0]} isAnimationActive={false}>
                     {GB.bySpeed.map((s) => (
                       <Cell
                         key={s.speed}
-                        fill={s.speed === peakSpeed.speed ? TEAL_LIFT : TEAL}
+                        fill={s.speed === peakSpeed.speed ? BLUE_DEEP : BLUE}
                         fillOpacity={s.speed === peakSpeed.speed ? 1 : 0.55}
                       />
                     ))}
@@ -236,16 +236,16 @@ export default function Statistics() {
                   layout="vertical"
                   margin={{ top: 4, right: 12, bottom: 10, left: 0 }}
                 >
-                  <CartesianGrid stroke="rgba(148, 163, 184, 0.14)" horizontal={false} strokeDasharray="0" />
+                  <CartesianGrid stroke="rgba(238, 240, 244, 0.12)" horizontal={false} strokeDasharray="0" />
                   <XAxis {...AXIS} type="number" />
                   <YAxis {...AXIS} type="category" dataKey="road" width={56} />
                   <Tooltip
-                    cursor={{ fill: 'rgba(148, 163, 184, 0.08)' }}
+                    cursor={{ fill: 'rgba(238, 240, 244, 0.06)' }}
                     content={(p) => <ChartTooltip {...p} unit="crashes" />}
                   />
                   <RechartsLegend iconType="square" iconSize={9} wrapperStyle={LEGEND_STYLE} />
-                  <Bar dataKey="ksi" name="Fatal or serious" fill={TEAL} radius={[0, 3, 3, 0]} barSize={14} isAnimationActive={false} />
-                  <Bar dataKey="fatal" name="Fatal" fill="#7A1F1A" radius={[0, 3, 3, 0]} barSize={14} isAnimationActive={false} />
+                  <Bar dataKey="ksi" name="Fatal or serious" fill={BLUE} radius={[0, 3, 3, 0]} barSize={14} isAnimationActive={false} />
+                  <Bar dataKey="fatal" name="Fatal" fill="#D7120F" radius={[0, 3, 3, 0]} barSize={14} isAnimationActive={false} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

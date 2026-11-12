@@ -24,8 +24,8 @@
   justify-content: space-between;
   gap: var(--s3);
   padding: var(--s2) var(--s4);
-  border-bottom: 1px solid var(--structural-line);
-  background: var(--panel-graphite);
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
 }
 
 .explorer__bar-main {
@@ -43,13 +43,13 @@
   gap: var(--s1);
   font-size: var(--type-label);
   line-height: 1.5;
-  color: var(--dim-grey);
+  color: var(--ink-faint);
 }
 
 .explorer__sep {
   width: 1px;
   height: 10px;
-  background: var(--structural-line);
+  background: var(--line);
   flex-shrink: 0;
 }
 
@@ -67,8 +67,8 @@
   display: grid;
   place-items: center;
   border-radius: 9px;
-  background: var(--beacon-teal);
-  color: var(--bone-white);
+  background: var(--accent);
+  color: var(--on-accent);
   font-size: 0.6875rem;
 }
 
@@ -142,7 +142,7 @@
   .explorer > .legend--strip {
     display: block;
     padding: var(--s2) var(--s3);
-    border-bottom: 1px solid var(--structural-line);
+    border-bottom: 1px solid var(--line);
   }
 
   .explorer__grid {
@@ -162,7 +162,7 @@
   position: fixed;
   inset: 0;
   z-index: 60;
-  background: rgba(10, 11, 14, 0.62);
+  background: var(--scrim);
   display: grid;
   align-items: end;
   animation: scrim-in var(--dur-fast) var(--ease-settle) both;
@@ -182,8 +182,8 @@
 }
 
 .explorer__sheet {
-  background: var(--panel-graphite);
-  border-top: 1px solid var(--structural-line);
+  background: var(--panel);
+  border-top: 1px solid var(--line);
   border-radius: var(--radius-surface) var(--radius-surface) 0 0;
   display: grid;
   grid-template-rows: auto 1fr;
@@ -226,7 +226,7 @@
   width: 36px;
   height: 4px;
   border-radius: 2px;
-  background: var(--structural-line);
+  background: var(--line);
 }
 
 .explorer__sheet-close {
@@ -238,13 +238,13 @@
   height: 44px;
   display: grid;
   place-items: center;
-  color: var(--steel-grey);
+  color: var(--ink-soft);
   border-radius: var(--radius-interactive);
 }
 
 .explorer__sheet-close:hover {
-  color: var(--bone-white);
-  background: var(--raised-slate);
+  color: var(--ink);
+  background: var(--raised);
 }
 
 .explorer__sheet .filter-rail {

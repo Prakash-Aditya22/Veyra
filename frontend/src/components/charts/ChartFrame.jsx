@@ -45,7 +45,7 @@ export function ChartTooltip({ active, payload, label, unit = 'incidents' }) {
 export const AXIS = {
   stroke: 'transparent',
   tick: {
-    fill: '#9AA2AE',
+    fill: 'rgba(238, 240, 244, 0.74)',
     fontFamily: "'JetBrains Mono', monospace",
     fontSize: 11,
   },
@@ -54,7 +54,7 @@ export const AXIS = {
 };
 
 export const GRID = {
-  stroke: 'rgba(148, 163, 184, 0.14)',
+  stroke: 'rgba(238, 240, 244, 0.12)',
   strokeDasharray: '0',
   vertical: false,
 };

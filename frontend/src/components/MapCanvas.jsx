@@ -8,8 +8,10 @@ import Legend from './Legend.jsx';
 import Basemap from './Basemap.jsx';
 import './MapCanvas.css';
 
-const DEEP_GRAPHITE = '#131417';
-const BONE_WHITE = '#EEF1F5';
+// Marker outlines: the black ground separates a marker from the dark basemap;
+// paper white marks the selected one.
+const OUTLINE = '#0E0F11';
+const OUTLINE_SELECTED = '#EEF0F4';
 
 function prefersReducedMotion() {
   return (
@@ -96,10 +98,10 @@ function HeatLayer({ points, active }) {
       minOpacity: 0.18,
       max: 1,
       gradient: {
-        0.0: '#C9A227',
-        0.35: '#C2711F',
-        0.65: '#A33A2B',
-        1.0: '#7A1F1A',
+        0.0: '#F2A31B',
+        0.35: '#F2A31B',
+        0.65: '#D7120F',
+        1.0: '#8E44AD',
       },
     });
     layer.addTo(map);
@@ -259,7 +261,7 @@ export default function MapCanvas({
                 radius={r}
                 interactive={!coarsePointer}
                 pathOptions={{
-                  color: isSelected ? BONE_WHITE : DEEP_GRAPHITE,
+                  color: isSelected ? OUTLINE_SELECTED : OUTLINE,
                   weight: isSelected ? 2 : 1.5,
                   fillColor: tier.hex,
                   // A segment under the six-crash floor is drawn, not hidden -

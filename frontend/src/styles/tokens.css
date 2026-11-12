@@ -5,30 +5,51 @@
 */
 
 :root {
-  /* ---- Interface neutrals: one cool graphite family, no warm/cool drift ---- */
-  --deep-graphite: #131417; /* application canvas */
-  --panel-graphite: #1a1c21; /* rails, docked panels, table headers, modals */
-  --raised-slate: #22252b; /* hover surfaces, selected rows, input fills */
-  --structural-line: rgba(148, 163, 184, 0.14); /* every 1px rule in the product */
-  --bone-white: #eef1f5; /* primary text */
-  --steel-grey: #9aa2ae; /* secondary text, labels, axis ticks */
-  --dim-grey: #6b7280; /* tertiary text, disabled, attribution */
+  /*
+    Palette: four colours from a Japanese traditional colour plate, and
+    nothing else - 青色 Blue, 赤色 Spectrum Red, 半色 Aconite Violet,
+    山吹色 Orange Yellow - on a black ground, with paper-white type. Every
+    other value in this block is black, white, or white at an opacity.
+  */
+  --c-blue: #1f4fbf; /* 青色 Blue */
+  --c-red: #d7120f; /* 赤色 Spectrum Red */
+  --c-violet: #8e44ad; /* 半色 Aconite Violet */
+  --c-yellow: #f2a31b; /* 山吹色 Orange Yellow */
 
-  /* ---- Interface accent: exactly one, and it is not red ---- */
-  --beacon-teal: #0f766e;
-  --beacon-teal-lift: #14918a; /* hover only. Same hue, never a second accent. */
-  --beacon-teal-wash: rgba(15, 118, 110, 0.16);
+  /* ---- Neutrals: black ground, paper-white type ---- */
+  --canvas: #0e0f11; /* black: application ground */
+  --panel: #16171a; /* black lifted: rails, panels, headers */
+  --raised: #212327; /* hover surfaces, selected rows, input fills */
+  --line: rgba(238, 240, 244, 0.12); /* every 1px rule in the product */
+  --track: rgba(238, 240, 244, 0.08); /* empty bar tracks, chart hover band */
+  --ink: #eef0f4; /* paper white: primary text */
+  --ink-soft: rgba(238, 240, 244, 0.72); /* secondary text, labels, axis ticks */
+  --ink-faint: rgba(238, 240, 244, 0.52); /* tertiary text, disabled, attribution */
 
-  /* ---- Risk ramp: the only saturated color, reserved exclusively for data ---- */
-  --risk-1: #c9a227; /* Watch     - score 0-24  */
-  --risk-2: #c2711f; /* Elevated  - score 25-49 */
-  --risk-3: #a33a2b; /* Severe    - score 50-74 */
-  --risk-4: #7a1f1a; /* Critical  - score 75-100 */
-  --risk-none: #3a3e46; /* No Data. Absence of data is not absence of risk. */
+  /* ---- Interface accent: Blue, and only Blue ---- */
+  --accent: var(--c-blue);
+  /* Hover and blue text: the same blue lifted toward white, legible on black. */
+  --accent-lift: color-mix(in srgb, var(--c-blue) 70%, var(--ink));
+  --accent-wash: rgba(31, 79, 191, 0.22);
+  --on-accent: #ffffff; /* text on an accent fill */
 
-  /* ---- Status: utility only. Banned from the map and from every chart. ---- */
-  --confirm-green: #3f7d58;
-  --notice-amber: #b4813a;
+  /*
+    ---- Risk ramp: Yellow -> Red -> Violet ----
+    Three colours for four tiers: Watch and Elevated share Orange Yellow and
+    are told apart by their word, which every tier consumer renders anyway.
+  */
+  --risk-1: var(--c-yellow); /* Watch,    score 0-24  */
+  --risk-2: var(--c-yellow); /* Elevated, score 25-49 */
+  --risk-3: var(--c-red); /* Severe,   score 50-74 */
+  --risk-4: var(--c-violet); /* Critical, score 75-100 */
+  --risk-none: rgba(238, 240, 244, 0.22); /* No Data: ink, not a colour */
+
+  /* ---- Status: utility only, drawn from the same four. ---- */
+  --status-confirm: var(--c-blue);
+  --status-notice: var(--c-yellow);
+
+  /* ---- Overlays ---- */
+  --scrim: rgba(0, 0, 0, 0.6);
 
   /* ---- Type ---- */
   --font-ui: 'Satoshi', 'Satoshi-Variable', 'Segoe UI', sans-serif;
@@ -57,7 +78,7 @@
   --radius-surface: 0.75rem;
 
   /* ---- Elevation: diffused, tinted to the canvas hue. Never a glow. ---- */
-  --shadow-card: 0 8px 24px rgba(10, 11, 14, 0.5);
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.5);
 
   /* ---- Shell geometry (DESIGN.md section 5) ---- */
   --rail-width: 280px;
@@ -73,10 +94,9 @@
 }
 
 /*
-  The product is a single locked dark theme. DESIGN.md describes one atmosphere
-  ("night-shift control room") and encodes risk against a dark basemap; a light
-  mode would break the ramp's contrast contract. Declared here rather than left
-  implicit so the choice is visible.
+  The product is a single locked dark theme: black ground, paper-white type,
+  risk drawn over a dark grey basemap. Only the four plate colours appear as
+  colour; the ramp runs yellow -> red -> violet, ordered and legible on black.
 */
 @media (prefers-reduced-motion: reduce) {
   :root {

@@ -20,8 +20,8 @@ html {
 
 body {
   min-height: 100dvh;
-  background: var(--deep-graphite);
-  color: var(--bone-white);
+  background: var(--canvas);
+  color: var(--ink);
   font-family: var(--font-ui);
   font-size: var(--type-body);
   line-height: 1.65;
@@ -94,12 +94,12 @@ h4 {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--steel-grey);
+  color: var(--ink-soft);
   line-height: 1.4;
 }
 
 .body-secondary {
-  color: var(--steel-grey);
+  color: var(--ink-soft);
   max-width: 65ch;
 }
 
@@ -150,28 +150,28 @@ h4 {
 }
 
 .btn-primary {
-  background: var(--beacon-teal);
-  color: var(--bone-white);
+  background: var(--accent);
+  color: var(--on-accent);
 }
 
 .btn-primary:hover {
-  background: var(--beacon-teal-lift);
+  background: var(--accent-lift);
 }
 
 .btn-secondary {
   background: transparent;
-  color: var(--bone-white);
-  border: 1px solid var(--structural-line);
+  color: var(--ink);
+  border: 1px solid var(--line);
 }
 
 .btn-secondary:hover {
-  background: var(--raised-slate);
+  background: var(--raised);
 }
 
 .btn-tertiary {
   min-height: 44px;
   padding: 0 var(--s2);
-  color: var(--steel-grey);
+  color: var(--ink-soft);
   font-size: var(--type-body);
   font-weight: 500;
   border-radius: var(--radius-interactive);
@@ -179,7 +179,7 @@ h4 {
 }
 
 .btn-tertiary:hover {
-  color: var(--bone-white);
+  color: var(--ink);
 }
 
 /* ============================================================
@@ -187,7 +187,7 @@ h4 {
    ============================================================ */
 
 :focus-visible {
-  outline: 2px solid var(--beacon-teal-lift);
+  outline: 2px solid var(--accent-lift);
   outline-offset: 2px;
   border-radius: var(--radius-interactive);
 }
@@ -205,10 +205,10 @@ h4 {
   width: 100%;
   min-height: 44px;
   padding: 0 var(--s2);
-  background: var(--raised-slate);
-  border: 1px solid var(--structural-line);
+  background: var(--raised);
+  border: 1px solid var(--line);
   border-radius: var(--radius-interactive);
-  color: var(--bone-white);
+  color: var(--ink);
   font-size: var(--type-body);
   transition:
     border-color var(--dur-fast) var(--ease-settle),
@@ -216,13 +216,13 @@ h4 {
 }
 
 .input::placeholder {
-  color: var(--dim-grey);
+  color: var(--ink-faint);
 }
 
 .input:focus {
   outline: none;
-  border-color: var(--beacon-teal-lift);
-  box-shadow: 0 0 0 3px var(--beacon-teal-wash);
+  border-color: var(--accent-lift);
+  box-shadow: 0 0 0 3px var(--accent-wash);
 }
 
 .input[aria-invalid='true'] {
@@ -231,7 +231,7 @@ h4 {
 
 .field-helper {
   font-size: 0.8125rem;
-  color: var(--dim-grey);
+  color: var(--ink-faint);
 }
 
 .field-error {
@@ -245,7 +245,7 @@ h4 {
 
 .rule {
   height: 1px;
-  background: var(--structural-line);
+  background: var(--line);
   border: 0;
 }
 
@@ -282,7 +282,7 @@ h4 {
    ============================================================ */
 
 .skeleton {
-  background: var(--raised-slate);
+  background: var(--raised);
   border-radius: var(--radius-interactive);
   position: relative;
   overflow: hidden;
@@ -296,7 +296,7 @@ h4 {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(238, 241, 245, 0.06),
+    rgba(238, 240, 244, 0.06),
     transparent
   );
   animation: shimmer 1.4s infinite;
@@ -319,21 +319,21 @@ h4 {
    ============================================================ */
 
 .leaflet-container {
-  background: var(--deep-graphite);
+  background: var(--canvas);
   font-family: var(--font-ui);
   outline: none;
 }
 
 .leaflet-control-attribution {
-  background: rgba(19, 20, 23, 0.82) !important;
-  color: var(--dim-grey) !important;
+  background: rgba(14, 15, 17, 0.82) !important;
+  color: var(--ink-faint) !important;
   font-size: 0.6875rem !important;
   padding: 2px 8px !important;
   border-radius: 4px 0 0 0;
 }
 
 .leaflet-control-attribution a {
-  color: var(--steel-grey) !important;
+  color: var(--ink-soft) !important;
 }
 
 /* The default zoom control chrome is replaced by our own panel-graphite one. */
@@ -343,7 +343,7 @@ h4 {
 
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
-  background: var(--raised-slate);
-  color: var(--bone-white);
+  background: var(--raised);
+  color: var(--ink);
   box-shadow: var(--shadow-card);
 }

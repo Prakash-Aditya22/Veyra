@@ -1,6 +1,6 @@
 .legend {
-  background: var(--panel-graphite);
-  border: 1px solid var(--structural-line);
+  background: var(--panel);
+  border: 1px solid var(--line);
   border-radius: var(--radius-surface);
   padding: var(--s2);
   min-width: 194px;
@@ -62,12 +62,12 @@
 .legend__word {
   font-size: 0.75rem;
   font-weight: 500;
-  color: var(--bone-white);
+  color: var(--ink);
 }
 
 .legend__range {
   font-size: 0.6875rem;
-  color: var(--steel-grey);
+  color: var(--ink-soft);
 }
 
 /*
@@ -79,10 +79,10 @@
   max-width: 30ch;
   padding-top: 6px;
   margin-top: 6px;
-  border-top: 1px solid var(--structural-line);
+  border-top: 1px solid var(--line);
   font-size: 0.6875rem;
   line-height: 1.45;
-  color: var(--dim-grey);
+  color: var(--ink-faint);
 }
 
 /* Below 768px the legend leaves the canvas and becomes a strip under the header. */

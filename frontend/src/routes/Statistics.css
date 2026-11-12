@@ -18,8 +18,8 @@
 .kpi-strip {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  border-top: 1px solid var(--structural-line);
-  border-bottom: 1px solid var(--structural-line);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
 .kpi {
@@ -27,7 +27,7 @@
   gap: 2px;
   align-content: start;
   padding: var(--s3) var(--s3) var(--s3) 0;
-  border-left: 1px solid var(--structural-line);
+  border-left: 1px solid var(--line);
   padding-left: var(--s3);
 }
 
@@ -40,12 +40,12 @@
   font-size: var(--type-hero-metric);
   font-weight: 700;
   line-height: 1.05;
-  color: var(--bone-white);
+  color: var(--ink);
 }
 
 .kpi__note {
   font-size: var(--type-label);
-  color: var(--dim-grey);
+  color: var(--ink-faint);
 }
 
 /* --- Asymmetric 2:1 grid, flipped on the second row --- */
@@ -93,11 +93,11 @@
   display: grid;
   gap: 2px;
   padding-bottom: var(--s1);
-  border-bottom: 1px solid var(--structural-line);
+  border-bottom: 1px solid var(--line);
 }
 
 .stats__factors-meta {
-  color: var(--dim-grey);
+  color: var(--ink-faint);
   text-transform: none;
   letter-spacing: 0.02em;
   font-weight: 500;
@@ -117,17 +117,17 @@
   align-items: center;
   gap: var(--s3);
   height: 52px;
-  border-bottom: 1px solid var(--structural-line);
+  border-bottom: 1px solid var(--line);
 }
 
 .factor-rank__index {
   font-size: 0.75rem;
-  color: var(--dim-grey);
+  color: var(--ink-faint);
 }
 
 .factor-rank__label {
   font-size: 0.9375rem;
-  color: var(--bone-white);
+  color: var(--ink);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -137,14 +137,14 @@
 .factor-rank__detail {
   display: block;
   font-size: 0.75rem;
-  color: var(--dim-grey);
+  color: var(--ink-faint);
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .factor-rank__track {
   height: 5px;
-  background: rgba(148, 163, 184, 0.1);
+  background: var(--track);
   border-radius: 3px;
   overflow: hidden;
 }
@@ -152,13 +152,13 @@
 .factor-rank__fill {
   display: block;
   height: 100%;
-  background: var(--beacon-teal-lift);
+  background: var(--accent-lift);
   border-radius: 3px;
 }
 
 .factor-rank__value {
   font-size: 0.8125rem;
-  color: var(--steel-grey);
+  color: var(--ink-soft);
   text-align: right;
 }
 
@@ -181,7 +181,7 @@
 
   .kpi:nth-child(3),
   .kpi:nth-child(4) {
-    border-top: 1px solid var(--structural-line);
+    border-top: 1px solid var(--line);
   }
 }
 

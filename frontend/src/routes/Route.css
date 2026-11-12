@@ -32,8 +32,8 @@
   justify-content: space-between;
   gap: var(--s3);
   padding: var(--s2) var(--s4);
-  border-bottom: 1px solid var(--structural-line);
-  background: var(--panel-graphite);
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
 }
 
 .route__bar-main {
@@ -50,13 +50,13 @@
   gap: var(--s1);
   font-size: var(--type-label);
   line-height: 1.5;
-  color: var(--dim-grey);
+  color: var(--ink-faint);
 }
 
 .route__sep {
   width: 1px;
   height: 10px;
-  background: var(--structural-line);
+  background: var(--line);
   flex-shrink: 0;
 }
 
@@ -66,15 +66,15 @@
   align-items: center;
   gap: var(--s2);
   padding: var(--s2) var(--s4);
-  background: var(--panel-graphite);
-  border-bottom: 1px solid var(--structural-line);
-  border-left: 3px solid var(--notice-amber);
-  color: var(--bone-white);
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  border-left: 3px solid var(--status-notice);
+  color: var(--ink);
   font-size: 0.8125rem;
 }
 
 .route__banner svg {
-  color: var(--notice-amber);
+  color: var(--status-notice);
   flex-shrink: 0;
 }
 
@@ -93,14 +93,14 @@
 }
 
 .route__rail {
-  background: var(--panel-graphite);
-  border-right: 1px solid var(--structural-line);
+  background: var(--panel);
+  border-right: 1px solid var(--line);
   overflow-y: auto;
 }
 
 .route__canvas {
   position: relative;
-  background: var(--deep-graphite);
+  background: var(--canvas);
 }
 
 .route__map {
@@ -122,8 +122,8 @@
 }
 
 .route-form__submit:disabled {
-  background: var(--raised-slate);
-  color: var(--dim-grey);
+  background: var(--raised);
+  color: var(--ink-faint);
   cursor: default;
 }
 
@@ -140,7 +140,7 @@
   margin: 0;
   padding: 0;
   display: grid;
-  border: 1px solid var(--structural-line);
+  border: 1px solid var(--line);
   border-radius: var(--radius-interactive);
   overflow: hidden;
 }
@@ -151,8 +151,8 @@
   gap: 1px;
   padding: var(--s1) var(--s2);
   cursor: pointer;
-  background: var(--raised-slate);
-  border-bottom: 1px solid var(--structural-line);
+  background: var(--raised);
+  border-bottom: 1px solid var(--line);
   transition: background var(--dur-fast) var(--ease-settle);
 }
 
@@ -162,18 +162,18 @@
 
 .route-field__option:hover,
 .route-field__option.is-active {
-  background: var(--beacon-teal-wash);
+  background: var(--accent-wash);
 }
 
 .route-field__name {
   font-size: 0.8125rem;
-  color: var(--bone-white);
+  color: var(--ink);
   line-height: 1.35;
 }
 
 .route-field__coord {
   font-size: 0.6875rem;
-  color: var(--steel-grey);
+  color: var(--ink-soft);
 }
 
 /* --- Evidence floor toggle --- */
@@ -186,7 +186,7 @@
   margin-inline: -6px;
   border-radius: 6px;
   cursor: pointer;
-  color: var(--steel-grey);
+  color: var(--ink-soft);
   font-size: 0.8125rem;
   line-height: 1.45;
   transition:
@@ -195,13 +195,13 @@
 }
 
 .route-check:hover {
-  background: var(--raised-slate);
-  color: var(--bone-white);
+  background: var(--raised);
+  color: var(--ink);
 }
 
 .route-check--on {
-  background: var(--beacon-teal-wash);
-  color: var(--bone-white);
+  background: var(--accent-wash);
+  color: var(--ink);
 }
 
 .route-check__input {
@@ -209,7 +209,7 @@
   height: 14px;
   margin-top: 3px;
   flex-shrink: 0;
-  accent-color: var(--beacon-teal);
+  accent-color: var(--accent);
   cursor: pointer;
 }
 
@@ -219,7 +219,7 @@
   display: grid;
   gap: var(--s2);
   padding: var(--s3);
-  border-top: 1px solid var(--structural-line);
+  border-top: 1px solid var(--line);
 }
 
 .route-form__compare-title {
@@ -229,7 +229,7 @@
 .route-form__note {
   font-size: 0.75rem;
   line-height: 1.5;
-  color: var(--dim-grey);
+  color: var(--ink-faint);
 }
 
 /* --- Docked blackspot list --- */
@@ -237,8 +237,8 @@
 .route-spots {
   height: 100%;
   min-height: 0;
-  background: var(--panel-graphite);
-  border-left: 1px solid var(--structural-line);
+  background: var(--panel);
+  border-left: 1px solid var(--line);
   display: grid;
   grid-template-rows: auto 1fr;
 }
@@ -247,11 +247,11 @@
   display: grid;
   gap: 2px;
   padding: var(--s3);
-  border-bottom: 1px solid var(--structural-line);
+  border-bottom: 1px solid var(--line);
 }
 
 .route-spots__count {
-  color: var(--steel-grey);
+  color: var(--ink-soft);
 }
 
 .route-spots__scroll {
@@ -267,19 +267,19 @@
   align-items: center;
   gap: var(--s2);
   padding: var(--s2) var(--s3);
-  border-bottom: 1px solid var(--structural-line);
+  border-bottom: 1px solid var(--line);
   border-left: 2px solid transparent;
   transition: background var(--dur-fast) var(--ease-settle);
 }
 
 .route-spot-row:hover {
-  background: var(--raised-slate);
-  border-left-color: var(--beacon-teal);
+  background: var(--raised);
+  border-left-color: var(--accent);
 }
 
 .route-spot-row__at {
   font-size: 0.75rem;
-  color: var(--dim-grey);
+  color: var(--ink-faint);
   align-self: start;
   padding-top: 2px;
 }
@@ -293,7 +293,7 @@
 .route-spot-row__name {
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--bone-white);
+  color: var(--ink);
   line-height: 1.35;
 }
 
@@ -303,18 +303,18 @@
   align-items: center;
   gap: 6px;
   font-size: 0.75rem;
-  color: var(--steel-grey);
+  color: var(--ink-soft);
 }
 
 .route-spot-row__dot {
   width: 1px;
   height: 9px;
-  background: var(--structural-line);
+  background: var(--line);
   flex-shrink: 0;
 }
 
 .route-spot-row__thin {
-  color: var(--dim-grey);
+  color: var(--ink-faint);
 }
 
 /* --- Map paths ---------------------------------------------------------
@@ -324,15 +324,15 @@
   ---------------------------------------------------------------------- */
 
 .route-line {
-  stroke: var(--steel-grey);
+  stroke: var(--ink-soft);
 }
 
 .route-line--selected {
-  stroke: var(--beacon-teal-lift);
+  stroke: var(--accent-lift);
 }
 
 .route-spot {
-  stroke: var(--deep-graphite);
+  stroke: var(--canvas);
 }
 
 .route-spot--watch {
@@ -402,7 +402,7 @@
   .route > .legend--strip {
     display: block;
     padding: var(--s2) var(--s3);
-    border-bottom: 1px solid var(--structural-line);
+    border-bottom: 1px solid var(--line);
   }
 
   .route__grid {
@@ -412,13 +412,13 @@
 
   .route__rail {
     border-right: 0;
-    border-bottom: 1px solid var(--structural-line);
+    border-bottom: 1px solid var(--line);
     overflow-y: visible;
   }
 
   .route-spots {
     border-left: 0;
-    border-top: 1px solid var(--structural-line);
+    border-top: 1px solid var(--line);
   }
 
   /* The panel keeps its own scroll; the page body never scrolls sideways. */

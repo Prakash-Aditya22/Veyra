@@ -18,8 +18,8 @@
   gap: 2px;
   padding: var(--s2);
   text-align: left;
-  background: var(--panel-graphite);
-  border: 1px solid var(--structural-line);
+  background: var(--panel);
+  border: 1px solid var(--line);
   border-left: 2px solid transparent;
   border-radius: var(--radius-surface);
   transition:
@@ -28,24 +28,24 @@
 }
 
 .route-compare__card:hover {
-  background: var(--raised-slate);
+  background: var(--raised);
 }
 
 .route-compare__card.is-selected {
-  background: var(--beacon-teal-wash);
-  border-left-color: var(--beacon-teal);
+  background: var(--accent-wash);
+  border-left-color: var(--accent);
 }
 
 .route-compare__label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--bone-white);
+  color: var(--ink);
   line-height: 1.35;
 }
 
 .route-compare__stats {
   font-size: var(--type-label);
-  color: var(--steel-grey);
+  color: var(--ink-soft);
 }
 
 .route-compare__risk {
@@ -55,7 +55,7 @@
   gap: 6px;
   padding-top: 2px;
   font-size: var(--type-label);
-  color: var(--steel-grey);
+  color: var(--ink-soft);
 }
 
 .route-compare__figure {
@@ -65,6 +65,6 @@
 .route-compare__dot {
   width: 1px;
   height: 9px;
-  background: var(--structural-line);
+  background: var(--line);
   flex-shrink: 0;
 }

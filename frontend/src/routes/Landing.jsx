@@ -186,9 +186,9 @@ export default function Landing() {
         {!reduce && (
           <div className="hero__bg" aria-hidden="true">
             <GradientWaves
-              horizonColor="#131417"
-              waveColor="#0f766e"
-              crestColor="#eef1f5"
+              horizonColor="#0e0f11"
+              waveColor="#1f4fbf"
+              crestColor="#ffffff"
               speed={0.4}
               amplitude={2.4}
               waveScale={0.55}

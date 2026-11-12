@@ -2,7 +2,7 @@
   position: relative;
   height: 100%;
   min-height: 0;
-  background: var(--deep-graphite);
+  background: var(--canvas);
 }
 
 .map-canvas__map {
@@ -49,8 +49,8 @@
 
 .map-controls__cluster {
   display: grid;
-  background: var(--panel-graphite);
-  border: 1px solid var(--structural-line);
+  background: var(--panel);
+  border: 1px solid var(--line);
   border-radius: var(--radius-interactive);
   overflow: hidden;
   box-shadow: var(--shadow-card);
@@ -58,7 +58,7 @@
 
 .map-controls__rule {
   height: 1px;
-  background: var(--structural-line);
+  background: var(--line);
 }
 
 .map-btn {
@@ -66,15 +66,15 @@
   height: 36px;
   display: grid;
   place-items: center;
-  color: var(--steel-grey);
+  color: var(--ink-soft);
   transition:
     background var(--dur-fast) var(--ease-settle),
     color var(--dur-fast) var(--ease-settle);
 }
 
 .map-btn:hover {
-  background: var(--raised-slate);
-  color: var(--bone-white);
+  background: var(--raised);
+  color: var(--ink);
 }
 
 .map-btn:active {
@@ -82,8 +82,8 @@
 }
 
 .map-btn--on {
-  background: var(--beacon-teal-wash);
-  color: var(--bone-white);
+  background: var(--accent-wash);
+  color: var(--ink);
 }
 
 /* Touch targets reach 44px on coarse pointers without changing the desktop look. */

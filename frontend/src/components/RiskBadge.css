@@ -16,13 +16,13 @@
   font-size: var(--type-label);
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: var(--bone-white);
+  color: var(--ink);
 }
 
 .risk-badge__score {
   font-size: var(--type-readout);
   font-weight: 500;
-  color: var(--steel-grey);
+  color: var(--ink-soft);
 }
 
 .risk-badge--lg .risk-badge__chip {
@@ -38,7 +38,7 @@
 
 .risk-badge--lg .risk-badge__score {
   font-size: var(--type-panel-title);
-  color: var(--bone-white);
+  color: var(--ink);
 }
 
 .risk-badge--sm .risk-badge__chip {

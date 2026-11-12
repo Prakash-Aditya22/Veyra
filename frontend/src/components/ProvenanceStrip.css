@@ -5,12 +5,12 @@
   gap: var(--s1);
   font-size: var(--type-label);
   line-height: 1.5;
-  color: var(--dim-grey);
+  color: var(--ink-faint);
 }
 
 .provenance__sep {
   width: 1px;
   height: 10px;
-  background: var(--structural-line);
+  background: var(--line);
   flex-shrink: 0;
 }

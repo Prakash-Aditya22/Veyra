@@ -3,7 +3,7 @@
   min-height: 0;
   display: grid;
   grid-template-rows: auto 1fr;
-  background: var(--panel-graphite);
+  background: var(--panel);
 }
 
 .detail__head {
@@ -12,7 +12,7 @@
   justify-content: space-between;
   gap: var(--s2);
   padding: 6px var(--s3);
-  border-bottom: 1px solid var(--structural-line);
+  border-bottom: 1px solid var(--line);
 }
 
 .detail__back {
@@ -24,7 +24,7 @@
 }
 
 .detail__id {
-  color: var(--dim-grey);
+  color: var(--ink-faint);
 }
 
 .detail__scroll {
@@ -36,7 +36,7 @@
    Cards are banned here. */
 .detail__block {
   padding: var(--s3);
-  border-bottom: 1px solid var(--structural-line);
+  border-bottom: 1px solid var(--line);
 }
 
 .detail__block--last {
@@ -57,7 +57,7 @@
 .detail__coords {
   padding-top: 4px;
   font-size: 0.75rem;
-  color: var(--dim-grey);
+  color: var(--ink-faint);
 }
 
 /* --- Composite score --- */
@@ -100,7 +100,7 @@
 
 .detail__score-note {
   font-size: 0.8125rem;
-  color: var(--steel-grey);
+  color: var(--ink-soft);
   line-height: 1.55;
 }
 
@@ -113,22 +113,22 @@
 .detail__raw {
   font-size: 0.8125rem;
   line-height: 1.55;
-  color: var(--bone-white);
+  color: var(--ink);
 }
 
 /* Notice Amber is the low-confidence colour and it stays inside panels. */
 .detail__caveat {
   font-size: 0.8125rem;
   line-height: 1.55;
-  color: var(--steel-grey);
-  border-left: 2px solid var(--notice-amber);
+  color: var(--ink-soft);
+  border-left: 2px solid var(--status-notice);
   padding-left: var(--s2);
 }
 
 .detail__figure {
   font-size: 0.9375rem;
   line-height: 1.5;
-  color: var(--bone-white);
+  color: var(--ink);
 }
 
 /* --- Stat strip --- */
@@ -149,12 +149,12 @@
   font-size: 1.375rem;
   font-weight: 500;
   line-height: 1.2;
-  color: var(--bone-white);
+  color: var(--ink);
 }
 
 .stat__value--sm {
   font-size: 0.8125rem;
-  color: var(--steel-grey);
+  color: var(--ink-soft);
   padding-top: 6px;
 }
 
@@ -183,12 +183,12 @@
 
 .severity__word {
   font-size: 0.8125rem;
-  color: var(--bone-white);
+  color: var(--ink);
 }
 
 .severity__bar {
   height: 6px;
-  background: rgba(148, 163, 184, 0.1);
+  background: var(--track);
   border-radius: 3px;
   overflow: hidden;
 }
@@ -201,13 +201,13 @@
 
 .severity__count {
   font-size: 0.8125rem;
-  color: var(--bone-white);
+  color: var(--ink);
   text-align: right;
 }
 
 .severity__pct {
   font-size: 0.75rem;
-  color: var(--steel-grey);
+  color: var(--ink-soft);
   text-align: right;
 }
 
@@ -225,7 +225,7 @@
   justify-content: space-between;
   gap: var(--s2);
   padding: 6px 0;
-  border-bottom: 1px solid var(--structural-line);
+  border-bottom: 1px solid var(--line);
 }
 
 .kv__row:last-child {
@@ -234,13 +234,13 @@
 
 .kv dt {
   font-size: 0.8125rem;
-  color: var(--steel-grey);
+  color: var(--ink-soft);
 }
 
 .kv dd {
   margin: 0;
   font-size: 0.8125rem;
-  color: var(--bone-white);
+  color: var(--ink);
 }
 
 @media (max-width: 767px) {

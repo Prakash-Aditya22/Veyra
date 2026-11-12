@@ -1,8 +1,8 @@
 .filter-rail {
   height: 100%;
   min-height: 0;
-  background: var(--panel-graphite);
-  border-right: 1px solid var(--structural-line);
+  background: var(--panel);
+  border-right: 1px solid var(--line);
   display: grid;
   grid-template-rows: auto auto 1fr auto;
 }
@@ -11,11 +11,11 @@
   padding: var(--s3) var(--s3) var(--s2);
   display: grid;
   gap: 2px;
-  border-bottom: 1px solid var(--structural-line);
+  border-bottom: 1px solid var(--line);
 }
 
 .filter-rail__count {
-  color: var(--steel-grey);
+  color: var(--ink-soft);
   font-size: var(--type-label);
 }
 
@@ -26,7 +26,7 @@
   flex-wrap: wrap;
   gap: var(--s1);
   padding: var(--s2) var(--s3);
-  border-bottom: 1px solid var(--structural-line);
+  border-bottom: 1px solid var(--line);
 }
 
 .chip {
@@ -36,15 +36,15 @@
   min-height: 28px;
   padding: 0 8px;
   border-radius: var(--radius-interactive);
-  background: var(--beacon-teal-wash);
-  color: var(--bone-white);
+  background: var(--accent-wash);
+  color: var(--ink);
   font-size: 0.75rem;
   font-weight: 500;
   transition: background var(--dur-fast) var(--ease-settle);
 }
 
 .chip:hover {
-  background: rgba(15, 118, 110, 0.28);
+  background: rgba(31, 79, 191, 0.2);
 }
 
 .chip__label {
@@ -64,7 +64,7 @@
 
 .filter-group {
   border: 0;
-  border-top: 1px solid var(--structural-line);
+  border-top: 1px solid var(--line);
   margin: 0;
   padding: var(--s3) var(--s3) var(--s2);
   display: grid;
@@ -88,7 +88,7 @@
   margin-inline: -6px;
   border-radius: 6px;
   cursor: pointer;
-  color: var(--steel-grey);
+  color: var(--ink-soft);
   font-size: 0.875rem;
   transition:
     background var(--dur-fast) var(--ease-settle),
@@ -96,24 +96,24 @@
 }
 
 .filter-option:hover {
-  background: var(--raised-slate);
-  color: var(--bone-white);
+  background: var(--raised);
+  color: var(--ink);
 }
 
 .filter-option--on {
-  background: var(--beacon-teal-wash);
-  color: var(--bone-white);
+  background: var(--accent-wash);
+  color: var(--ink);
 }
 
 .filter-option--on:hover {
-  background: rgba(15, 118, 110, 0.24);
+  background: rgba(31, 79, 191, 0.18);
 }
 
 .filter-option__input {
   width: 14px;
   height: 14px;
   flex-shrink: 0;
-  accent-color: var(--beacon-teal);
+  accent-color: var(--accent);
   cursor: pointer;
 }
 
@@ -152,7 +152,7 @@
   padding-top: var(--s1);
   font-size: 0.75rem;
   line-height: 1.5;
-  color: var(--dim-grey);
+  color: var(--ink-faint);
 }
 
 .filter-rail__field {
@@ -162,11 +162,11 @@
 
 .filter-rail__foot {
   padding: var(--s2) var(--s3);
-  border-top: 1px solid var(--structural-line);
+  border-top: 1px solid var(--line);
 }
 
 .filter-rail__foot .btn-tertiary:disabled {
-  color: var(--dim-grey);
+  color: var(--ink-faint);
   cursor: default;
 }
 
